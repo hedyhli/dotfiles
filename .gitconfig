@@ -1,0 +1,41 @@
+[core]
+	editor = nvim
+	autocrlf = input
+	excludesfile = /home/hedy/.gitignore_global
+
+[user]
+	name = Hedy Li
+	email = hedyhyry@gmail.com
+
+[alias]
+	st = status
+	cm = commit
+	br = branch
+	ls-alias = config --get-regexp alias
+	llog = log --oneline
+	sst = status -s
+	ch = checkout
+	chb = checkout -b
+	mylog = log --pretty=format:'%C(yellow)%h %C(bold blue)%an, %C(green)%ar: %C(white)"%s"'
+	lgraph = log --oneline --graph --decorate --all
+	brd = branch -d
+	l = log --oneline
+	fame = !python3 -m gitfame
+
+[credential]
+	helper = store --file="$HOME/.git_creds"
+	helper = cache --timeout 90000
+
+[help]
+	autocorrect = 30
+[pull]
+	rebase = false
+[sendemail]
+        smtpserver = smtp.gmail.com
+        smtpuser = hedyhyry@gmail.com
+        smtpencryption = tls
+        smtpserverport = 587
+        annotate = yes
+
+[include]
+	path = ~/.gitconfig-priv

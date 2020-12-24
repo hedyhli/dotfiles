@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# my own copy script
+
+echo '$1' > ~/clipped.txt
+echo $1 | clip.exe
+
+exit 0
+

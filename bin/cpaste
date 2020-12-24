@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# my own paste from clipboard script
+
+powershell.exe Get-Clipboard | sed 's/\r$//' | sed -z '$ s/\n$//' > ~/clipped.txt
+
+cat ~/clipped.txt
+
+exit 0
+

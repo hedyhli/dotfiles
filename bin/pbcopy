@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# the pbcopy script
+
+tee | clip.exe
+
+exit 0
+
