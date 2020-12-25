@@ -1,0 +1,7 @@
+{
+	"git": [".gitconfig", ".gitignore_global"],
+    "irb": ".irbrc",
+	"vim": [".vimrc", "iswsl.vim"],
+	"nvim": ["iswsl.vim", ".config/nvim"],
+	"fish": ".config/fish"
+}
