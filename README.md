@@ -1,5 +1,5 @@
 # dotfiles
-Welcome, these are for Ubuntu/Debian and WSL
+Welcome, these are for Ubuntu/Debian and/or WSL
 
 ### Basics
 - Shell: fish
