@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# local to repo
+# WORK IN PROGRESS!
+
+for var in "$@"
+do
+    dest=$(cat paths.json | jq '.'$var -r)
+	src=$dest
+	[ -d $dest ] && src=$dest'/*'
+    cp ~/$src $dest
+done
