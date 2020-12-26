@@ -5,9 +5,13 @@ Welcome, these are for Ubuntu/Debian and/or WSL
 - Shell: fish
 - Theme: Dracula
 - Email: aerc
-- Terminal browser: w3m
+- Browser:
+   - Chrome :p
+   - w3m
 - Gemini/Gopher browser: bombadillo
-- Editor: (Neo)Vim with CoC, VS Code
+- Editor:
+   - (Neo)Vim with CoC
+   - VS Code
 
 ### Notes for setup
 
