@@ -3,5 +3,10 @@
     "irb": ".irbrc",
 	"vim": [".vimrc", "iswsl.vim"],
 	"nvim": ["iswsl.vim", ".config/nvim"],
-	"fish": ".config/fish"
+	"fish": {
+	"    config": ".config/fish/config.fish",
+	"    functions": ".config/fish/functions"
+	},
+    "aerc": ".config/aerc",
+	"bin": "bin/"
 }
