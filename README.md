@@ -1,12 +1,17 @@
 # dotfiles
-Welcome, these are for Ubuntu/Debian and/or WSL
+
+I mostly use these for Ubuntu/Debian and sometimes with WSL, but it should work for other
+Linux distros, feel free to pick and choose. Because the only OS specific thing (I think)
+is [this fish function](.config/fish/functions/apt-up.fish) which updates packages with apt.
+
 
 ### Basics
+- Manager: yadm
 - Shell: fish
 - Theme: Dracula
 - Email: aerc
 - Browser:
-   - Chrome :p
+   - Chrome :P
    - w3m
 - Gemini/Gopher browser: bombadillo
 - Editor:
@@ -15,6 +20,8 @@ Welcome, these are for Ubuntu/Debian and/or WSL
 
 ### Notes for setup
 
+(Will eventually put them into setup script)
+
 **Python**
 - git fame
 - termdown
@@ -22,9 +29,11 @@ Welcome, these are for Ubuntu/Debian and/or WSL
 
 **Shell/Misc**
 - exa
-- qalc (apt)
+- qalc
 - trash-cli
+- git-diff: diff-so-fancy
 
 ### Todo
 - [ ] Add links for above
-- [ ] Write copy/sync scripts
+- [ ] Put fish aliases into separate place
+- [ ] Write setup scripts that check requirements
