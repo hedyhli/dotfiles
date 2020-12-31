@@ -19,12 +19,14 @@ Plug 'majutsushi/tagbar'
 Plug 'jreybert/vimagit'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'adelarsq/vim-hackernews'
-Plug 'laurentgoudet/vim-howdoi'
+if has('python')
+	Plug 'laurentgoudet/vim-howdoi'
+endif
 Plug 'wakatime/vim-wakatime'  " wakatime for vim
 
 call plug#end()
 
-let g:dracula_colorterm = 0
+"let g:dracula_colorterm = 0
 colorscheme dracula
 
 " airline integrations
