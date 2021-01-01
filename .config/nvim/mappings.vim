@@ -5,7 +5,7 @@
 nnoremap <Leader>rn :set relativenumber!<CR>
 nnoremap <Leader>z zR
 nnoremap <Leader>w :w<CR>
-nnoremap <Leader>x :wqa<CR>
+nnoremap <Leader>x :xa<CR>
 nnoremap <Leader>q :qa<CR>
 
 " no highlight - when finished search
