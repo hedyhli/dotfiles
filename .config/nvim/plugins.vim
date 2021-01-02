@@ -36,7 +36,7 @@ let g:airline#extensions#tagbar#enabled = 1
 noremap <Leader>nf :NERDTreeFind<CR>
 " open nerdtree when openning a dir in vim
 let NERDTreeWinSize = 20
-autocmd vimenter * :NERDTree %
+autocmd vimenter * NERDTree % | exe "normal \<c-w>l"
 noremap <Leader>n :NERDTreeToggle %<CR>
 
 " NerdTree Git plugin
