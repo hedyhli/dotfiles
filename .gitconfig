@@ -9,18 +9,18 @@
 	email = hedyhyry@gmail.com
 
 [alias]
-	st = status
-	cm = commit
-	br = branch
+	s = status
+	c = commit
+	b = branch
 	ls-alias = config --get-regexp alias
-	llog = log --oneline
-	sst = status -s
+	l = log --oneline
+	ll = log
+	ss = status -s
 	ch = checkout
 	chb = checkout -b
 	mylog = log --pretty=format:'%C(yellow)%h %C(bold blue)%an, %C(green)%ar: %C(white)"%s"'
 	lgraph = log --oneline --graph --decorate --all
 	brd = branch -d
-	l = log --oneline
 	fame = !python3 -m gitfame
 
 [credential]
