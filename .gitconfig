@@ -22,6 +22,8 @@
 	lgraph = log --oneline --graph --decorate --all
 	brd = branch -d
 	fame = !python3 -m gitfame
+	p = push
+	cmam = commit -am
 
 [credential]
 	helper = store --file="$HOME/.git_creds"
