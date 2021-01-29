@@ -1,3 +1,7 @@
 bass 'export GEM_HOME=$HOME/gems'
-bass 'export BROWSER=w3m'
+if command -sq links
+	bass 'export BROWSER=links'
+else
+	bass 'export BROWSER=w3m'
+end
 umask 0002
