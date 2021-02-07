@@ -11,6 +11,7 @@
 [alias]
 	s = status
 	c = commit
+	cm = commit  # scheduled for "deprecation" lol
 	b = branch
 	ls-alias = config --get-regexp alias
 	l = log --oneline
