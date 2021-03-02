@@ -6,12 +6,11 @@
 
 [user]
 	name = Hedy Li
-	email = hedyhyry@gmail.com
+	email = hedy@ttm.sh
 
 [alias]
 	s = status
 	c = commit
-	cm = commit  # scheduled for "deprecation" lol
 	b = branch
 	ls-alias = config --get-regexp alias
 	l = log --oneline
@@ -37,10 +36,10 @@
 	rebase = false
 
 [sendemail]
-        smtpserver = smtp.gmail.com
-        smtpuser = hedyhyry@gmail.com
+        smtpserver = smtp.tilde.team
+        ;smtpuser = hedy
         smtpencryption = tls
-        smtpserverport = 587
+        smtpserverport = 465
         annotate = yes
 
 [include]
