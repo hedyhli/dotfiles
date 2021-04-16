@@ -1,4 +1,0 @@
-function hellofish
-
-end
-

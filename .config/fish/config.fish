@@ -4,3 +4,5 @@ if command -sq links
 else
 	bass 'export BROWSER=w3m'
 end
+source ~/.config/fish/config_local.fish
+source ~/.aliases
