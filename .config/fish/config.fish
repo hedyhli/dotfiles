@@ -4,4 +4,3 @@ if command -sq links
 else
 	bass 'export BROWSER=w3m'
 end
-umask 0002
