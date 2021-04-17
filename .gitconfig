@@ -1,12 +1,12 @@
 [core]
-	editor = nvim
+	editor = nv
 	autocrlf = input
 	excludesfile = /home/hedy/.gitignore_global
 	pager = diff-so-fancy | less --tabs=4 -RFX
 
 [user]
 	name = Hedy Li
-	# email in [include]
+	email = hedy@ttm.sh  # email overidden in [include]
 
 [alias]
 	s = status
@@ -35,15 +35,9 @@
 [pull]
 	rebase = false
 
-[sendemail]
-        smtpserver = smtp.tilde.team
-        ;smtpuser = hedy
-        smtpencryption = tls
-        smtpserverport = 465
-        annotate = yes
+# sendmail conig in [include]
 
 [include]
-	path = ~/.gitconfig-priv
 	path = ~/.gitconfig-local
 
 # diff-so-fancy
