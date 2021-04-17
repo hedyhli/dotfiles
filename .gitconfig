@@ -1,5 +1,0 @@
-[user]
-	email = hedy@rawtext.club
-
-[include]
-	path = ~/.gitconfig-share
