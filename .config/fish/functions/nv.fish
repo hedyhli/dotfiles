@@ -1,5 +1,5 @@
 # Defined via `source`
-function --description 'alias nv=nvim'
+function nv --description 'alias nv=nvim'
 	if command -sq nvim
 		nvim $argv
 	else
