@@ -6,7 +6,7 @@
 
 [user]
 	name = Hedy Li
-	email = hedy@ttm.sh
+	# email in [include]
 
 [alias]
 	s = status
