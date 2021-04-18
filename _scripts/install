@@ -7,6 +7,11 @@ ln -s ~/diffsofancy/diff-so-fancy ~/bin/
 echo "done"
 echo
 echo "installing vundle"
-#git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 echo "done, you should run vim +PluginInstall"
+echo
+echo "installing omf and using it to install stuff"
+curl -L https://get.oh-my.fish | fish
+omf install pj z bass
+echo "done"
 echo
