@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+echo "installing diff-so-fancy"
+git clone https://github.com/so-fancy/diff-so-fancy ~/diffsofancy
+chmod +x ~/diffsofancy/diff-so-fancy
+ln -s ~/diffsofancy/diff-so-fancy ~/bin/
+echo "done"
+echo
+echo "installing vundle"
+#git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+echo "done, you should run vim +PluginInstall"
+echo

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+echo "creating local git config"
+touch ~/.gitconfig-local
+echo "creating local fish config"
+touch ~/.config/fish/config_local.fish

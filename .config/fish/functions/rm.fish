@@ -2,6 +2,7 @@ function rm --wraps=trash --description 'alias rm=trash'
   if command -sq trash
 	  trash $argv;
   else
-	  /usr/bin/rm $argv;
+	  set rmpath (which rm)
+	  $rmpath $argv;
   end
 end
