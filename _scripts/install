@@ -13,5 +13,6 @@ echo
 echo "installing omf and using it to install stuff"
 curl -L https://get.oh-my.fish | fish
 omf install pj z bass
+echo
 echo "done"
 echo
