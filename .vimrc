@@ -12,7 +12,8 @@ Plugin 'dracula/vim', {'name': 'dracula'}  " dracula color theme
 Plugin 'stautob/vim-fish'                  " fish support for vim
 Plugin 'jiangmiao/auto-pairs'              " auto insert and del quotes in pairs
 Plugin 'tpope/vim-surround'                " quoting and parenthesizing plugin
-Plugin 'preservim/nerdcommenter'           " commenting made simple
+" Plugin 'preservim/nerdcommenter'           " commenting made simple
+Plugin 'tpope/vim-commentary'
 Plugin 'bling/vim-bufferline'              " buffer line
 Plugin 'preservim/nerdtree'                " NERDTree :)
 

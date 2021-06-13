@@ -8,7 +8,8 @@ Plug 'Yggdroot/indentLine'  " indentLine plugin
 Plug 'stautob/vim-fish'  " fish support for vim
 Plug 'jiangmiao/auto-pairs'  " auto insert and del quotes in pairs
 Plug 'tpope/vim-surround'  " quoting and parenthesizing plugin
-Plug 'preservim/nerdcommenter'  " commenting made simple
+"Plug 'preservim/nerdcommenter'  " commenting made simple
+Plug 'https://github.com/tpope/vim-commentary'
 Plug 'vim-airline/vim-airline'  " airline plugin for status bar
 Plug 'mbbill/undotree'  " undo tree
 Plug 'bling/vim-bufferline'  " buffer line
