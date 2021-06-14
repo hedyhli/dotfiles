@@ -17,7 +17,7 @@ is [this fish function](.config/fish/functions/apt-up.fish) which updates packag
 - Editor:
    - (Neo)Vim with CoC
 
-### Requirementsfor setup
+### Requirements for setup
 
 (these should be in [these setup scripts](_script/) unless I forgot to include them there)
 
