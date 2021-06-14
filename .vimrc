@@ -17,8 +17,6 @@ Plugin 'tpope/vim-commentary'
 Plugin 'bling/vim-bufferline'              " buffer line
 Plugin 'preservim/nerdtree'                " NERDTree :)
 
-
-
 call vundle#end()
 filetype plugin indent on
 " Brief help
