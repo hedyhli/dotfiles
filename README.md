@@ -1,7 +1,7 @@
 # dotfiles
 
 I mostly use these for Ubuntu/Debian and sometimes with WSL, but it should work for other
-Linux distros, feel free to pick and choose. Because the only OS specific thing (I think)
+Linux distros. The only OS specific thing (I think)
 is [this fish function](.config/fish/functions/apt-up.fish) which updates packages with apt.
 
 
@@ -11,29 +11,23 @@ is [this fish function](.config/fish/functions/apt-up.fish) which updates packag
 - Theme: Dracula
 - Email: aerc
 - Browser:
-   - Chrome :P
+   - Chrome (has nothing to do with this repo though)
    - w3m
-- Gemini/Gopher browser: bombadillo
+- Gemini/Gopher browser: amfora
 - Editor:
    - (Neo)Vim with CoC
-   - VS Code
 
-### Notes for setup
+### Requirementsfor setup
 
-(Will eventually put them into setup script)
+(these should be in [these setup scripts](_script/) unless I forgot to include them there)
 
-**Python**
-- git fame
-- termdown
-- pyjokes
-
-**Shell/Misc**
-- exa
-- qalc
-- trash-cli
 - git-diff: diff-so-fancy
+- vim plugins: [vundle](https://github.com/VundleVim/Vundle.vim)
+- nvim plugins: [plug](https://github.com/junegunn/vim-plughttps://github.com/junegunn/vim-plug)
+- fish stuff: [omf](https://github.com/oh-my-fish/oh-my-fish)
 
 ### Todo
-- [ ] Add links for above
-- [ ] Put fish aliases into separate place
-- [ ] Write setup scripts that check requirements
+- [x] Add links for above
+- [x] Put fish aliases into separate place
+- [x] Write setup scripts
+- [ ] Add a mapping for ```gg=G`````
