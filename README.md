@@ -23,7 +23,7 @@ is [this fish function](.config/fish/functions/apt-up.fish) which updates packag
 
 - git-diff: diff-so-fancy
 - vim plugins: [vundle](https://github.com/VundleVim/Vundle.vim)
-- nvim plugins: [plug](https://github.com/junegunn/vim-plughttps://github.com/junegunn/vim-plug)
+- nvim plugins: [plug](https://github.com/junegunn/vim-plug)
 - fish stuff: [omf](https://github.com/oh-my-fish/oh-my-fish)
 
 ### Todo
