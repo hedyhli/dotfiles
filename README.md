@@ -30,4 +30,4 @@ is [this fish function](.config/fish/functions/apt-up.fish) which updates packag
 - [x] Add links for above
 - [x] Put fish aliases into separate place
 - [x] Write setup scripts
-- [ ] Add a mapping for `gg=G`\`\`
+- [ ] Add a mapping for gg=G\`\`
