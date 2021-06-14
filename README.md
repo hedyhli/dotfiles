@@ -13,7 +13,7 @@ is [this fish function](.config/fish/functions/apt-up.fish) which updates packag
 - Browser:
    - Chrome (has nothing to do with this repo though)
    - w3m
-- Gemini/Gopher browser: amfora
+- Gemini client: amfora
 - Editor:
    - (Neo)Vim with CoC
 
