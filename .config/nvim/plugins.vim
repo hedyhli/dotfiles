@@ -66,7 +66,6 @@ nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 " ==== coc installs ====
 " coc-go
 " coc-html
-" coc-bookmark
 " coc-snippets
 " coc-python
 " coc-marketplace
@@ -155,10 +154,4 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-
-" coc-bookmark
-nmap <Leader>bj <Plug>(coc-bookmark-next)
-nmap <Leader>bk <Plug>(coc-bookmark-prev)
-nmap <Leader>bt <Plug>(coc-bookmark-toggle)
-nmap <Leader>ba <Plug>(coc-bookmark-annotate)
 
