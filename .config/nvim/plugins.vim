@@ -38,7 +38,7 @@ noremap <Leader>nf :NERDTreeFind<CR>
 " open nerdtree when openning a dir in vim
 let NERDTreeWinSize = 20
 autocmd vimenter * NERDTree % | exe "normal \<c-w>l"
-noremap <Leader>n :NERDTreeToggle %<CR>
+noremap <Leader>nt :NERDTreeToggle<CR>
 
 " NerdTree Git plugin
 let g:NERDTreeGitStatusIndicatorMapCustom = {
@@ -57,6 +57,7 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
 
 " tagbar
 nnoremap <leader>tt :TagbarToggle<CR>
+let g:tagbar_width = 20
 
 " coc-yank
 nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
