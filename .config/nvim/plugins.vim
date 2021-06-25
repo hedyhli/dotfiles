@@ -63,6 +63,13 @@ nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 
 
 " coc settings
+" ==== coc installs ====
+" coc-go
+" coc-html
+" coc-bookmark
+" coc-snippets
+" coc-python
+" coc-marketplace
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
