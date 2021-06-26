@@ -6,7 +6,7 @@
 
 [user]
 	name = Hedy Li
-	email = hedy@ttm.sh  # email overidden in [include]
+	email = hedy@tilde.cafe  # email overidden in [include]
 
 [alias]
 	s = status
@@ -34,6 +34,9 @@
 
 [pull]
 	rebase = false
+
+[commit]
+	gpgsign = true
 
 # sendmail conig in [include]
 

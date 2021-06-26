@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 if ! command -v nvim &> /dev/null
 then
-	vim "$*"
+	vim $*
 else
-	nvim "$*"
+	nvim $*
 fi
