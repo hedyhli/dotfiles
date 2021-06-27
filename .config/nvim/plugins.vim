@@ -6,7 +6,8 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'prettier/vim-prettier', { 'do': 'npm install'  }
 Plug 'Yggdroot/indentLine'  " indentLine plugin
 Plug 'stautob/vim-fish'  " fish support for vim
-Plug 'jiangmiao/auto-pairs'  " auto insert and del quotes in pairs
+Plug 'townk/vim-autoclose'
+Plug 'tpope/vim-fugitive'  " git stuff
 Plug 'tpope/vim-surround'  " quoting and parenthesizing plugin
 "Plug 'preservim/nerdcommenter'  " commenting made simple
 Plug 'https://github.com/tpope/vim-commentary'
@@ -17,7 +18,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'majutsushi/tagbar'
-Plug 'jreybert/vimagit'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'adelarsq/vim-hackernews'
 if has('python')
