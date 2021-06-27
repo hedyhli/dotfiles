@@ -7,6 +7,7 @@
 [user]
 	name = Hedy Li
 	email = hedy@tilde.cafe  # email overidden in [include]
+	signingkey = B51B5A8D1B176372  # and this
 
 [alias]
 	s = status
