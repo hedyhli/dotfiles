@@ -1,11 +1,16 @@
 # dotfiles
 
+## Repo
+
+Mirrors: [tildegit (gitea)](https://tildegit.org/hedy/dotfiles)
+| [GitHub](https://github.com/hedyhli/dotfiles)
+
 I mostly use these for Ubuntu/Debian and sometimes with WSL, but it should work for other
 Linux distros. The only OS specific thing (I think)
 is [this fish function](.config/fish/functions/apt-up.fish) which updates packages with apt.
 
 
-### Basics
+## Basics
 - Manager: yadm
 - Shell: fish
 - Theme: Dracula
@@ -17,7 +22,7 @@ is [this fish function](.config/fish/functions/apt-up.fish) which updates packag
 - Editor:
    - (Neo)Vim with CoC
 
-### Requirements for setup
+## Requirements for setup
 
 (these should be in [these setup scripts](_script/) unless I forgot to include them there)
 
@@ -26,7 +31,7 @@ is [this fish function](.config/fish/functions/apt-up.fish) which updates packag
 - nvim plugins: [plug](https://github.com/junegunn/vim-plug)
 - fish stuff: [omf](https://github.com/oh-my-fish/oh-my-fish)
 
-### Todo
+## Todo
 - [x] Add links for above
 - [x] Put fish aliases into separate place
 - [x] Write setup scripts
