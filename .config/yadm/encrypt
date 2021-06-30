@@ -1,5 +1,8 @@
 .config/aerc/accounts.conf
 .gnupg/*.gpg
 .gnupg/gpg.conf
+.gnupg/*.d
+.gnupg/*.kbx*
+.gnupg/*.db
 .ssh/key*
 .ssh/config
