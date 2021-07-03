@@ -6,3 +6,5 @@
 .gnupg/*.db
 .ssh/key*
 .ssh/config
+cert.pem
+key.pem
