@@ -81,7 +81,7 @@ emoji_favicons = true
 # "example.com" = 'mycert.crt'
 "astrobotany.mozz.us" = '~/cert.pem'
 "chat.mozz.us" = '~/cert.pem'
-# "station.martinrue.com" = '~/cert.pem' # this doesn't support multiple certs for account
+"station.martinrue.com" = '~/cert.pem'
 
 [auth.keys]
 # Client certificate keys
@@ -89,7 +89,7 @@ emoji_favicons = true
 # "example.com" = 'mycert.key'
 "astrobotany.mozz.us" = '~/key.pem'
 "chat.mozz.us" = '~/key.pem'
-# "station.martinrue.com" = '~/key.pem'
+"station.martinrue.com" = '~/key.pem'
 
 
 [keybindings]
