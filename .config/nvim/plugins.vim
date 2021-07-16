@@ -6,10 +6,9 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'prettier/vim-prettier', { 'do': 'npm install'  }
 Plug 'Yggdroot/indentLine'  " indentLine plugin
 Plug 'stautob/vim-fish'  " fish support for vim
-Plug 'townk/vim-autoclose'
 Plug 'tpope/vim-fugitive'  " git stuff
 Plug 'tpope/vim-surround'  " quoting and parenthesizing plugin
-"Plug 'preservim/nerdcommenter'  " commenting made simple
+Plug 'jiangmiao/auto-pairs'  " quote pairs and other neat stuff
 Plug 'https://github.com/tpope/vim-commentary'
 Plug 'vim-airline/vim-airline'  " airline plugin for status bar
 Plug 'mbbill/undotree'  " undo tree
