@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+old=$(git tag | tail -n1)
+case $1 in
+	v*)
+		git shortlog $old..HEAD | git tag -as -F - $1
+		exit;;
+	--help)
+		echo Usage: shltag '[v<version> | --help | -o ]'
+		exit;;
+	-o)
+		# show old tag
+		echo old is $old;;
+esac
