@@ -7,3 +7,5 @@ end
 source ~/.config/fish/config_local.fish
 source ~/.aliases
 bass 'export GPG_TTY=$(tty)'
+
+set -x TERM xterm-256color
