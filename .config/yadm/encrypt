@@ -1,6 +1,6 @@
 .config/aerc/accounts.conf
 .gnupg/*.gpg
-.gnupg/gpg.conf
+.gnupg/*.conf
 .gnupg/*.d
 .gnupg/*.kbx*
 .gnupg/*.db
