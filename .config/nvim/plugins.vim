@@ -3,7 +3,6 @@ call plug#begin(stdpath('data') . '/plugged')
 Plug 'dracula/vim', {'name': 'dracula'} " dracula color theme
 Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'prettier/vim-prettier', { 'do': 'npm install'  }
 Plug 'Yggdroot/indentLine'  " indentLine plugin
 Plug 'stautob/vim-fish'  " fish support for vim
 Plug 'tpope/vim-fugitive'  " git stuff
@@ -24,6 +23,7 @@ if has('python')
 	Plug 'laurentgoudet/vim-howdoi'
 endif
 Plug 'wakatime/vim-wakatime'  " wakatime for vim
+Plug 'SuneelFreimuth/vim-gemtext'
 
 call plug#end()
 

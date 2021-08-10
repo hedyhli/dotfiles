@@ -25,6 +25,7 @@
 	fame = !python3 -m gitfame
 	p = push
 	cmam = commit -am
+	pushall = !git remote | xargs -L1 git push --all
 
 [credential]
 	helper = store --file="$HOME/.git_creds"

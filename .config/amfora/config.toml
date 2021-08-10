@@ -82,6 +82,7 @@ emoji_favicons = true
 "astrobotany.mozz.us" = '~/cert.pem'
 "chat.mozz.us" = '~/cert.pem'
 "station.martinrue.com" = '~/cert.pem'
+"feeds.drewdevault.com" = '~/cert.pem'
 
 [auth.keys]
 # Client certificate keys
@@ -90,6 +91,7 @@ emoji_favicons = true
 "astrobotany.mozz.us" = '~/key.pem'
 "chat.mozz.us" = '~/key.pem'
 "station.martinrue.com" = '~/key.pem'
+"feeds.drewdevault.com" = '~/key.pem'
 
 
 [keybindings]
