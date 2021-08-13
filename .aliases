@@ -9,3 +9,4 @@ alias syscu='systemctl --user'
 alias codespell='codespell --skip="venv,.git,*.pyc,*.png,*.PNG,*.gif",.vim'
 alias bom=bombadillo
 alias newvenv='python3 -m virtualenv venv && source ./venv/bin/activate.fish'
+alias edoom='emacs --with-profile=doom'
