@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+echo "First you need chemacs..."
+echo "clone chemacs into .emacs.d"
+echo "then try running emacs and see if default emacs runs ok, not sure how packages will work though"
+echo
+echo "Wanna try doom?"
+echo "Clone doom into .doomemacs"
+echo "set up your fish_user_paths and run doom sync"
+echo "run edoom and get ready for some errors probably lol"
