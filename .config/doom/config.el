@@ -56,3 +56,26 @@
 
 (setq evil-split-window-below t
       evil-vsplit-window-right t)
+(setq confirm-kill-emacs nil)
+
+(after! neotree
+  (setq neo-window-width 20))
+
+(after! magit
+  (custom-set-faces
+ ;; other faces
+ '(magit-diff-added-highlight ((((type tty)) (:background nil))))
+ '(magit-diff-context-highlight ((((type tty)) (:background nil))))
+ '(magit-diff-file-heading ((((type tty)) nil)))
+ '(magit-diff-removed ((((type tty)) (:foreground "red"))))
+ '(magit-diff-removed-highlight ((((type tty)) (:background nil))))
+ '(magit-section-highlight ((((type tty)) nil)))
+ '(magit-diff-highlight-hunk-body ((((type tty)) (:background nil))))
+ '(magit-diff-base-highlight ((((type tty)) (:background nil))))
+ ))
+
+
+;; This doesn't work
+;; (defun disable-magit-highlight-in-buffer ()
+;;   (face-remap-add-relative 'magit-item-highlight '()))
+;; (add-hook 'magit-status-mode-hook 'disable-magit-highlight-in-buffer)
