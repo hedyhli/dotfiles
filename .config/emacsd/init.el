@@ -1,42 +1,43 @@
-;;; I don't use emacs built-in manager anymore but keeping it here just in case
-;;(package-initialize)
-;;(require 'package)
-;;(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-;;(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
-;;(setq package-archives '(
-;;  ("gnu" . "http://elpa.gnu.org/packages/")
-;;  ("melpa" . "http://melpa.milkbox.net/packages/")
-;;  )
-;;)
+(setq create-lockfiles nil)
 
-;;; straight
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
+;; I think this saves the last cursor pos or something
+(require 'saveplace)
+(setq-default save-place t)
+(setq save-place-file (expand-file-name ".places" user-emacs-directory))
 
-(straight-use-package 'use-package)
-(straight-use-package 'zenburn-theme)
-(use-package evil
-  :straight t)
+;; Some better defaults?
+(setq make-backup-files nil)
+(setq auto-save-default nil)
 
-;;(setq dracula-use-24-bit-colors-on-256-colors-terms t)
-;;(load-theme 'dracula t)
-;;(unless (display-graphic-p)
-;;  (set-face-background 'default "black" nil))
+(setq-default major-mode 'text-mode)
+(setq sentence-end-double-space nil)
 
-(load-theme 'zenburn t)
+;; Always tabs except for *.go?
+;; TODO: set up language mode packages
+(setq-default c-basic-offset  4
+	      tab-width       4
+	      indent-tabs-mode nil)
 
-(global-hl-line-mode 1)
-(set-face-background hl-line-face "gray13")
+;; Some modes
+(recentf-mode 1)
+(show-paren-mode 1)
+(setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
+(electric-pair-mode 1)
 
-(require 'evil)
-(evil-mode 1)
+;; IDK
+(add-hook 'prog-mode-hook #'subword-mode)
+(add-hook 'minibuffer-setup-hook #'subword-mode)
+
+;; elisp
+(add-hook 'emacs-lisp-mode-hook
+	  (lambda ()
+	    (local-set-key (kbd "C-c C-x") #'ielm)
+	    (local-set-key (kbd "C-c C-c") #'eval-defun)
+	    (local-set-key (kbd "C-c C-b") #'eval-buffer)))
+
+;; customize shits in separate file, thanks
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file)
+
+;; Packages
+(load (expand-file-name "packages.el" user-emacs-directory))

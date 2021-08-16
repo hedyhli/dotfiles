@@ -1,0 +1,8 @@
+#!/usr/bin/bash
+
+# Remember to install wakatime-cli first
+
+# This is to fix some odd or legacy behaviour of the emacs wakatime plugin
+
+args=$(echo "$@" | sed 's/--file/--entity/')
+wakatime-cli $args
