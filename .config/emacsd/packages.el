@@ -63,7 +63,7 @@
   :init
   (savehist-mode))
 
-;; A few more useful configurations...
+;; Pasted from vertico
 (use-package emacs
   :init
   ;; Add prompt indicator to `completing-read-multiple'.
@@ -85,7 +85,9 @@
   ;; Enable recursive minibuffers
   (setq enable-recursive-minibuffers t))
 
-;; End of straight?
+(straight-use-package 'diminish)
+
+;; End of straight stuff hopefully
 (global-wakatime-mode)
 
 ;;(setq dracula-use-24-bit-colors-on-256-colors-terms t)
@@ -98,7 +100,20 @@
 (global-hl-line-mode 1)
 (set-face-background hl-line-face "gray13")
 
-;; Sometimes I disable this so I can experience how inefficient emacs's default
-;; editting experience.
+;; Sometimes I disable this so I can experience how inefficient emacs's default editting experience is
 (require 'evil)
 (evil-mode 1)
+
+;; Modules
+;; Force the load path thing at the head to reduce startup time
+;; People have both lisp and site-lisp. what the heck. I'll name it modules just because.
+(defun update-load-path (&rest _)
+  "Update `load-path'."
+  (dolist (dir '("modules"))
+    (push (expand-file-name dir user-emacs-directory) load-path)))
+
+;; I have no idea if I need the add subdirs to load path thingy (see centaur emacs)
+(advice-add #'pckage-initialize :after #'update-load-path)
+(update-load-path)
+
+(require 'init-highlight)

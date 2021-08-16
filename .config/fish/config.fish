@@ -1,11 +1,10 @@
-bass 'export GEM_HOME=$HOME/gems'
-if command -sq links
-	bass 'export BROWSER=links'
-else
-	bass 'export BROWSER=w3m'
-end
-source ~/.config/fish/config_local.fish
 source ~/.aliases
-bass 'export GPG_TTY=$(tty)'
 
-set -x TERM xterm-256color
+# Environment variables
+for line in (cat ~/.exportenvs)
+	bass $line
+end
+
+if test -f ~/.config/fish/config_local.fish
+	source ~/.config/fish/config_local.fish
+end

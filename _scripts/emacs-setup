@@ -1,10 +1,53 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-echo "First you need chemacs..."
-echo "clone chemacs into .emacs.d"
-echo "then try running emacs and see if default emacs runs ok, not sure how packages will work though"
+echo "First you need chemacs"
+if [ -d ~/.emacs.d ]; then
+    echo ".emacs.d already exists!"
+    echo "What would you like to do?"
+    cat <<EOF
+1. Remove dir and continue to installing chemacs to .emacs.d
+2. Backup the dir in .emacs.d.bak and install chemacs [DEFAULT]
+3. Skip installation of chemacs (you should make sure .emacs.d already contains chemacs!)
+4. Same as above but run git pull in the directory
+5. ABORT
+EOF
+    read -p "1/2/3/4/5> " option
+    case option in
+        "1")
+            rm -rf ~/.emacs.d;;
+        "2"|"")
+            mv ~/.emacs.d ~/.emacs.d.bak;;
+        "3")
+            echo "Skipping chemacs installation"
+            install_chemacs=no;;
+        "4")
+            cd ~/.emacs.d
+            git pull
+            install_chemacs=no;;
+        "5")
+            echo "aborting :)"
+            exit;;
+        *)
+            echo "Unknown option!"
+            exit 1;;
+    esac
+fi
+if [[ $install_chemacs != "no" ]]; then
+    echo "Installing chemacs"
+    mkdir ~/.emacs.d
+    cd ~/.emacs.d
+    git clone https://github.com/plexus/chemacs2 .
+fi
+read -p "Run emacs? [y/N] " run
+if [[ run == "y" ]]; then
+    cd
+    emacs .config/emacsd/
+fi
+
+### DOOM ###
+
 echo
-echo "Wanna try doom?"
+
 echo "Clone doom into .doomemacs"
 echo "set up your fish_user_paths and run doom sync"
 echo "run edoom and get ready for some errors probably lol"
