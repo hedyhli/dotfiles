@@ -10,20 +10,29 @@ cross-platform as possible.
 Mirrors: [tildegit (gitea)](https://tildegit.org/hedy/dotfiles)
 | [GitHub](https://github.com/hedyhli/dotfiles)
 
-**Table of contents**
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+## Table of Contents
 
-- [Basic list of things in the repo](#basics)
+- [Overview](#overview)
 - [Features](#features)
 - [Installation](#installation)
 - [Details](#details)
-  - [shell](#shell)
-  - [editor](#editor)
-    - [vim and nvim](#vim-and-nvim)
-    - [emacs](#emacs)
-  - [gemini/spartan client](#gemini-and-spartan-client) 
-- [todo](#todo)
+   - [Shell](#shell)
+      - [oh my fish](#oh-my-fish)
+      - [fish functions](#fish-functions)
+      - [local](#local)
+   - [editor](#editor)
+      - [vim and nvim](#vim-and-nvim)
+      - [emacs](#emacs)
+            - [Vanilla emacs](#vanilla-emacs)
+            - [Doom emacs](#doom-emacs)
+   - [Gemini and Spartan client](#gemini-and-spartan-client)
+- [TODO](#todo)
 
-## Basics
+<!-- markdown-toc end -->
+
+
+## Overview
 
 - Manager: [yadm](https://yadm.io) ([config](.config/yadm))
 - Shell: [fish](https://fishshell.com) ([config](.config/fish))
@@ -55,7 +64,7 @@ These are more like "what I tend to do" in this repo
 1. Install yadm
 2. Clone the repo with yadm
 3. Fix conflicts as you please
-4. Selectively run scripts in [`_scripts_`](./_scripts/)
+4. Selectively run scripts in [`_scripts`](./_scripts/)
 
 ## Details
 
