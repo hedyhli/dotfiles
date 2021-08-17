@@ -20,7 +20,7 @@ Mirrors: [tildegit (gitea)](https://tildegit.org/hedy/dotfiles)
   - [editor](#editor)
     - [vim and nvim](#vim-and-nvim)
     - [emacs](#emacs)
-  - [gemini/spartan client](#gemini-spartan-client) 
+  - [gemini/spartan client](#gemini-and-spartan-client) 
 - [todo](#todo)
 
 ## Basics
@@ -49,6 +49,13 @@ These are more like "what I tend to do" in this repo
 - Shared aliases and env between shells
 - Setup and install scripts
 - Private configuration tracked with yadm
+
+## Installation
+
+1. Install yadm
+2. Clone the repo with yadm
+3. Fix conflicts as you please
+4. Selectively run scripts in [`_scripts_`](./_scripts/)
 
 ## Details
 
@@ -121,14 +128,14 @@ has mostly the same content as `.vimrc`.
 The isWSL function checks whether the system is WSL in my (n)vim configs
 I rebind some keys to make it work on WSL, but I don't use it much anymore.
 
-**Setup**: `_scripts/nvim-setup_`
+**Setup**: `_scripts/setup-nvim`
 
 #### emacs
 
 I use chemacs2 for switching emacs profiles and it allows me to use both vanilla emacs and doom emacs
 at the same time. See [`.emacs-profiles.el`](.emacs-profiles.el).
 
-**Setup**: `_scripts/emacs-setup_`. This script is mostly tested and it should set up everything you need
+**Setup**: `_scripts/setup-emacs`. This script is mostly tested and it should set up everything you need
 to start using both emacs and doom normally. It installs chemacs and doom if not already.
 
 ##### Vanilla emacs
