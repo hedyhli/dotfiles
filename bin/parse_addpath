@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# read addpath file and return each path
+
+file="${1:-$HOME/.addpath}"
+while read line; do
+	# If the path doesn't begin with / then assume it is relative to $HOME
+	# Who cares if this is bashism
+	if [[ ! "$line" == /* ]]; then
+		line=$HOME/$line
+	fi
+	echo -n "$line "
+done < "$file"

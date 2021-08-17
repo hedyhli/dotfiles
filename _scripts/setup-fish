@@ -1,21 +1,34 @@
 #!/usr/bin/env bash
 
+setpaths() {
+	fish -c 'set -Ux fish_user_paths $fish_user_paths '"$(parse_addpath)"
+}
+
 if ! command -v fish &> /dev/null; then
 	echo "I'm sorry but I can't help you install fish"
 	echo "Please install fish before running this script lol"
 	exit 1
 fi
 
-echo -n "Setting up fish_user_paths..."
-cat <<END | fish
-set -Ux fish_user_paths /home/hedy/bin /home/hedy/local/bin /home/hedy/.local/bin /home/hedy/go/bin $fish_user_paths
-END
+echo "Setting up fish_user_paths..."
+setpaths ~/.addpath
 echo "done"
+
+if [ -f ~/.addpath_local ]; then
+	echo "Adding paths in ~/.addpath_local..."
+	setpaths ~/.addpath_local
+	echo "done"
+fi
 
 echo Maybe add ~/local/share/man to manpath but I forgot how as of writing
 
-echo
-echo "Installing oh my fish"
-curl -L https://get.oh-my.fish | fish
-echo "Installing oh my fish packages"
-omf install
+# TODO have a better check for omf existence (command -v doesnt work)
+# Although omf does this same check lol
+if [ ! -d ~/.local/share/omf ]; then
+	echo "Installing oh my fish"
+	curl -L https://get.oh-my.fish | fish
+	# TODO: check for omf packages too
+	echo "Installing oh my fish packages"
+	omf install
+	echo done
+fi

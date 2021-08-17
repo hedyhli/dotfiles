@@ -1,0 +1,6 @@
+bin
+local/bin
+.local/bin
+.doomemacs/bin
+go/bin
+/usr/local/go/bin
