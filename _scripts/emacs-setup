@@ -12,7 +12,7 @@ if [ -d ~/.emacs.d ]; then
 5. ABORT
 EOF
     read -p "1/2/3/4/5> " option
-    case option in
+    case $option in
         "1")
             rm -rf ~/.emacs.d;;
         "2"|"")
@@ -28,7 +28,7 @@ EOF
             echo "aborting :)"
             exit;;
         *)
-            echo "Unknown option!"
+            echo "Unknown option $option"
             exit 1;;
     esac
 fi
@@ -39,7 +39,7 @@ if [[ $install_chemacs != "no" ]]; then
     git clone https://github.com/plexus/chemacs2 .
 fi
 read -p "Run emacs? [y/N] " run
-if [[ run == "y" ]]; then
+if [[ $run == "y" ]]; then
     cd
     emacs .config/emacsd/
 fi
