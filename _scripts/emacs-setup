@@ -3,25 +3,30 @@
 echo "First you need chemacs"
 if [ -d ~/.emacs.d ]; then
     echo ".emacs.d already exists!"
+    echo "Directory listing:"
+    ls -A ~/.doomemacs
     echo "What would you like to do?"
     cat <<EOF
-1. Remove dir and continue to installing chemacs to .emacs.d
-2. Backup the dir in .emacs.d.bak and install chemacs [DEFAULT]
-3. Skip installation of chemacs (you should make sure .emacs.d already contains chemacs!)
-4. Same as above but run git pull in the directory
-5. ABORT
+    1. Remove dir and continue to installing chemacs to .emacs.d
+    2. Backup the dir in .emacs.d.bak and install chemacs [DEFAULT]
+    3. Skip installation of chemacs (you should make sure .emacs.d already contains chemacs!)
+    4. Same as above but run git pull in the directory
+    5. ABORT
 EOF
     read -p "1/2/3/4/5> " option
-    case $option in
+    case "$option" in
         "1")
             rm -rf ~/.emacs.d;;
         "2"|"")
+			echo "Your original .emacs.d will be at .emacs.d.bak"
+			# TODO: check if .emacs.d.bak exists
             mv ~/.emacs.d ~/.emacs.d.bak;;
         "3")
             echo "Skipping chemacs installation"
             install_chemacs=no;;
         "4")
             cd ~/.emacs.d
+			echo "git pulling"
             git pull
             install_chemacs=no;;
         "5")
@@ -44,10 +49,73 @@ if [[ $run == "y" ]]; then
     emacs .config/emacsd/
 fi
 
+echo "Emacs and chemacs setup all done!"
+
 ### DOOM ###
 
 echo
+read -p "Set up doom? [Y/n] " option
+if [[ "$option" == "n" ]]; then
+	echo "Exiting"
+    exit
+fi
+echo "Alright we're going to install doom. This is the part where many things could go wrong :P"
 
-echo "Clone doom into .doomemacs"
-echo "set up your fish_user_paths and run doom sync"
-echo "run edoom and get ready for some errors probably lol"
+if [ -d ~/.doomemacs ]; then
+	echo "~/.doomemacs already exists! What would you like to do?"
+    echo "Directory listing:"
+    ls -A ~/.doomemacs
+    echo "What would you like to do?"
+    cat <<EOF
+    1. remove the dir and continue to install doomemacs
+    2. backup the dir and continue to install doomemacs [DEFAULT]
+    3. skip installation (sorta dangerous!)
+    4. same as above but run git pull in the dir
+    5. ABORT
+EOF
+    read -p "1/2/3/4/5> " option
+    case "$option" in
+        "1")
+            echo "Removing directory"
+            rm -rf ~/.doomemacs;;
+        "2"|"")
+            echo "Original dir would be at .doomemacs.bak"
+            mv ~/.doomemacs ~/.doomeamcs.bak;;
+        "3")
+            echo "Skipping installation!"
+            install_doom=no;;
+        "4")
+            cd ~/.doomemacs
+            echo "Running git pull"
+            git pull
+            install_doom=no;;
+        "5")
+            echo "aborting"
+            exit;;
+        *)
+            echo "unknown option $option"
+            exit 1;;
+    esac
+fi
+export DOOMDIR='/home/hedy/.config/doom'
+export EMACSDIR='/home/hedy/.doomemacs'
+if [[ "$install_doom" != no ]]; then
+    echo "Installing doom!"
+    mkdir ~/.doomemacs
+    cd ~/.doomemacs
+    git clone https://github.com/hlissner/doom-emacs .
+    echo "Running doom sync"
+    bin/doom sync
+    read -p "Run doom install? [Y/n] " option
+    if [[ "$option" != n ]]; then
+        echo "Running doom install with -y plus doom sync just in case"
+        bin/doom -y install; bin/doom sync
+    fi
+    echo "All done! Hopefully doom would work"
+fi
+read -p "Run edoom? [Y/n] " option
+if [[ "$option" != n ]]; then
+    cd ~/.config/doom
+    edoom .
+fi
+echo "Good luck, all done!"
