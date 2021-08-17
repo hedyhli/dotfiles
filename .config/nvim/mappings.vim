@@ -68,3 +68,6 @@ cnoremap <C-f> Format<cr>
 command! ReloadConfig so $HOME/.config/nvim/init.vim
 nnoremap <Leader>rc :ReloadConfig<cr>
 
+" keep text sleected after indentation
+vnoremap < <gv
+vnoremap > >gv
