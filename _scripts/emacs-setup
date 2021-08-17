@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source ~/.aliases
+
 echo "First you need chemacs"
 if [ -d ~/.emacs.d ]; then
     echo ".emacs.d already exists!"
