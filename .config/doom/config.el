@@ -1,11 +1,6 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+;; No need to run doom sync after modifying this file
 
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
-
-
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets.
 (setq user-full-name "Hedy Li"
       user-mail-address "hedy@tilde.cafe")
 
@@ -45,21 +40,20 @@
 ;;   this file. Emacs searches the `load-path' when you load packages with
 ;;   `require' or `use-package'.
 ;; - `map!' for binding new keys
-;;
-;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
-;; This will open documentation for it, including demos of how they are used.
-;;
-;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
-;; they are implemented.
 
+;; Documentation for symbol: K || C-c c k
+;; Go to definition:         gd || C-c c d
 
 (setq evil-split-window-below t
       evil-vsplit-window-right t)
+
+;; Seriously? I just want to quit. Damn. Why confirm lol
 (setq confirm-kill-emacs nil)
 
-(after! neotree
-  (setq neo-window-width 20))
+(after! treemacs
+  (setq treemacs-width 20
+        treemacs-project-follow-cleanup t)
+  (treemacs-load-theme "Default"))
 
 (after! magit
   (custom-set-faces
@@ -74,8 +68,5 @@
  '(magit-diff-base-highlight ((((type tty)) (:background nil))))
  ))
 
-
-;; This doesn't work
-;; (defun disable-magit-highlight-in-buffer ()
-;;   (face-remap-add-relative 'magit-item-highlight '()))
-;; (add-hook 'magit-status-mode-hook 'disable-magit-highlight-in-buffer)
+;; Scroll margin like scrolloff in vim
+(setq scroll-margin 6)
