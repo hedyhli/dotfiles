@@ -39,3 +39,36 @@
 */set autosort.v3.helpers "{"core_first": "${if:${buffer.full_name}!=core.weechat}", "hashless_name": "${info:autosort_replace,#,,${info:autosort_escape,${buffer.name}}}", "irc_raw_first": "${if:${buffer.full_name}!=irc.irc_raw}", "irc_raw_last": "${if:${buffer.full_name}==irc.irc_raw}", "script_or_plugin": "${if:${script_name}?${script_name}:${plugin}}"}"
 */set script.scripts.download_enabled on
 */set script.scripts.path "%h/script"
+*/set weechat.look.day_change_message_1date "-- %d %b %Y --"
+*/set weechat.look.day_change_message_2dates "-- %%d %%b %%Y (%d %b %Y) --"
+*/set weechat.look.hotlist_names_merged_buffers on
+*/set weechat.look.hotlist_prefix "H "
+*/set weechat.look.hotlist_short_names off
+*/set weechat.look.mouse on
+*/set weechat.look.nick_prefix "<"
+*/set weechat.look.nick_suffix ">"
+*/set weechat.look.prefix_suffix ""
+*/set weechat.completion.nick_completer ":"
+*/set weechat.plugin.path "%h/plugins"
+*/set weechat.bar.buflist.items "buflist"
+*/set weechat.bar.fset.items "fset"
+*/set weechat.bar.highmon.items "highmon"
+*/set logger.look.backlog 1000
+*/set logger.file.path "%h/logs/"
+*/set buflist.format.hotlist_separator "${color:cyan},"
+*/set fifo.file.path "%h/weechat_fifo"
+*/set xfer.file.download_path "%h/xfer"
+*/set irc.look.display_away off
+*/set irc.look.server_buffer independent
+*/set irc.look.smart_filter off
+*/set irc.server_default.msg_quit "I rarely quits, so I'm most probably testing something"
+*/set irc.server_default.realname "hedy"
+*/set relay.color.status_active lightblue
+*/set relay.color.status_auth_failed lightred
+*/set relay.color.status_connecting yellow
+*/set relay.color.status_waiting_auth brown
+*/set relay.network.ssl_cert_key "%h/ssl/relay.pem"
+*/set relay.irc.backlog_max_minutes 10080
+*/set autosort.v3.helpers "{"core_first": "${if:${buffer.full_name}!=core.weechat}", "hashless_name": "${info:autosort_replace,#,,${info:autosort_escape,${buffer.name}}}", "irc_raw_first": "${if:${buffer.full_name}!=irc.irc_raw}", "irc_raw_last": "${if:${buffer.full_name}==irc.irc_raw}", "script_or_plugin": "${if:${script_name}?${script_name}:${plugin}}"}"
+*/set script.scripts.download_enabled on
+*/set script.scripts.path "%h/script"

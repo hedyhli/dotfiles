@@ -5,5 +5,5 @@ export DOOMDIR=~/.config/doom/
 export EMACSDIR=~/.doomemacs/
 export BROWSER=w3m
 export FILEMAN=ranger
-export TERM=xterm-256color
+export TERM=tmux-256color
 export GPG_TTY=$(tty)
