@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
+PATH=~/bin:$PATH
+
 setpaths() {
-	fish -c 'set -Ux fish_user_paths $fish_user_paths '"$(parse_addpath)"
+	fish -c 'set -Ux fish_user_paths $fish_user_paths '"$(parse_addpath $1)"
 }
 
 if ! command -v fish &> /dev/null; then
