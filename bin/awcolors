@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
 ## Credits goes to https://jdhao.github.io/2018/10/19/tmux_nvim_true_color/
+## Modified 2021-08-08: Remove the /\/\/\/\/\ in the band of colors
 
 awk 'BEGIN{
 s="          "; s=s s s s s s s s;
