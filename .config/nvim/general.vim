@@ -38,7 +38,7 @@ else
   set signcolumn=yes
 endif
 
-
+set termguicolors
 
 
 set laststatus=2  " show status line
