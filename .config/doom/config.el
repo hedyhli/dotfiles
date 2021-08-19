@@ -57,7 +57,6 @@
 
 (after! magit
   (custom-set-faces
- ;; other faces
  '(magit-diff-added-highlight ((((type tty)) (:background nil))))
  '(magit-diff-context-highlight ((((type tty)) (:background nil))))
  '(magit-diff-file-heading ((((type tty)) nil)))
