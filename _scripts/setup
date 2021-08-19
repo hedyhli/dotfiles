@@ -4,5 +4,3 @@ echo "creating local git config"
 touch ~/.gitconfig-local
 echo "creating local fish config"
 touch ~/.config/fish/config_local.fish
-echo "installing tmux package manager"
-git clone https://github.com/tmux-plugins/tpm .tmux/plugins/tpm

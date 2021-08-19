@@ -4,15 +4,12 @@ echo "installing diff-so-fancy"
 git clone https://github.com/so-fancy/diff-so-fancy ~/diffsofancy
 chmod +x ~/diffsofancy/diff-so-fancy
 ln -s ~/diffsofancy/diff-so-fancy ~/bin/
-echo "done"
-echo
 echo "installing vundle"
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-echo "done, you should run vim +PluginInstall"
+echo "installing vim plugins"
+vim +PluginInstall
 echo
-echo "installing omf and using it to install stuff"
-curl -L https://get.oh-my.fish | fish
-omf install pj z bass
-echo
-echo "done"
-echo
+echo "installing tmux package manager"
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+echo "remember to hit <prefix> + I to install tmux plugins"
+echo "done!"
