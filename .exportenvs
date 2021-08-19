@@ -7,3 +7,23 @@ export BROWSER=w3m
 export FILEMAN=ranger
 export TERM=tmux-256color
 export GPG_TTY=$(tty)
+
+# telemetry shit
+export DO_NOT_TRACK=1  # https://consoledonottrack.com
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+export HINT_TELEMENTRY="off"
+export GATSBY_TELEMETRY_OPTOUT=1
+export NEXT_TELEMETRY_DEBUG=1
+export NUXT_TELEMETRY_DISABLED=1
+export ET_NO_TELEMETRY=1
+export NG_CLI_ANALYTICS=false
+export INFLUXD_REPORTING_DISABLED=true
+export NG_CLI_ANALYTICS=false
+export CHOOSENIM_NO_ANALYTICS=1
+export POWERSHELL_TELEMETRY_OPTOUT=1
+
+# XDG Base Directory Specification
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_USER_CONFIG_DIR="$XDG_CONFIG_HOME"
