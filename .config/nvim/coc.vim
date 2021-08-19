@@ -1,7 +1,11 @@
 " This file is only executed if we don't have nvim0.5, if we do, lua LSP will
 " be used instead. See plugins.vim
-" coc settings
-" ==== coc installs ====
+"
+" ==============
+" CoC Settings
+" ==============
+
+" === coc installs ===
 " TODO: Track .config/coc in dotfiles so I can remove this
 " coc-go
 " coc-html
@@ -11,6 +15,8 @@
 
 " coc-yank
 nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
+
+" Below is mostly or completely copied from coc's readme
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by

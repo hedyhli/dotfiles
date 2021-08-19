@@ -2,7 +2,7 @@
 compiler fish
 
 " set indent size
-set shiftwidth=4
+setlocal shiftwidth=4
 
 " Set this to have long lines wrap inside comments.
 setlocal textwidth=79

@@ -1,30 +1,32 @@
-""""""""""""""""""
+" ================
 " General settings
-" """"""""""""""
+" ================
 
 set number
-set mouse=a " allow mouse for all
-set hlsearch " highlight search
-set showcmd  " show incomplete commands
-set wildmenu  " command line's tab complete in a menu
-set cursorline  " highlight cursor line
-set noerrorbells  " no beeps
-set visualbell  " flash screen instead
-set title  " set window title to file name
-set autoindent
-set softtabstop=2  " indent by 2 spaces when with tab
-set tabstop=4  " show existing tab with 4 spaces width
-set shiftwidth=4
-set incsearch  " find next match while typing search
-set scrolloff=6  " screen lines to keep above and below cursor
+set mouse=a         " allow mouse for all; TODO: I rarely use mouse (duh) so maybe remove this
+set hlsearch        " highlight search
+set showcmd         " show incomplete commands
+set wildmenu        " command line's tab complete in a menu
+set cursorline      " highlight current cursor line (this is SO GOOD)
+set noerrorbells    " no beeps please
+set visualbell      " flash screen instead
+set title           " set window title to file name
+set autoindent      " Keep indentation from previous line when RET (I think)
+set expandtab       " AIUI, tab -> spaces
+set softtabstop=2   " indent by 2 spaces with tab
+set tabstop=4       " show existing tabs with 4 spaces width
+set shiftwidth=4    " Put or remove 4 spaces with using < and >
+set incsearch       " incrementally find next match while typing search
+set scrolloff=6     " screen lines to keep above and below cursor
 set sidescrolloff=8  " screen columns to keep on left and right of cursor
-set confirm  " display confirmation when closing unsaved file
+set confirm         " display confirmation when closing unsaved file
 set encoding=utf-8  " set encoding with Unicode
-set showmatch  " match brackets when text indecator is over it
-set mat=2  " how mny tenths of second to blink when matching brackets
+set showmatch       " match brackets when cursor is over it
+set mat=2           " how many tenths of second to blink when matching brackets
 set inccommand=nosplit  " neovim only
 
-" settings required from coc
+" Settings required from coc
+" Still keeping this if we're using lua+lsp instead of CoC because why not
 set hidden
 set cmdheight=2
 set updatetime=300
@@ -38,29 +40,28 @@ else
   set signcolumn=yes
 endif
 
+" Bunch of shit really, spent *hours* trying to get tmux + nvim true colors to work
+" TODO: check has('termguicolors') and set a env var or something
 set termguicolors
 
-
 set laststatus=2  " show status line
-"set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L\ \|\ col\ %c)
 
 set whichwrap+=<,>,h,l
 
-"" fold settings
+" fold settings
 set foldenable
 set foldlevelstart=10
 set foldnestmax=10
 set foldmethod=manual
 set foldcolumn=2
 
-
-" set the swp, backup and undo settings
+" Set the swp, backup and undo settings
 set noswapfile
 set nobackup nowritebackup
 set undodir=~/.local/share/nvim/undodir/
 set undofile
-"
-"" Ignore compiled files
+
+" Ignore compiled files
 set wildignore=*.o,*~,*.pyc
 if has("win16") || has("win32")
 	set wildignore+=.git\*,.hg\*,.svn\*
@@ -68,20 +69,20 @@ else
 	set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 endif
 
-" Return to last edit position when opening files (You want
-" this!)
+" Return to last edit position when opening files
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-"au ColorScheme * hi Normal ctermbg=None
 
-"" highlight extra whitespace
+" highlight trailing whitespace
 match ErrorMsg '\s\+$'
 
-" setting the shell for fish to sh
+" setting the shell for fish to bash
 "if &shell =~# 'fish$'
 "	set shell=bash
 "endif
-"
+" commented because without it things still seems to work
 
+" IsWSL function sourced in functions.vim, declared in ~/iswsl.vim
+" I think this is a neovim-only thing, +1 for neovim :smirk:
 if IsWSL()
 		let g:clipboard = {
 			\   'name': 'WSLClip',
