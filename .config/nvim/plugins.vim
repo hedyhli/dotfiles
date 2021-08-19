@@ -23,9 +23,13 @@ endif
 Plug 'wakatime/vim-wakatime'  " wakatime for vim
 Plug 'SuneelFreimuth/vim-gemtext'
 
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'hrsh7th/nvim-compe'
-Plug 'neovim/nvim-lspconfig'
+" Picking the right LSP completion method, see bottom of file for more
+if has("nvim-0.5")
+	Plug 'hrsh7th/nvim-compe'
+	Plug 'neovim/nvim-lspconfig'
+else
+	Plug 'neoclide/coc.nvim', {'branch': 'release'}
+endif
 call plug#end()
 
 "let g:dracula_colorterm = 0
@@ -98,6 +102,11 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
 nnoremap <leader>tt :TagbarToggle<CR>
 let g:tagbar_width = 20
 
-" source $HOME/.config/nvim/coc.vim
-lua require('lsp')
-lua require('autocomplete')
+" LSP
+if has("nvim-0.5")
+	lua require('lsp')
+	lua require('autocomplete')
+else
+	source $HOME/.config/nvim/coc.vim
+endif
+

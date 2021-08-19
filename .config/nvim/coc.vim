@@ -1,5 +1,8 @@
+" This file is only executed if we don't have nvim0.5, if we do, lua LSP will
+" be used instead. See plugins.vim
 " coc settings
 " ==== coc installs ====
+" TODO: Track .config/coc in dotfiles so I can remove this
 " coc-go
 " coc-html
 " coc-snippets
