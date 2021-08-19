@@ -1,6 +1,6 @@
 # dotfiles
 
-Welcome to my personal collection of weirdish sometimes unmained configuration and
+Welcome to my personal collection of weirdish—sometimes unmaintained—configuration and
 lose organization of cool scripts!
 
 These are the setup I have on almost all machines I work in, and because I work
@@ -11,7 +11,7 @@ Mirrors: [tildegit (gitea)](https://tildegit.org/hedy/dotfiles)
 | [GitHub](https://github.com/hedyhli/dotfiles)
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
-## Table of Contents
+**Table of Contents**
 
 - [Overview](#overview)
 - [Features](#features)
