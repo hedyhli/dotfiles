@@ -43,35 +43,35 @@ colorscheme dracula  " Probably THE most important nvim configuration ;-;
 
 " === Lightline Settings ===
 let g:lightline = {
-			\ 'colorscheme': 'dracula',
-			\ 'mode_map': {
-			\ 'n' : 'NORM',
-			\ 'i' : 'INS',
-			\ 'R' : 'REP',
-			\ 'v' : 'VIS',
-			\ 'V' : 'VL',
-			\ "\<C-v>": 'VB',
-			\ 'c' : 'C',
-			\ 's' : 'S',
-			\ 'S' : 'SL',
-			\ "\<C-s>": 'SB',
-			\ 't': 'T',
-			\ },
-			\ 'component': {
-      \   'tagbar': '%{tagbar#currenttag("[%s]", "")}',
-			\ },
-			\ 'component_function': {
-			\   'fugitive': 'LightlineFugitive',
-			\   'diagnosticscount': 'LightlineDiagnostics',
-			\ },
-			\ 'component_type': {
-			\   'diagnosticscount': 'error',
-			\ },
-			\ 'active': {
-			\       'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['tagbar'] ],
-			\		'right': [ [ 'diagnosticscount' ], ['percent'], ['fileformat', 'fileencoding', 'filetype'] ]
-			\ },
-			\ }
+      \ 'colorscheme': 'dracula',
+      \ 'mode_map': {
+        \ 'n' : 'NORM',
+        \ 'i' : 'INS',
+        \ 'R' : 'REP',
+        \ 'v' : 'VIS',
+        \ 'V' : 'VL',
+        \ "\<C-v>": 'VB',
+        \ 'c' : 'C',
+        \ 's' : 'S',
+        \ 'S' : 'SL',
+        \ "\<C-s>": 'SB',
+        \ 't': 'T',
+        \ },
+      \ 'component': {
+        \   'tagbar': '%{tagbar#currenttag("[%s]", "")}',
+      \ },
+      \ 'component_function': {
+      \   'fugitive': 'LightlineFugitive',
+      \   'diagnosticscount': 'LightlineDiagnostics',
+      \ },
+      \ 'component_type': {
+        \   'diagnosticscount': 'error',
+      \ },
+      \ 'active': {
+        \       'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['tagbar'] ],
+        \		'right': [ [ 'diagnosticscount' ], ['percent'], ['fileformat', 'fileencoding', 'filetype'] ]
+        \ },
+      \ }
 
 function! LightlineFugitive()
 	" Referenced from Lightline docs; I'm not 100% what this does but seems like
@@ -115,17 +115,17 @@ noremap <Leader>nt :NERDTreeToggle<CR>
 
 " NerdTree Git plugin
 let g:NERDTreeGitStatusIndicatorMapCustom = {
-			\ "Modified"  : "M",
-			\ "Staged"    : "A",
-			\ "Untracked" : "?",
-			\ "Renamed"   : "R",
-			\ "Unmerged"  : "═",
-			\ "Deleted"   : "D",
-			\ "Dirty"     : "X",
-			\ "Clean"     : "✔︎",
-			\ 'Ignored'   : 'i',
-			\ "Unknown"   : "??"
-			\ }
+      \ "Modified"  : "M",
+      \ "Staged"    : "A",
+      \ "Untracked" : "?",
+      \ "Renamed"   : "R",
+      \ "Unmerged"  : "═",
+      \ "Deleted"   : "D",
+      \ "Dirty"     : "X",
+      \ "Clean"     : "✔︎",
+      \ 'Ignored'   : 'i',
+      \ "Unknown"   : "??"
+      \ }
 
 " tagbar
 nnoremap <leader>tt :TagbarToggle<CR>

@@ -64,9 +64,9 @@ set undofile
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
 if has("win16") || has("win32")
-	set wildignore+=.git\*,.hg\*,.svn\*
+  set wildignore+=.git\*,.hg\*,.svn\*
 else
-	set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+  set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 endif
 
 " Return to last edit position when opening files
@@ -84,17 +84,17 @@ match ErrorMsg '\s\+$'
 " IsWSL function sourced in functions.vim, declared in ~/iswsl.vim
 " I think this is a neovim-only thing, +1 for neovim :smirk:
 if IsWSL()
-		let g:clipboard = {
-			\   'name': 'WSLClip',
-			\   'copy': {
-			\      '+': 'clip.exe',
-			\      '*': 'clip.exe',
-			\	},
-			\   'paste': {
-			\      '+': 'pbpaste',
-			\      '*': 'pbpaste',
-			\	},
-			\   'cache_enabled': 0,
-			\ }
+  let g:clipboard = {
+        \   'name': 'WSLClip',
+        \   'copy': {
+          \      '+': 'clip.exe',
+          \      '*': 'clip.exe',
+          \	},
+        \   'paste': {
+          \      '+': 'pbpaste',
+          \      '*': 'pbpaste',
+          \	},
+          \   'cache_enabled': 0,
+        \ }
 endif
 
