@@ -8,4 +8,3 @@
 .ssh/config
 cert.pem
 key.pem
-.wakatime.cfg

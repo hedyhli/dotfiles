@@ -29,7 +29,6 @@
   :straight t)
 (straight-use-package 'elpher)
 (straight-use-package 'eww)
-(straight-use-package 'wakatime-mode)
 
 ;; vertico
 ;; Enable vertico
@@ -88,7 +87,6 @@
 (straight-use-package 'diminish)
 
 ;; End of straight stuff hopefully
-(global-wakatime-mode)
 
 ;;(setq dracula-use-24-bit-colors-on-256-colors-terms t)
 ;;(load-theme 'dracula t)

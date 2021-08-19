@@ -23,7 +23,7 @@ Plug 'bling/vim-bufferline'             " buffer line (one of my most used plugi
 Plug 'ctrlpvim/ctrlp.vim'               " Quickly find a fine with fuzzy find; TODO: use fzf instead
 Plug 'airblade/vim-gitgutter'           " Show git diff overview stuff in the left column
 Plug 'majutsushi/tagbar'                " Quickly jump to a symbol in buffer (one of my most used omg!)
-Plug 'wakatime/vim-wakatime'            " Tracks my coding stats (because I like to look at the stats for fun)
+" Plug 'wakatime/vim-wakatime'            " Tracks my coding stats (because I like to look at the stats for fun)
 Plug 'https://git.sr.ht/~torresjrjr/gemini.vim' " gemtext syntax highlighting; I know there are more
                                         " popular alternatives but this is the
                                         " best IMO

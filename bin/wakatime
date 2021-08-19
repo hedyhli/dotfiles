@@ -1,8 +1,9 @@
 #!/usr/bin/bash
 
-# Remember to install wakatime-cli first
+# NOTE: I don't use wakatime anymore because it makes nvim startup slow
 
-# This is to fix some odd or legacy behaviour of the emacs wakatime plugin
+# Remember to install wakatime-cli first
+# This fixes some odd or legacy behaviour of the emacs wakatime plugin
 
 args=$(echo "$@" | sed 's/--file/--entity/')
 wakatime-cli $args
