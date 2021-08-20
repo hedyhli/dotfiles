@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# This is quite a lame script, horrible actualy.
+# Though it does its job. Basically it toggles the existence of a folder.
+# Say there's a folder you want to temporarily remove. use mvtmp <path>,
+# it will be moved to ~/tmp/<path>. Then to resotre it run mvtmp <path> again.
+
+name=$(basename "$1")
+
+if [[ -d ~/tmp/"$name" ]]; then
+  mv ~/tmp/"$name" "$1"
+else
+  mv "$1" ~/tmp/"$name"
+fi
