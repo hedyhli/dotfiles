@@ -46,6 +46,13 @@ set termguicolors
 
 set laststatus=2  " show status line
 
+" This is to fix the issue of when you are on a commented line (like # ...),
+" then you press o, and you want to remove the `# ` so you hit backspace, and
+" suddenly the line after the cursor is joined up to the current line.
+set backspace=start,indent
+
+" Let <left> <right> and h, l keys be able to move to previous or next line
+" when currently on start or end of line respectively
 set whichwrap+=<,>,h,l
 
 " fold settings

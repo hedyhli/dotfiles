@@ -65,7 +65,7 @@ set laststatus=2  " show status line
 set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L\ \|\ col\ %c)
 
 " Configure backspace so it acts as it should act
-set backspace=eol,start,indent
+set backspace=start,indent
 set whichwrap+=<,>,h,l
 
 " fold settings
