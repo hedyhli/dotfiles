@@ -13,10 +13,11 @@ Plug 'stautob/vim-fish'                 " fish support for vim
 Plug 'tpope/vim-fugitive'               " git stuff
 Plug 'tpope/vim-surround'               " quoting and parenthesizing plugin
 Plug 'jiangmiao/auto-pairs'             " quote pairs and other neat stuff; TODO: switch to nvim-autopairs
-Plug 'https://github.com/tpope/vim-commentary'
+Plug 'tpope/vim-commentary'
 Plug 'itchyny/lightline.vim'            " airline was throwing shitty errors so yeah.
                                         " Pretty and customizable status bar,
-                                        " for components see below
+                                        " for components see below; TODO:
+                                        " switch to galaxy line in the future
 " Commented out because I realized I never used it (lol)
 " Plug 'mbbill/undotree'  " undo tree
 Plug 'bling/vim-bufferline'             " buffer line (one of my most used plugins!)
@@ -27,7 +28,7 @@ Plug 'majutsushi/tagbar'                " Quickly jump to a symbol in buffer (on
 Plug 'https://git.sr.ht/~torresjrjr/gemini.vim' " gemtext syntax highlighting; I know there are more
                                         " popular alternatives but this is the
                                         " best IMO
-
+Plug 'tpope/vim-endwise'                " auto-add 'endif', 'end', 'endfunction', etc.
 " Picking the right LSP completion method, see bottom of file for more
 if has("nvim-0.5")
 	Plug 'hrsh7th/nvim-compe'
