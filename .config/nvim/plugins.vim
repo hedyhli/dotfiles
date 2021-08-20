@@ -9,10 +9,20 @@ Plug 'dracula/vim', {'name': 'dracula'} " dracula color theme (THE most importan
 Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'      " Show git statuses in NERDTree
 Plug 'Yggdroot/indentLine'
-Plug 'stautob/vim-fish'                 " fish support for vim
+Plug 'blankname/vim-fish'               " fish support for vim
 Plug 'tpope/vim-fugitive'               " git stuff
 Plug 'tpope/vim-surround'               " quoting and parenthesizing plugin
-Plug 'jiangmiao/auto-pairs'             " quote pairs and other neat stuff; TODO: switch to nvim-autopairs
+" This plugin below is really good, but whenever I'm on a commented line,
+" press o, press backspace, the line below is joined up above. You won't
+" believe how long it took me to debug this problem and finally realize it's
+" because of this really good plugin.
+" Plug 'jiangmiao/auto-pairs'
+" So now I'm using these two instead:
+if has('nvim-0.5')
+  Plug 'windwp/nvim-autopairs'
+else
+  Plug 'townk/vim-autoclose'
+endif
 Plug 'tpope/vim-commentary'
 Plug 'itchyny/lightline.vim'            " airline was throwing shitty errors so yeah.
                                         " Pretty and customizable status bar,
@@ -24,7 +34,6 @@ Plug 'bling/vim-bufferline'             " buffer line (one of my most used plugi
 Plug 'ctrlpvim/ctrlp.vim'               " Quickly find a fine with fuzzy find; TODO: use fzf instead
 Plug 'airblade/vim-gitgutter'           " Show git diff overview stuff in the left column
 Plug 'majutsushi/tagbar'                " Quickly jump to a symbol in buffer (one of my most used omg!)
-" Plug 'wakatime/vim-wakatime'            " Tracks my coding stats (because I like to look at the stats for fun)
 Plug 'https://git.sr.ht/~torresjrjr/gemini.vim' " gemtext syntax highlighting; I know there are more
                                         " popular alternatives but this is the
                                         " best IMO
@@ -134,12 +143,13 @@ let g:tagbar_width = 20
 
 " === LSP ===
 if has("nvim-0.5")
+  lua require('autopair')
 	lua require('lsp')
 	lua require('autocomplete')
 
   " Autoclose completion popup when completion is done
   " TODO: Doesn't seem to work though?
-  " Just press C-e I guess (defined in ./lua/autocomplete.lua)
+  " Just press C-g I guess (defined in ./lua/autocomplete.lua)
   augroup complete_hide_popup
     autocmd! CompleteDone * if pumvisible() == 1 | pclose | endif
   augroup END
