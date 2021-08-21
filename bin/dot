@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# This is (will be) the dotfile script manager for hedy.
+# It will run scripts in ~/dotscripts, that's all I think.
+
+# This script is horrible right now. TODO
+
+type="$1"
+target="$2"
+
+# TODO: run all scripts if target not given
+
+~/dotscripts/"$1"/"$2"
