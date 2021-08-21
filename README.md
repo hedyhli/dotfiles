@@ -64,7 +64,7 @@ These are more like "what I tend to do" in this repo
 1. Install yadm
 2. Clone the repo with yadm
 3. Fix conflicts as you please
-4. Selectively run scripts in [`_scripts`](./_scripts/)
+4. Selectively run scripts in [`dotscripts`](./dotscripts/) (in the future, you'll be able to use the `bin/dot` utility)
 
 ## Details
 
@@ -106,7 +106,7 @@ cat, rm, ll are aliased to ccat, trash, and exa respectively if those programs a
 The `.config/fish/config_local.fish` file is for configuration specific for a computer, this could
 be setting a special $EDITOR, etc.
 
-**Setup**: `_scripts/setup-fish`
+**Setup**: `dotscripts/setup/fish`
 
 ### editor
 
@@ -137,14 +137,14 @@ has mostly the same content as `.vimrc`.
 The isWSL function checks whether the system is WSL in my (n)vim configs
 I rebind some keys to make it work on WSL, but I don't use it much anymore.
 
-**Setup**: `_scripts/setup-nvim`
+**Setup**: `dotscripts/setup/nvim`
 
 #### emacs
 
 I use chemacs2 for switching emacs profiles and it allows me to use both vanilla emacs and doom emacs
 at the same time. See [`.emacs-profiles.el`](.emacs-profiles.el).
 
-**Setup**: `_scripts/setup-emacs`. This script is mostly tested and it should set up everything you need
+**Setup**: `dotscripts/setup/emacs`. This script is mostly tested and it should set up everything you need
 to start using both emacs and doom normally. It installs chemacs and doom if not already.
 
 ##### Vanilla emacs

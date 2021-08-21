@@ -13,6 +13,7 @@ if ! command -v fish &> /dev/null; then
 fi
 
 echo "Setting up fish_user_paths..."
+fish -c 'set -gx fish_user_paths' # clear the variable first
 setpaths ~/.addpath
 echo "done"
 
