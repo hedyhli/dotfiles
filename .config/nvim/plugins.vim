@@ -144,8 +144,14 @@ let g:tagbar_width = 20
 " === LSP ===
 if has("nvim-0.5")
   lua require('autopair')
-	lua require('lsp')
-	lua require('autocomplete')
+  lua require('lsp')
+  lua require('autocomplete')
+
+  " compe mappings for nvim-autopairs
+  inoremap <silent><expr> <C-Space> compe#complete()
+  inoremap <silent><expr> <CR>      compe#confirm(luaeval("require 'nvim-autopairs'.autopairs_cr()"))
+  inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+  inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
   " Autoclose completion popup when completion is done
   " TODO: Doesn't seem to work though?
@@ -154,6 +160,6 @@ if has("nvim-0.5")
     autocmd! CompleteDone * if pumvisible() == 1 | pclose | endif
   augroup END
 else
-	source $HOME/.config/nvim/coc.vim
+  source $HOME/.config/nvim/coc.vim
 endif
 

@@ -71,7 +71,8 @@ _G.s_tab_complete = function()
 	end
 end
 
--- vim.api.nvim_set_keymap("i", "<cr>", "compe#confirm('<cr>')", {expr = true})
+-- Mappings
+-- Note that some mappings are also in bottom of  plugins.vim
 vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
 vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
 vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
