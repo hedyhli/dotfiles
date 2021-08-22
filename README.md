@@ -183,5 +183,5 @@ so there won't be much configuration in there yet.
 ## TODO
 
 - [ ] add LSP and completion to emacs
-- [ ] (n)vim mapping for gg=``
-- [ ] `.addpath` file
+- [x] (n)vim mapping for gg=<backtick><backtick> (not needed anymore since we had `g@` mapping for LSP format)
+- [x] `.addpath` file
