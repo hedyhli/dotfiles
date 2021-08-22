@@ -25,6 +25,12 @@ fi
 
 echo Maybe add ~/local/share/man to manpath but I forgot how as of writing
 
+# env
+if ! [ -f ~/.exportenvs.fish ]; then
+    echo "Generating ~/.exportenvs.fish"
+    ~/dotscripts/gen/fish-exportenvs
+fi
+
 # TODO have a better check for omf existence (command -v doesnt work)
 # Although omf does this same check lol
 if [ ! -d ~/.local/share/omf ]; then
