@@ -149,6 +149,7 @@ if has("nvim-0.5")
 
   " compe mappings for nvim-autopairs
   inoremap <silent><expr> <C-Space> compe#complete()
+  " endwise remaps <CR> though so it doesn't work
   inoremap <silent><expr> <CR>      compe#confirm(luaeval("require 'nvim-autopairs'.autopairs_cr()"))
   inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
   inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
