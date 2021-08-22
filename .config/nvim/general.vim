@@ -85,10 +85,9 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 match ErrorMsg '\s\+$'
 
 " setting the shell for fish to bash
-"if &shell =~# 'fish$'
-"	set shell=bash
-"endif
-" commented because without it things still seems to work
+if &shell =~# 'fish$'
+	set shell=bash
+endif
 
 " IsWSL function sourced in functions.vim, declared in ~/iswsl.vim
 " I think this is a neovim-only thing, +1 for neovim :smirk:
