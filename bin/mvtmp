@@ -8,7 +8,7 @@
 name=$(basename "$1")
 
 if [[ -d ~/tmp/"$name" ]]; then
-  mv ~/tmp/"$name" "$1"
+  mv -v ~/tmp/"$name" "$1"
 else
-  mv "$1" ~/tmp/"$name"
+  mv -v "$1" ~/tmp/"$name"
 fi
