@@ -48,11 +48,6 @@ endif
 " TODO: check has('termguicolors') and set a env var or something
 set termguicolors
 
-" This is to fix the issue of when you are on a commented line (like # ...),
-" then you press o, and you want to remove the `# ` so you hit backspace, and
-" suddenly the line after the cursor is joined up to the current line.
-
-
 " Let <left> <right> and h, l keys be able to move to previous or next line
 " when currently on start or end of line respectively
 set whichwrap+=<,>,h,l
