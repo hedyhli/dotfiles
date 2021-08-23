@@ -10,12 +10,12 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'dracula/vim', {'name': 'dracula'}  " dracula color theme
 Plugin 'stautob/vim-fish'                  " fish support for vim
-Plugin 'jiangmiao/auto-pairs'              " auto insert and del quotes in pairs
 Plugin 'tpope/vim-surround'                " quoting and parenthesizing plugin
 " Plugin 'preservim/nerdcommenter'           " commenting made simple
 Plugin 'tpope/vim-commentary'
 Plugin 'bling/vim-bufferline'              " buffer line
 Plugin 'preservim/nerdtree'                " NERDTree :)
+Plugin 'townk/vim-autoclose'
 
 call vundle#end()
 filetype plugin indent on
@@ -65,7 +65,7 @@ set laststatus=2  " show status line
 set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L\ \|\ col\ %c)
 
 " Configure backspace so it acts as it should act
-set backspace=start,indent
+set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
 
 " fold settings
