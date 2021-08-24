@@ -1,14 +1,14 @@
 # dotfiles
 
-Welcome to my personal collection of weirdish—sometimes unmaintained—configuration and
-lose organization of cool scripts!
+Welcome to my personal collection of weirdish—sometimes
+unmaintained—configuration and lose organization of cool scripts!
 
 These are the setup I have on almost all machines I work in, and because I work
 on many [tildes](https://tildeverse.org), I make this set of configuration as
 cross-platform as possible.
 
-Mirrors: [tildegit (gitea)](https://tildegit.org/hedy/dotfiles)
-| [GitHub](https://github.com/hedyhli/dotfiles)
+Mirrors: [tildegit (gitea)](https://tildegit.org/hedy/dotfiles) |
+[GitHub](https://github.com/hedyhli/dotfiles)
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 **Table of Contents**
@@ -34,21 +34,21 @@ Mirrors: [tildegit (gitea)](https://tildegit.org/hedy/dotfiles)
 
 ## Overview
 
-- Manager: [yadm](https://yadm.io) ([config](.config/yadm))
-- Shell: [fish](https://fishshell.com) ([config](.config/fish))
+- Manager: [yadm](https://yadm.io) ([`.config/yadm`](.config/yadm))
+- Shell: [fish](https://fishshell.com) ([`.config/fish`](.config/fish))
 - Theme: Dracula ((neo)vim and terminal)
-- Email: [aerc](https://aerc-mail.org) ([config](.config/aerc))
+- Email: [aerc](https://aerc-mail.org) ([`.config/aerc`](.config/aerc))
 - Browser:
    - Chrome (has nothing to do with this repo though)
    - w3m
 - Gemini client:
-   - [amfora](https://github.com/makeworld-the-better-one/amfora) ([config](.config/amfora))
-   - [gelim (also spartan)](https://sr.ht/~hedy/gelim) ([config](.config/gelim))
+   - [amfora](https://github.com/makeworld-the-better-one/amfora) ([`.config/amfora`](.config/amfora))
+   - [gelim (also spartan)](https://sr.ht/~hedy/gelim) ([`.config/gelim`](.config/gelim))
 - Editor:
-   - vim ([config](.vimrc))
-   - neovim ([config](.config/nvim))
-   - emacs ([config](.config/emacsd)) (with [chemacs](.emacs-profiles.el))
-   - doom ([config](.config/doom))
+   - vim ([`.vimrc`](.vimrc))
+   - neovim ([`.config/nvim`](.config/nvim))
+   - emacs ([`.config/emacsd`](.config/emacsd)) (with chemacs: [.emacs-profiles.el](.emacs-profiles.el))
+   - doom ([`.config/doom`](.config/doom))
 
 ## Features
 
@@ -118,67 +118,79 @@ be setting a special $EDITOR, etc.
 - vim: only for systems that don't have neovim installed
 - nvim: I use this as my primary editor and IDE
 - emacs: just to play around and learn elisp
-- doom: looking for IDE features and inspiration for my nvim setup. (Currenting editting READ using doom).
+- doom: looking for IDE features and inspiration for my nvim setup. (Currenting editting README using doom).
 This *may* become my primary IDE for GUI.
-- vscode: I only use this when I'm too stressed to remember vim/emacs's key binds, or I'm remote-editting
+- vscode: I only use this when I'm too stressed to remember vim/emacs's key binds, or sometimes when I'm remote-editting
 my [site](https://hedy.tilde.cafe)'s markdown posts.
 
 #### vim and nvim
 
-The [bin/nv](./bin/nv) script is an alias to neovim, and runs vim if neovim is not installed.
+The [bin/nv](./bin/nv) script is an alias to neovim, and runs vim if neovim is
+not installed.
 
-For vim I use Vundle as my plugin manager just because I discovered vim before nvim and Vundle before Plug.
-My [`vimrc`](.vimrc) is largely unmaintained pieces of configuration copied from other people's configs. The
-set of plugins are mostly maintained (as in me modifying what plugins to use), except for auto-pairs if I remember correctly.
+For vim I use Vundle as my plugin manager just because I discovered vim before
+nvim and Vundle before Plug.  My [`vimrc`](.vimrc) is largely unmaintained
+pieces of configuration copied from other people's configs. The set of plugins
+are mostly maintained (as in me modifying what plugins to use), except for
+auto-pairs if I remember correctly.
 
-Sometimes when I change a plugin for nvim and change it for vim too, if I have extra time.
+Sometimes when I change a plugin for nvim and change it for vim too, if I have
+extra time.
 
-I use vim-plug as my plugin manager for nvim because it is shorter to type. Completion with CoC is set up
-for languages that I commonly work in. CoC keybinds configuration is mostly copied from their readme.
+I use vim-plug as my plugin manager for nvim because it is shorter to type.
+Completion with CoC is set up for languages that I commonly work in. CoC
+keybinds configuration is mostly copied from their readme.
 
-My nvim config directory (`.config/nvim`) has separate files for different types of configuration. `general.vim`
-has mostly the same content as `.vimrc`.
+My nvim config directory (`.config/nvim`) has separate files for different
+types of configuration. `general.vim` has mostly the same content as `.vimrc`.
 
-The isWSL function checks whether the system is WSL in my (n)vim configs
-I rebind some keys to make it work on WSL, but I don't use it much anymore.
+The isWSL function checks whether the system is WSL in my (n)vim configs I
+rebind some keys to make it work on WSL, but I don't use it much anymore.
 
 **Setup**: `dotscripts/setup/nvim`
 
 #### emacs
 
-I use chemacs2 for switching emacs profiles and it allows me to use both vanilla emacs and doom emacs
-at the same time. See [`.emacs-profiles.el`](.emacs-profiles.el).
+I use chemacs2 for switching emacs profiles and it allows me to use both
+vanilla emacs and doom emacs at the same time. See
+[`.emacs-profiles.el`](.emacs-profiles.el).
 
-**Setup**: `dotscripts/setup/emacs`. This script is mostly tested and it should set up everything you need
-to start using both emacs and doom normally. It installs chemacs and doom if not already.
+**Setup**: `dotscripts/setup/emacs`. This script is mostly tested and it should
+set up everything you need to start using both emacs and doom normally. It
+installs chemacs and doom if not already.
 
 ##### Vanilla emacs
 
-They should probably work for version 26 too, but I use 27+ on almost all my machines.
+They should probably work for version 26 too, but I use 27+ on almost all my
+machines.
 
-Stuff in `.config/emacsd` are largely copied from various emacs distributions to suit my needs.
-The [`modules`](.config/emacsd/modules) directory is work-in-progress.
+Stuff in `.config/emacsd` are largely copied from various emacs distributions
+to suit my needs.  The [`modules`](.config/emacsd/modules) directory is
+work-in-progress.
 
 ##### Doom emacs
 
-Doom itself requires at least emacs 27+ and git 2.23+ among other things. More info on the
-[github repo](https://github.com/hlissner/doom-emacs).
+Doom itself requires at least emacs 27+ and git 2.23+ among other things. More
+info on the [github repo](https://github.com/hlissner/doom-emacs).
 
-There isn't much personal configuration in `.config/doom` yet, it's mostly just enabling or disabling
-doom modules and add some packages.
+There isn't much personal configuration in `.config/doom` yet, it's mostly just
+enabling or disabling doom modules and add some packages.
 
-The emacs directory would be at `.doomemacs` (because `.emacs.d` is for chemacs).
+The emacs directory would be at `.doomemacs` (because `.emacs.d` is for
+chemacs).
 
 ### Gemini and Spartan client
 
-My amfora config at `.config/amfora` uses the default theme with mostly default settings. I don't use
-amfora all that often because I also use elpher, lagrange, and gelim. I plan to have a custom newtab page
-as well as a custom theme in the future. Because gelim doesn't support client certificates yet, I only
-mostly use amfora for capsules that want a client certificate.
+My amfora config at `.config/amfora` uses the default theme with mostly default
+settings. I don't use amfora all that often because I also use elpher,
+lagrange, and gelim. I plan to have a custom newtab page as well as a custom
+theme in the future. Because gelim doesn't support client certificates yet, I
+only mostly use amfora for capsules that want a client certificate.
 
-gelim config is at `.config/gelim`. gelim is my own gemini and spartan client for the terminal that isn't
-a full-blown TUI and tries to stay simple whilst offering many features and extensibility. It's still WIP
-so there won't be much configuration in there yet.
+gelim config is at `.config/gelim`. gelim is my own gemini and spartan client
+for the terminal that isn't a full-blown TUI and tries to stay simple whilst
+offering many features and extensibility. It's still WIP so there won't be much
+configuration in there yet.
 
 ## TODO
 
