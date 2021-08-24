@@ -147,6 +147,9 @@ if has("nvim-0.5")
   lua require('lsp')
   lua require('autocomplete')
 
+  " Set completeopt to have a better completion experience
+  set completeopt=menuone,noinsert,noselect,preview
+
   " compe mappings for nvim-autopairs
   inoremap <silent><expr> <C-Space> compe#complete()
   " endwise remaps <CR> though so it doesn't work
