@@ -15,29 +15,29 @@ if [ -d ~/.emacs.d ]; then
     4. Same as above but run git pull in the directory
     5. ABORT
 EOF
-    read -p "1/2/3/4/5> " option
-    case "$option" in
-        "1")
-            rm -rf ~/.emacs.d;;
-        "2"|"")
-			echo "Your original .emacs.d will be at .emacs.d.bak"
-			# TODO: check if .emacs.d.bak exists
-            mv ~/.emacs.d ~/.emacs.d.bak;;
-        "3")
-            echo "Skipping chemacs installation"
-            install_chemacs=no;;
-        "4")
-            cd ~/.emacs.d
-			echo "git pulling"
-            git pull
-            install_chemacs=no;;
-        "5")
-            echo "aborting :)"
-            exit;;
-        *)
-            echo "Unknown option $option"
-            exit 1;;
-    esac
+read -p "1/2/3/4/5> " option
+case "$option" in
+    "1")
+        rm -rf ~/.emacs.d;;
+    "2"|"")
+        echo "Your original .emacs.d will be at .emacs.d.bak"
+        # TODO: check if .emacs.d.bak exists
+        mv ~/.emacs.d ~/.emacs.d.bak;;
+    "3")
+        echo "Skipping chemacs installation"
+        install_chemacs=no;;
+    "4")
+        cd ~/.emacs.d
+        echo "git pulling"
+        git pull
+        install_chemacs=no;;
+    "5")
+        echo "aborting :)"
+        exit;;
+    *)
+        echo "Unknown option $option"
+        exit 1;;
+esac
 fi
 if [[ $install_chemacs != "no" ]]; then
     echo "Installing chemacs"
@@ -58,7 +58,7 @@ echo "Emacs and chemacs setup all done!"
 echo
 read -p "Set up doom? [Y/n] " option
 if [[ "$option" == "n" ]]; then
-	echo "Exiting"
+    echo "Exiting"
     exit
 fi
 echo "Alright we're going to install doom. This is the part where many things could go wrong :P"
