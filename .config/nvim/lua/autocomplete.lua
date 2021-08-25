@@ -2,8 +2,6 @@
 
 local compe = require('compe')
 
-vim.o.completeopt = "menuone,noselect"
-
 compe.setup {
 	enabled = true;
 	autocomplete = true;
