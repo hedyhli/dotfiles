@@ -37,7 +37,7 @@ Plug 'majutsushi/tagbar'                " Quickly jump to a symbol in buffer (on
 Plug 'https://git.sr.ht/~torresjrjr/gemini.vim' " gemtext syntax highlighting; I know there are more
                                         " popular alternatives but this is the
                                         " best IMO
-Plug 'tpope/vim-endwise'                " auto-add 'endif', 'end', 'endfunction', etc.
+" Plug 'tpope/vim-endwise'                " auto-add 'endif', 'end', 'endfunction', etc.
 " Picking the right LSP completion method, see bottom of file for more
 if has("nvim-0.5")
 	Plug 'hrsh7th/nvim-compe'
@@ -145,7 +145,7 @@ let g:tagbar_width = 20
 if has("nvim-0.5")
   lua require('autopair')
   lua require('lsp')
-  lua require('autocomplete')
+  lua require('complete')
 
   " Set completeopt to have a better completion experience
   set completeopt=menuone,noinsert,noselect,preview
