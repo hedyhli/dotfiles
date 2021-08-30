@@ -38,6 +38,7 @@ Plug 'https://git.sr.ht/~torresjrjr/gemini.vim' " gemtext syntax highlighting; I
                                         " popular alternatives but this is the
                                         " best IMO
 " Plug 'tpope/vim-endwise'                " auto-add 'endif', 'end', 'endfunction', etc.
+Plug 'cespare/vim-toml'
 " Picking the right LSP completion method, see bottom of file for more
 if has("nvim-0.5")
 	Plug 'hrsh7th/nvim-compe'
