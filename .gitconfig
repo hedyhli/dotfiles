@@ -9,6 +9,10 @@
 	email = hedy@tilde.cafe  # email overidden in [include]
 	signingkey = B51B5A8D1B176372  # and this
 
+[init]
+    # I don't want people to complain and main is shorter to type so yeah
+    defaultBranch = main
+
 [alias]
 	s = status
 	c = commit
