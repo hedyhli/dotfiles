@@ -46,6 +46,7 @@ if has("nvim-0.5")
 else
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
 endif
+Plug 'hedyhli/vim-bun'                  " bun filetype support
 call plug#end()
 " Plugin declarations ends here
 " =============================

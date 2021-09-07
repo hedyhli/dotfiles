@@ -1,1 +1,1 @@
-autocmd BufNewFile,BufRead *.scd sed filetype=scdoc
+autocmd BufNewFile,BufRead *.scd set filetype=scdoc
