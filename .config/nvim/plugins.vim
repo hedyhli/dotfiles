@@ -47,6 +47,7 @@ else
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
 endif
 Plug 'hedyhli/vim-bun'                  " bun filetype support
+Plug 'https://git.rawtext.club/slope-lang/slope-vim-syntax'  " slope filetype support
 call plug#end()
 " Plugin declarations ends here
 " =============================
