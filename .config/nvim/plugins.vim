@@ -46,7 +46,7 @@ if has("nvim-0.5")
 else
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
 endif
-Plug 'hedyhli/vim-bun'                  " bun filetype support
+Plug '~/stuff/vim-bun'
 Plug 'https://git.rawtext.club/slope-lang/slope-vim-syntax'  " slope filetype support
 call plug#end()
 " Plugin declarations ends here
