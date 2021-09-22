@@ -10,26 +10,27 @@ cross-platform as possible.
 Mirrors: [tildegit (gitea)](https://tildegit.org/hedy/dotfiles) |
 [GitHub](https://github.com/hedyhli/dotfiles)
 
-<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 **Table of Contents**
 
-- [Overview](#overview)
-- [Features](#features)
-- [Installation](#installation)
-- [Details](#details)
-   - [Shell](#shell)
-      - [oh my fish](#oh-my-fish)
-      - [fish functions](#fish-functions)
-      - [local](#local)
-   - [editor](#editor)
-      - [vim and nvim](#vim-and-nvim)
-      - [emacs](#emacs)
-            - [Vanilla emacs](#vanilla-emacs)
-            - [Doom emacs](#doom-emacs)
-   - [Gemini and Spartan client](#gemini-and-spartan-client)
-- [TODO](#todo)
+<!-- vim-markdown-toc GFM -->
 
-<!-- markdown-toc end -->
+* [Overview](#overview)
+* [Features](#features)
+* [Installation](#installation)
+* [Details](#details)
+    * [Shell](#shell)
+        * [oh my fish](#oh-my-fish)
+        * [fish functions](#fish-functions)
+        * [local](#local)
+    * [editor](#editor)
+        * [vim and nvim](#vim-and-nvim)
+        * [emacs](#emacs)
+            * [Vanilla emacs](#vanilla-emacs)
+            * [Doom emacs](#doom-emacs)
+    * [Gemini and Spartan client](#gemini-and-spartan-client)
+* [TODO](#todo)
+
+<!-- vim-markdown-toc -->
 
 
 ## Overview
@@ -62,9 +63,12 @@ These are more like "what I tend to do" in this repo
 ## Installation
 
 1. Install yadm
-2. Clone the repo with yadm
-3. Fix conflicts as you please
-4. Selectively run scripts in [`dotscripts`](./dotscripts/) (in the future, you'll be able to use the `bin/dot` utility)
+1. Clone the repo with yadm
+1. Fix conflicts as you please
+1. Reload sessions
+  - fish
+  - `tmux source ~/.tmux.conf`
+1. Selectively run scripts in [`dotscripts`](./dotscripts/) using `dot <type> <target>` such as `dot setup fish`
 
 ## Details
 

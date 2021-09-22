@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+if ! command -v aerc &> /dev/null; then
+    echo aerc isnt installed!
+    echo you should install go, scdoc, clone the repo, make, make install
+    exit 1
+fi
+
+if [[ -d ~/local/share/aerc ]]; then
+    echo local/share/aerc already exists, youre all good
+    exit
+else
+    if ! [[ -d /usr/share/aerc ]]; then
+        echo Neither ~/local/share/aerc nor /use/share/aerc exists!
+        echo Perhaps aerc wasnt installed properly. Please figure out where aerc share folder is
+        echo then ln -s manually
+        exit 1
+    fi
+fi
+mkdir -vp ~/local/share
+ln -vs /usr/share/aerc ~/local/share/aerc

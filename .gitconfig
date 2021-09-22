@@ -1,68 +1,70 @@
 [core]
-	editor = nv
-	autocrlf = input
-	excludesfile = /home/hedy/.gitignore_global
-	pager = diff-so-fancy | less --tabs=4 -RFX
+    editor = nv
+    autocrlf = input
+    excludesfile = /home/hedy/.gitignore_global
+    pager = diff-so-fancy | less --tabs=4 -RFX
 
 [user]
-	name = Hedy Li
-	email = hedy@tilde.cafe  # email overidden in [include]
-	signingkey = B51B5A8D1B176372  # and this
+    name = Hedy Li
+    email = hedy@tilde.cafe  # email overidden in [include]
+    signingkey = B51B5A8D1B176372  # and this
 
 [init]
     # I don't want people to complain and main is shorter to type so yeah
     defaultBranch = main
 
 [alias]
-	s = status
-	c = commit
-	b = branch
-	ls-alias = config --get-regexp alias
-	l = log --oneline
-	ll = log
-	ss = status -s
-	ch = checkout
-	chb = checkout -b
-	mylog = log --pretty=format:'%C(yellow)%h %C(bold blue)%an, %C(green)%ar: %C(white)"%s"'
-	lgraph = log --oneline --graph --decorate --all
-	brd = branch -d
-	fame = !python3 -m gitfame
-	p = push
-	cmam = commit -am
-	pushall = !git remote | xargs -L1 git push --all
+    s = status
+    c = commit
+    b = branch
+    ls-alias = config --get-regexp alias
+    l = log --oneline
+    ll = log
+    ss = status -s
+    ch = checkout
+    chb = checkout -b
+    mylog = log --pretty=format:'%C(yellow)%h %C(bold blue)%an, %C(green)%ar: %C(white)"%s"'
+    lgraph = log --oneline --graph --decorate --all
+    brd = branch -d
+    fame = !python3 -m gitfame
+    p = push
+    cmam = commit -am
+    pushall = !git remote | xargs -L1 git push --all
+    # Same as pushall but not for all branches
+    pall = !git remote | xargs -L1 git push
 
 [credential]
-	helper = store --file="$HOME/.git_creds"
-	helper = cache --timeout 90000
+    helper = store --file="$HOME/.git_creds"
+    helper = cache --timeout 90000
 
 [help]
-	autocorrect = 30
+    autocorrect = 30
 
 [pull]
-	rebase = false
+    rebase = false
 
 [commit]
-	gpgsign = true
+    gpgsign = true
 
 # sendmail conig in [include]
 
 [include]
-	path = ~/.gitconfig-local
+    path = ~/.gitconfig-local
 
 # diff-so-fancy
 [color]
-	ui = true
+    ui = true
 [color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
+    oldNormal = red bold
+    oldHighlight = red bold 52
+    newNormal = green bold
+    newHighlight = green bold 22
 [color "diff"]
-	meta = 11
-	frag = magenta bold
-	commit = yellow bold
-	old = red bold
-	new = green bold
-	whitespace = red reverse
+    meta = 11
+    frag = magenta bold
+    commit = yellow bold
+    old = red bold
+    new = green bold
+    whitespace = red reverse
 [push]
-	followTags = true
+    followTags = true

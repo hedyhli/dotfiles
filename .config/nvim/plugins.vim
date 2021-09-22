@@ -47,7 +47,7 @@ Plug 'airblade/vim-gitgutter'   " Show git diff overview stuff in the left colum
 Plug 'majutsushi/tagbar'        " Quickly jump to a symbol in buffer (one of my most used omg!)
 " TODO: Figure out a way of using both endwise and auto pair
 
-" === File type or syntax plugins ===
+" === File type, syntax, or language helper plugins ===
 " gemtext syntax highlighting; I know there are more popular alternatives but
 " this is the best IMO
 Plug 'https://git.sr.ht/~torresjrjr/gemini.vim'
@@ -55,6 +55,7 @@ Plug 'cespare/vim-toml'
 Plug 'blankname/vim-fish'
 Plug 'hedyhli/vim-bun'
 Plug 'https://git.rawtext.club/slope-lang/slope-vim-syntax'
+Plug 'mzlogin/vim-markdown-toc'
 
 call plug#end()
 " Plugin declarations ends here
