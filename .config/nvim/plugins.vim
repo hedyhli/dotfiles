@@ -7,52 +7,61 @@ call plug#begin(stdpath('data') . '/plugged')
 
 Plug 'dracula/vim', {'name': 'dracula'} " dracula color theme (THE most important plugin, yes)
 Plug 'preservim/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'      " Show git statuses in NERDTree
-Plug 'Yggdroot/indentLine'
-Plug 'blankname/vim-fish'               " fish support for vim
-Plug 'tpope/vim-fugitive'               " git stuff
-Plug 'tpope/vim-surround'               " quoting and parenthesizing plugin
+Plug 'Xuyuanp/nerdtree-git-plugin'  " Show git statuses in NERDTree
+Plug 'Yggdroot/indentLine'          " No idea what it is (too lazy to check);
+                                    " something I had since a long time ago but
+                                    " didn't want to remove
+Plug 'tpope/vim-fugitive'           " git stuff
+Plug 'jreybert/vimagit'             " more git stuff
+Plug 'tpope/vim-surround'           " quoting and parenthesizing plugin
 " This plugin below is really good, but whenever I'm on a commented line,
 " press o, press backspace, the line below is joined up above. You won't
 " believe how long it took me to debug this problem and finally realize it's
-" because of this really good plugin.
+" because of this plugin.
 " Plug 'jiangmiao/auto-pairs'
-" So now I'm using these two instead:
+"
+" So now I'm using these instead:
+" 1. nvim-autopairs - extremely customizable, written in lua
+" 2. vim-autoclose - fallback if nvim < v0.5 (the installation might not have
+" the required lua files or something)
 if has('nvim-0.5')
   Plug 'windwp/nvim-autopairs'
+	" Best IDE autocomplete setup ever
+	Plug 'neovim/nvim-lspconfig'
+	Plug 'hrsh7th/nvim-compe'
 else
   Plug 'townk/vim-autoclose'
-endif
-Plug 'tpope/vim-commentary'
-Plug 'itchyny/lightline.vim'            " airline was throwing shitty errors so yeah.
-                                        " Pretty and customizable status bar,
-                                        " for components see below; TODO:
-                                        " switch to galaxy line in the future
-" Commented out because I realized I never used it (lol)
-" Plug 'mbbill/undotree'  " undo tree
-Plug 'bling/vim-bufferline'             " buffer line (one of my most used plugins!)
-Plug 'ctrlpvim/ctrlp.vim'               " Quickly find a fine with fuzzy find; TODO: use fzf instead
-Plug 'airblade/vim-gitgutter'           " Show git diff overview stuff in the left column
-Plug 'majutsushi/tagbar'                " Quickly jump to a symbol in buffer (one of my most used omg!)
-Plug 'https://git.sr.ht/~torresjrjr/gemini.vim' " gemtext syntax highlighting; I know there are more
-                                        " popular alternatives but this is the
-                                        " best IMO
-" Plug 'tpope/vim-endwise'                " auto-add 'endif', 'end', 'endfunction', etc.
-Plug 'cespare/vim-toml'
-" Picking the right LSP completion method, see bottom of file for more
-if has("nvim-0.5")
-	Plug 'hrsh7th/nvim-compe'
-	Plug 'neovim/nvim-lspconfig'
-else
+  " Picking the right LSP completion method, see bottom of file for more
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
 endif
-Plug '~/stuff/vim-bun'
-Plug 'https://git.rawtext.club/slope-lang/slope-vim-syntax'  " slope filetype support
+Plug 'tpope/vim-commentary'
+Plug 'itchyny/lightline.vim'    " airline was throwing shitty errors so yeah.
+                                " Pretty and customizable status bar,
+                                " for components see below; TODO:
+                                " switch to galaxy line in the future
+" Commented out because I realized I never used it (lol)
+" Plug 'mbbill/undotree'  " undo tree
+Plug 'bling/vim-bufferline'     " buffer line (one of my most used plugins!)
+Plug 'ctrlpvim/ctrlp.vim'       " Quickly find a fine with fuzzy find; TODO: use fzf instead
+Plug 'airblade/vim-gitgutter'   " Show git diff overview stuff in the left column
+Plug 'majutsushi/tagbar'        " Quickly jump to a symbol in buffer (one of my most used omg!)
+" TODO: Figure out a way of using both endwise and auto pair
+
+" === File type or syntax plugins ===
+" gemtext syntax highlighting; I know there are more popular alternatives but
+" this is the best IMO
+Plug 'https://git.sr.ht/~torresjrjr/gemini.vim'
+Plug 'cespare/vim-toml'
+Plug 'blankname/vim-fish'
+Plug 'hedyhli/vim-bun'
+Plug 'https://git.rawtext.club/slope-lang/slope-vim-syntax'
+
 call plug#end()
 " Plugin declarations ends here
-" =============================
 
-colorscheme dracula  " Probably THE most important nvim configuration ;-;
+
+colorscheme dracula  " THE most important nvim configuration
+
 
 " === Lightline Settings ===
 let g:lightline = {
@@ -87,7 +96,7 @@ let g:lightline = {
       \ }
 
 function! LightlineFugitive()
-	" Referenced from Lightline docs; I'm not 100% what this does but seems like
+  " Referenced from Lightline docs; I'm not 100% what this does but seems like
   " it just grabs the current git branch
   try
 	if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*FugitiveHead')
