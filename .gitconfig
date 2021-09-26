@@ -14,22 +14,22 @@
     defaultBranch = main
 
 [alias]
-    s = status
-    c = commit
-    b = branch
-    ls-alias = config --get-regexp alias
-    l = log --oneline
-    ll = log
-    ss = status -s
-    ch = checkout
-    chb = checkout -b
-    mylog = log --pretty=format:'%C(yellow)%h %C(bold blue)%an, %C(green)%ar: %C(white)"%s"'
-    lgraph = log --oneline --graph --decorate --all
-    brd = branch -d
-    fame = !python3 -m gitfame
-    p = push
-    cmam = commit -am
-    pushall = !git remote | xargs -L1 git push --all
+	s = status
+	c = commit
+	b = branch
+	ls-alias = config --get-regexp alias
+	l = log --oneline
+	ll = log
+	ss = status -s
+	ch = checkout
+	chb = checkout -b
+	mylog = log --pretty=format:'%C(yellow)%h %C(bold blue)%an, %C(green)%ar: %C(white)"%s"'
+	lgraph = log --oneline --graph --decorate --all
+	brd = branch -d
+	fame = !python3 -m gitfame
+	p = push
+	cmam = commit -am
+	pushall = !git remote | xargs -L1 git push --all
     # Same as pushall but not for all branches
     pall = !git remote | xargs -L1 git push
 
