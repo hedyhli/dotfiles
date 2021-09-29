@@ -1,16 +1,19 @@
 #!/usr/bin/env bash
 
-alias hdi=howdoi
+# Program aliases
 alias x=exit
+alias clr=clear
 alias y=yadm
 alias td=termdown
-alias clr=clear
-alias syscu='systemctl --user'
-alias codespell='codespell --skip="venv,.git,*.pyc,*.png,*.PNG,*.gif",.vim'
+alias hdi=howdoi
 alias bom=bombadillo
-alias newvenv='python3 -m virtualenv venv && source ./venv/bin/activate.fish'
+alias syscu='systemctl --user'
 alias edoom='emacs --with-profile=doom'
 alias g=git
+
+# Shortcuts
+alias codespell='codespell --skip="venv,.git,*.pyc,*.png,*.PNG,*.gif",.vim'
+alias newvenv='python3 -m virtualenv venv && source ./venv/bin/activate.fish'
 alias localusrlocal='rsync ~/local/usr/local/ ~/local/ -avr && rm -rf ~/local/usr/local'
 alias localusr='rsync ~/local/usr/ ~/local/ -avr && rm -rf ~/local/usr'
 
