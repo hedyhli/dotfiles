@@ -52,12 +52,12 @@ Plug 'majutsushi/tagbar'        " Quickly jump to a symbol in buffer (one of my 
 " === File type, syntax, or language helper plugins ===
 " gemtext syntax highlighting; I know there are more popular alternatives but
 " this is the best IMO
-Plug 'https://git.sr.ht/~torresjrjr/gemini.vim'
-Plug 'cespare/vim-toml'
-Plug 'blankname/vim-fish'
-Plug 'hedyhli/vim-bun'
-Plug 'https://git.rawtext.club/slope-lang/slope-vim-syntax'
-Plug 'mzlogin/vim-markdown-toc'
+Plug 'https://git.sr.ht/~torresjrjr/gemini.vim' , { 'for': 'gemini' }
+Plug 'cespare/vim-toml'                         , { 'for': 'toml' }
+Plug 'blankname/vim-fish'                       , { 'for': 'fish' }
+Plug 'hedyhli/vim-bun'                          , { 'for': 'bun' }
+Plug 'https://git.rawtext.club/slope-lang/slope-vim-syntax' , { 'for': 'slope' }
+Plug 'mzlogin/vim-markdown-toc'                 , { 'for': 'markdown' }
 
 call plug#end()
 " Plugin declarations ends here
