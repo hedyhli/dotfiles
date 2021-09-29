@@ -32,7 +32,9 @@ if has('nvim-0.5')
 else
   Plug 'townk/vim-autoclose'
   " Picking the right LSP completion method, see bottom of file for more
-	Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  if has('node')
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  endif
 endif
 Plug 'tpope/vim-commentary'
 Plug 'itchyny/lightline.vim'    " airline was throwing shitty errors so yeah.
@@ -177,6 +179,8 @@ if has("nvim-0.5")
     autocmd! CompleteDone * if pumvisible() == 1 | pclose | endif
   augroup END
 else
-  source $HOME/.config/nvim/coc.vim
+  if has('node')
+    source $HOME/.config/nvim/coc.vim
+  endif
 endif
 
