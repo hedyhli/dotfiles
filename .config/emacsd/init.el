@@ -35,9 +35,7 @@
 	    (local-set-key (kbd "C-c C-c") #'eval-defun)
 	    (local-set-key (kbd "C-c C-b") #'eval-buffer)))
 
-;; customize shits in separate file, thanks
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(load custom-file)
-
+;; Customize shits in separate file, thanks
+(load (expand-file-name "custom.el" user-emacs-directory))
 ;; Packages
 (load (expand-file-name "packages.el" user-emacs-directory))

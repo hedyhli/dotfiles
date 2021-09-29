@@ -1,9 +1,7 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 ;; No need to run doom sync after modifying this file
-
 (setq user-full-name "Hedy Li"
       user-mail-address "hedy@tilde.cafe")
-
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
 ;;
@@ -21,15 +19,11 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-vibrant)
-
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
+;; Can set to relative or nil
 (setq display-line-numbers-type t)
-
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
@@ -40,9 +34,6 @@
 ;;   this file. Emacs searches the `load-path' when you load packages with
 ;;   `require' or `use-package'.
 ;; - `map!' for binding new keys
-
-;; Documentation for symbol: K || C-c c k
-;; Go to definition:         gd || C-c c d
 
 (setq evil-split-window-below t
       evil-vsplit-window-right t)
