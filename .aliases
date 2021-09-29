@@ -11,4 +11,6 @@ alias bom=bombadillo
 alias newvenv='python3 -m virtualenv venv && source ./venv/bin/activate.fish'
 alias edoom='emacs --with-profile=doom'
 alias g=git
+alias localusrlocal='rsync ~/local/usr/local/ ~/local/ -avr && rm -rf ~/local/usr/local'
+alias localusr='rsync ~/local/usr/ ~/local/ -avr && rm -rf ~/local/usr'
 
