@@ -11,7 +11,6 @@
 */set weechat.look.hotlist_names_merged_buffers on
 */set weechat.look.hotlist_prefix "H "
 */set weechat.look.hotlist_short_names off
-*/set weechat.look.mouse on
 */set weechat.look.nick_prefix "<"
 */set weechat.look.nick_suffix ">"
 */set weechat.look.prefix_suffix ""
@@ -44,7 +43,6 @@
 */set weechat.look.hotlist_names_merged_buffers on
 */set weechat.look.hotlist_prefix "H "
 */set weechat.look.hotlist_short_names off
-*/set weechat.look.mouse on
 */set weechat.look.nick_prefix "<"
 */set weechat.look.nick_suffix ">"
 */set weechat.look.prefix_suffix ""
