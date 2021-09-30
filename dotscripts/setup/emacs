@@ -1,13 +1,24 @@
 #!/usr/bin/env bash
 
-source ~/.aliases
+RED=$(tput setaf 1)
+RESET=$(tput sgr0)
+GREEN=$(tput setaf 2)
+BLUE=$(tput setaf 4)
+BOLD=$(tput bold)
 
-echo "First you need chemacs"
+if ! command -v emacs &> /dev/null; then
+    echo "[${RED}ERROR${RESET}] Please install emacs first (package manager or custom build maybe?)"
+    exit 1
+fi
+
+echo "${BLUE}First you need chemacs${RESET}"
 if [ -d ~/.emacs.d ]; then
-    echo ".emacs.d already exists!"
-    echo "Directory listing:"
+    echo "[${RED}ERROR${RESET}] .emacs.d already exists!"
+
+    echo "${BOLD}Directory listing:${RESET}"
     ls -A ~/.doomemacs
-    echo "What would you like to do?"
+
+    echo "${BOLD}What would you like to do?${RESET}"
     cat <<EOF
     1. Remove dir and continue to installing chemacs to .emacs.d
     2. Backup the dir in .emacs.d.bak and install chemacs [DEFAULT]
@@ -15,48 +26,60 @@ if [ -d ~/.emacs.d ]; then
     4. Same as above but run git pull in the directory
     5. ABORT
 EOF
-read -p "1/2/3/4/5> " option
-case "$option" in
-    "1")
-        rm -rf ~/.emacs.d;;
-    "2"|"")
-        echo "Your original .emacs.d will be at .emacs.d.bak"
-        # TODO: check if .emacs.d.bak exists
-        mv ~/.emacs.d ~/.emacs.d.bak;;
-    "3")
-        echo "Skipping chemacs installation"
-        install_chemacs=no;;
-    "4")
-        cd ~/.emacs.d
-        echo "git pulling"
-        git pull
-        install_chemacs=no;;
-    "5")
-        echo "aborting :)"
-        exit;;
-    *)
-        echo "Unknown option $option"
-        exit 1;;
-esac
+    read -p "${BOLD}1/2/3/4/5${RESET}> " option
+    case "$option" in
+        "1")
+            rm -rf ~/.emacs.d;;
+        "2"|"")
+            echo "Your original .emacs.d will be at .emacs.d.bak"
+            # TODO: check if .emacs.d.bak exists
+            mv ~/.emacs.d ~/.emacs.d.bak;;
+        "3")
+            echo "Skipping chemacs installation"
+            install_chemacs=no;;
+        "4")
+            cd ~/.emacs.d
+            echo "git pulling"
+            git pull
+            install_chemacs=no;;
+        "5")
+            echo "aborting :)"
+            exit;;
+        *)
+            echo "[${RED}ERROR${RESET}] Unknown option $option"
+            exit 1;;
+    esac
 fi
 if [[ $install_chemacs != "no" ]]; then
-    echo "Installing chemacs"
+    echo "${BLUE}Installing chemacs${RESET}"
     mkdir ~/.emacs.d
     cd ~/.emacs.d
     git clone https://github.com/plexus/chemacs2 .
 fi
-read -p "Run emacs? [y/N] " run
+read -p "${BOLD}Run emacs? [y/N]${RESET} " run
 if [[ $run == "y" ]]; then
     cd
     emacs .config/emacsd/
 fi
 
-echo "Emacs and chemacs setup all done!"
+echo "${GREEN}Emacs and chemacs setup all done!${RESET}"
 
 ### DOOM ###
 
 echo
-read -p "Set up doom? [Y/n] " option
+echo "${BLUE}Now we'll setup up doom${RESET}"
+
+echo "Checking for emacs version"
+VERFULL=$(emacs --version | head -n1 | sed 's/^GNU Emacs //')
+VER=$(echo "$VERFULL" | grep -Eo '[[:digit:]]+[^ .]')
+if (( "$VER" < 27 )); then
+    echo "[${RED}ERROR${RESET}] emacs version must be 27 or higher for installing doom"
+    echo "Current is ${BOLD}${VERFULL}${RESET}"
+    echo Aborting
+    exit
+fi
+
+read -p "${BOLD}Set up doom? [Y/n]${RESET} " option
 if [[ "$option" == "n" ]]; then
     echo "Exiting"
     exit
@@ -64,9 +87,11 @@ fi
 echo "Alright we're going to install doom. This is the part where many things could go wrong :P"
 
 if [ -d ~/.doomemacs ]; then
-	echo "~/.doomemacs already exists! What would you like to do?"
-    echo "Directory listing:"
+	echo "[${RED}ERROR${RESET}] ~/.doomemacs already exists!"
+
+    echo "${BOLD}Directory listing:${RESET}"
     ls -A ~/.doomemacs
+
     echo "What would you like to do?"
     cat <<EOF
     1. remove the dir and continue to install doomemacs
@@ -75,7 +100,7 @@ if [ -d ~/.doomemacs ]; then
     4. same as above but run git pull in the dir
     5. ABORT
 EOF
-    read -p "1/2/3/4/5> " option
+    read -p "${BOLD}1/2/3/4/5${RESET}> " option
     case "$option" in
         "1")
             echo "Removing directory"
@@ -95,29 +120,34 @@ EOF
             echo "aborting"
             exit;;
         *)
-            echo "unknown option $option"
+            echo "[${RED}ERROR${RESET}] Unknown option $option"
             exit 1;;
     esac
 fi
+
 export DOOMDIR='/home/hedy/.config/doom'
 export EMACSDIR='/home/hedy/.doomemacs'
+
 if [[ "$install_doom" != no ]]; then
-    echo "Installing doom!"
+    echo "${BLUE}Installing doom!${RESET}"
     mkdir ~/.doomemacs
     cd ~/.doomemacs
     git clone https://github.com/hlissner/doom-emacs .
-    echo "Running doom sync"
+
+    echo "${BLUE}Running doom sync${RESET}"
     bin/doom sync
-    read -p "Run doom install? [Y/n] " option
+
+    read -p "${BOLD}Run doom install? [Y/n]${RESET} " option
     if [[ "$option" != n ]]; then
         echo "Running doom install with -y plus doom sync just in case"
         bin/doom -y install; bin/doom sync
     fi
+
     echo "All done! Hopefully doom would work"
 fi
-read -p "Run edoom? [Y/n] " option
+read -p "${BOLD}Run doom emacs? [Y/n]${RESET} " option
 if [[ "$option" != n ]]; then
     cd ~/.config/doom
-    edoom .
+    emacs --with-profile=doom .
 fi
 echo "Good luck, all done!"
