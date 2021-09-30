@@ -11,8 +11,10 @@ if ! command -v emacs &> /dev/null; then
     exit 1
 fi
 
-echo "${BLUE}First you need chemacs${RESET}"
+echo "First you need chemacs"
 if [ -d ~/.emacs.d ]; then
+    # Just to make the sudden output of many messages less confusing
+    echo "-------------"
     echo "[${RED}ERROR${RESET}] .emacs.d already exists!"
 
     echo "${BOLD}Directory listing:${RESET}"
@@ -51,7 +53,7 @@ EOF
     esac
 fi
 if [[ $install_chemacs != "no" ]]; then
-    echo "${BLUE}Installing chemacs${RESET}"
+    echo "> ${BLUE}Installing chemacs${RESET}"
     mkdir ~/.emacs.d
     cd ~/.emacs.d
     git clone https://github.com/plexus/chemacs2 .
@@ -67,7 +69,7 @@ echo "${GREEN}Emacs and chemacs setup all done!${RESET}"
 ### DOOM ###
 
 echo
-echo "${BLUE}Now we'll setup up doom${RESET}"
+echo "Now we'll setup up doom"
 
 echo "Checking for emacs version"
 VERFULL=$(emacs --version | head -n1 | sed 's/^GNU Emacs //')
@@ -87,12 +89,14 @@ fi
 echo "Alright we're going to install doom. This is the part where many things could go wrong :P"
 
 if [ -d ~/.doomemacs ]; then
+    # Just to make the sudden output of many messages less confusing
+    echo "-------------"
 	echo "[${RED}ERROR${RESET}] ~/.doomemacs already exists!"
 
     echo "${BOLD}Directory listing:${RESET}"
     ls -A ~/.doomemacs
 
-    echo "What would you like to do?"
+    echo "${BOLD}What would you like to do?${RESET}"
     cat <<EOF
     1. remove the dir and continue to install doomemacs
     2. backup the dir and continue to install doomemacs [DEFAULT]
@@ -129,7 +133,7 @@ export DOOMDIR='/home/hedy/.config/doom'
 export EMACSDIR='/home/hedy/.doomemacs'
 
 if [[ "$install_doom" != no ]]; then
-    echo "${BLUE}Installing doom!${RESET}"
+    echo "> ${BLUE}Installing doom${RESET}"
     mkdir ~/.doomemacs
     cd ~/.doomemacs
     git clone https://github.com/hlissner/doom-emacs .
