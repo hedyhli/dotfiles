@@ -3,7 +3,7 @@
 PATH=~/bin:$PATH
 
 setpaths() {
-	fish -c 'set -Ux fish_user_paths $fish_user_paths '"$(parse_addpath $1)"
+	fish -c 'set -Ux fish_user_paths $fish_user_paths '"$(parse_addpath)"
 }
 
 if ! command -v fish &> /dev/null; then
@@ -13,15 +13,9 @@ if ! command -v fish &> /dev/null; then
 fi
 
 echo "Setting up fish_user_paths..."
-fish -c 'set -gx fish_user_paths' # clear the variable first
-setpaths ~/.addpath
+fish -c 'set -Ux fish_user_paths' # clear the variable first
+setpaths
 echo "done"
-
-if [ -f ~/.addpath_local ]; then
-	echo "Adding paths in ~/.addpath_local..."
-	setpaths ~/.addpath_local
-	echo "done"
-fi
 
 echo Maybe add ~/local/share/man to manpath but I forgot how as of writing
 
