@@ -11,7 +11,7 @@ if [[ -d ~/local/share/aerc ]]; then
     exit
 else
     if ! [[ -d /usr/share/aerc ]]; then
-        echo Neither ~/local/share/aerc nor /use/share/aerc exists!
+        echo Neither ~/local/share/aerc nor /usr/share/aerc exists!
         echo Perhaps aerc wasnt installed properly. Please figure out where aerc share folder is
         echo then ln -s manually
         exit 1
