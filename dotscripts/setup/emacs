@@ -18,7 +18,7 @@ if [ -d ~/.emacs.d ]; then
     echo "[${RED}ERROR${RESET}] .emacs.d already exists!"
 
     echo "${BOLD}Directory listing:${RESET}"
-    ls -A ~/.doomemacs
+    ls -A ~/.emacs.d
 
     echo "${BOLD}What would you like to do?${RESET}"
     cat <<EOF
