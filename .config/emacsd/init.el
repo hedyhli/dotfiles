@@ -1,3 +1,4 @@
+(setq package-enable-at-startup nil)
 (setq create-lockfiles nil)
 
 ;; I think this saves the last cursor pos or something
@@ -8,7 +9,6 @@
 ;; Some better defaults?
 (setq make-backup-files nil)
 (setq auto-save-default nil)
-
 (setq-default major-mode 'text-mode)
 (setq sentence-end-double-space nil)
 
@@ -17,7 +17,6 @@
 (setq-default c-basic-offset  4
 	      tab-width       4
 	      indent-tabs-mode nil)
-
 ;; Some modes
 (recentf-mode 1)
 (show-paren-mode 1)
@@ -35,7 +34,6 @@
 	    (local-set-key (kbd "C-c C-c") #'eval-defun)
 	    (local-set-key (kbd "C-c C-b") #'eval-buffer)))
 
+(load (expand-file-name "packages.el" user-emacs-directory))
 ;; Customize shits in separate file, thanks
 (load (expand-file-name "custom.el" user-emacs-directory))
-;; Packages
-(load (expand-file-name "packages.el" user-emacs-directory))
