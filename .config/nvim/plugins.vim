@@ -59,6 +59,9 @@ Plug 'hedyhli/vim-bun'                          , { 'for': 'bun' }
 Plug 'https://git.rawtext.club/slope-lang/slope-vim-syntax' , { 'for': 'slope' }
 Plug 'mzlogin/vim-markdown-toc'                 , { 'for': 'markdown' }
 
+" beware, this<tab>
+" Plug 'github/copilot.vim'
+
 call plug#end()
 " Plugin declarations ends here
 
@@ -118,8 +121,13 @@ function! LightlineDiagnostics()
   " If both errors and warnings are 0 then don't display anything
   try
     " TODO: if we don't have nvim-0.5 then call some CoC function
-    let errors = luaeval('vim.lsp.diagnostic.get_count(0, [[Error]])')
-    let warnings = luaeval('vim.lsp.diagnostic.get_count(0, [[Warning]])')
+    if has('nvim-0.6')
+      let errors = luaeval('vim.diagnostic.get_count(0, [[Error]])')
+      let warnings = luaeval('vim.diagnostic.get_count(0, [[Warning]])')
+    else
+      let errors = luaeval('vim.lsp.diagnostic.get_count(0, [[Error]])')
+      let warnings = luaeval('vim.lsp.diagnostic.get_count(0, [[Warning]])')
+    endif
     if errors == 0 && warnings == 0
       return ''
     else
