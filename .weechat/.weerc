@@ -1,11 +1,108 @@
 #
-# WeeChat 3.2 (compiled on Jun 13 2021 08:57:57)
+# WeeChat 3.3 (compiled on Sep 19 2021 11:50:23)
 #
 # Use /autoconf load or cat this file to the FIFO pipe.
 #
 # For more info, see https://weechat.org/scripts/source/autoconf.py.html
 #
 
+*/set Option changed: weechat.look.day_change_message_1date "-- %d %b %Y --"
+*/set Option changed: weechat.look.day_change_message_2dates "-- %%d %%b %%Y (%d %b %Y) --"
+*/set Option changed: weechat.look.hotlist_names_merged_buffers on
+*/set Option changed: weechat.look.hotlist_prefix "H "
+*/set Option changed: weechat.look.hotlist_short_names off
+*/set Option changed: weechat.look.nick_prefix "<"
+*/set Option changed: weechat.look.nick_suffix ">"
+*/set Option changed: weechat.look.prefix_suffix ""
+*/set Option changed: weechat.completion.nick_completer ":"
+*/set Option changed: weechat.plugin.path "%h/plugins"
+*/set Option changed: weechat.bar.buflist.items "buflist"
+*/set Option changed: weechat.bar.fset.items "fset"
+*/set Option changed: weechat.bar.highmon.items "highmon"
+*/set Option changed: logger.look.backlog 1000
+*/set Option changed: logger.file.path "%h/logs/"
+*/set Option changed: buflist.format.hotlist_separator "${color:cyan},"
+*/set Option changed: fifo.file.path "%h/weechat_fifo"
+*/set Option changed: xfer.file.download_path "%h/xfer"
+*/set Option changed: irc.look.display_away off
+*/set Option changed: irc.look.server_buffer independent
+*/set Option changed: irc.look.smart_filter off
+*/set Option changed: irc.server_default.msg_quit "I rarely quits, so I'm most probably testing something"
+*/set Option changed: irc.server_default.realname "hedy"
+*/set Option changed: relay.color.status_active lightblue
+*/set Option changed: relay.color.status_auth_failed lightred
+*/set Option changed: relay.color.status_connecting yellow
+*/set Option changed: relay.color.status_waiting_auth brown
+*/set Option changed: relay.network.ssl_cert_key "%h/ssl/relay.pem"
+*/set Option changed: relay.irc.backlog_max_minutes 10080
+*/set Option changed: autosort.v3.helpers "{"core_first": "${if:${buffer.full_name}!=core.weechat}", "hashless_name": "${info:autosort_replace,#,,${info:autosort_escape,${buffer.name}}}", "irc_raw_first": "${if:${buffer.full_name}!=irc.irc_raw}", "irc_raw_last": "${if:${buffer.full_name}==irc.irc_raw}", "script_or_plugin": "${if:${script_name}?${script_name}:${plugin}}"}"
+*/set Option changed: script.scripts.download_enabled on
+*/set Option changed: script.scripts.path "%h/script"
+*/set Option changed: weechat.look.day_change_message_1date "-- %d %b %Y --"
+*/set Option changed: weechat.look.day_change_message_2dates "-- %%d %%b %%Y (%d %b %Y) --"
+*/set Option changed: weechat.look.hotlist_names_merged_buffers on
+*/set Option changed: weechat.look.hotlist_prefix "H "
+*/set Option changed: weechat.look.hotlist_short_names off
+*/set Option changed: weechat.look.nick_prefix "<"
+*/set Option changed: weechat.look.nick_suffix ">"
+*/set Option changed: weechat.look.prefix_suffix ""
+*/set Option changed: weechat.completion.nick_completer ":"
+*/set Option changed: weechat.plugin.path "%h/plugins"
+*/set Option changed: weechat.bar.buflist.items "buflist"
+*/set Option changed: weechat.bar.fset.items "fset"
+*/set Option changed: weechat.bar.highmon.items "highmon"
+*/set Option changed: logger.look.backlog 1000
+*/set Option changed: logger.file.path "%h/logs/"
+*/set Option changed: buflist.format.hotlist_separator "${color:cyan},"
+*/set Option changed: fifo.file.path "%h/weechat_fifo"
+*/set Option changed: xfer.file.download_path "%h/xfer"
+*/set Option changed: irc.look.display_away off
+*/set Option changed: irc.look.server_buffer independent
+*/set Option changed: irc.look.smart_filter off
+*/set Option changed: irc.server_default.msg_quit "I rarely quits, so I'm most probably testing something"
+*/set Option changed: irc.server_default.realname "hedy"
+*/set Option changed: relay.color.status_active lightblue
+*/set Option changed: relay.color.status_auth_failed lightred
+*/set Option changed: relay.color.status_connecting yellow
+*/set Option changed: relay.color.status_waiting_auth brown
+*/set Option changed: relay.network.ssl_cert_key "%h/ssl/relay.pem"
+*/set Option changed: relay.irc.backlog_max_minutes 10080
+*/set Option changed: autosort.v3.helpers "{"core_first": "${if:${buffer.full_name}!=core.weechat}", "hashless_name": "${info:autosort_replace,#,,${info:autosort_escape,${buffer.name}}}", "irc_raw_first": "${if:${buffer.full_name}!=irc.irc_raw}", "irc_raw_last": "${if:${buffer.full_name}==irc.irc_raw}", "script_or_plugin": "${if:${script_name}?${script_name}:${plugin}}"}"
+*/set Option changed: script.scripts.download_enabled on
+*/set Option changed: script.scripts.path "%h/script"
+*/set Option changed: weechat.look.day_change_message_1date "-- %d %b %Y --"
+*/set Option changed: weechat.look.day_change_message_2dates "-- %%d %%b %%Y (%d %b %Y) --"
+*/set Option changed: weechat.look.hotlist_names_merged_buffers on
+*/set Option changed: weechat.look.hotlist_prefix "H "
+*/set Option changed: weechat.look.hotlist_short_names off
+*/set Option changed: weechat.look.nick_prefix "<"
+*/set Option changed: weechat.look.nick_suffix ">"
+*/set Option changed: weechat.look.prefix_suffix ""
+*/set Option changed: weechat.completion.nick_completer ":"
+*/set Option changed: weechat.plugin.path "%h/plugins"
+*/set Option changed: weechat.bar.buflist.items "buflist"
+*/set Option changed: weechat.bar.fset.items "fset"
+*/set Option changed: weechat.bar.highmon.items "highmon"
+*/set Option changed: logger.look.backlog 1000
+*/set Option changed: logger.file.path "%h/logs/"
+*/set Option changed: buflist.format.hotlist_separator "${color:cyan},"
+*/set Option changed: fifo.file.path "%h/weechat_fifo"
+*/set Option changed: xfer.file.download_path "%h/xfer"
+*/set Option changed: irc.look.display_away off
+*/set Option changed: irc.look.server_buffer independent
+*/set Option changed: irc.look.smart_filter off
+*/set Option changed: irc.server_default.msg_quit "I rarely quits, so I'm most probably testing something"
+*/set Option changed: irc.server_default.realname "hedy"
+*/set Option changed: relay.color.status_active lightblue
+*/set Option changed: relay.color.status_auth_failed lightred
+*/set Option changed: relay.color.status_connecting yellow
+*/set Option changed: relay.color.status_waiting_auth brown
+*/set Option changed: relay.network.ssl_cert_key "%h/ssl/relay.pem"
+*/set Option changed: relay.irc.backlog_max_minutes 10080
+*/set Option changed: autosort.v3.helpers "{"core_first": "${if:${buffer.full_name}!=core.weechat}", "hashless_name": "${info:autosort_replace,#,,${info:autosort_escape,${buffer.name}}}", "irc_raw_first": "${if:${buffer.full_name}!=irc.irc_raw}", "irc_raw_last": "${if:${buffer.full_name}==irc.irc_raw}", "script_or_plugin": "${if:${script_name}?${script_name}:${plugin}}"}"
+*/set Option changed: script.scripts.download_enabled on
+*/set Option changed: script.scripts.path "%h/script"
+*/set Option changed: irc.server_default.msg_quit "I rarely quit (if at all), so I'm most probably testing something"
 */set weechat.look.day_change_message_1date "-- %d %b %Y --"
 */set weechat.look.day_change_message_2dates "-- %%d %%b %%Y (%d %b %Y) --"
 */set weechat.look.hotlist_names_merged_buffers on
@@ -19,6 +116,8 @@
 */set weechat.bar.buflist.items "buflist"
 */set weechat.bar.fset.items "fset"
 */set weechat.bar.highmon.items "highmon"
+*/set weechat.bar.nicklist.hidden off
+*/set weechat.bar.status.items "[time],[buffer_last_number],[buffer_plugin],buffer_number+:+buffer_name+(buffer_modes)+{buffer_nicklist_count}+buffer_zoom+buffer_filter,scroll,[lag],[hotlist],completion"
 */set logger.look.backlog 1000
 */set logger.file.path "%h/logs/"
 */set buflist.format.hotlist_separator "${color:cyan},"
@@ -27,40 +126,10 @@
 */set irc.look.display_away off
 */set irc.look.server_buffer independent
 */set irc.look.smart_filter off
-*/set irc.server_default.msg_quit "I rarely quits, so I'm most probably testing something"
+*/set irc.server_default.capabilities ""
+*/set irc.server_default.msg_quit "I rarely quit (if at all), so I'm most probably testing something"
 */set irc.server_default.realname "hedy"
-*/set relay.color.status_active lightblue
-*/set relay.color.status_auth_failed lightred
-*/set relay.color.status_connecting yellow
-*/set relay.color.status_waiting_auth brown
-*/set relay.network.ssl_cert_key "%h/ssl/relay.pem"
-*/set relay.irc.backlog_max_minutes 10080
-*/set autosort.v3.helpers "{"core_first": "${if:${buffer.full_name}!=core.weechat}", "hashless_name": "${info:autosort_replace,#,,${info:autosort_escape,${buffer.name}}}", "irc_raw_first": "${if:${buffer.full_name}!=irc.irc_raw}", "irc_raw_last": "${if:${buffer.full_name}==irc.irc_raw}", "script_or_plugin": "${if:${script_name}?${script_name}:${plugin}}"}"
-*/set script.scripts.download_enabled on
-*/set script.scripts.path "%h/script"
-*/set weechat.look.day_change_message_1date "-- %d %b %Y --"
-*/set weechat.look.day_change_message_2dates "-- %%d %%b %%Y (%d %b %Y) --"
-*/set weechat.look.hotlist_names_merged_buffers on
-*/set weechat.look.hotlist_prefix "H "
-*/set weechat.look.hotlist_short_names off
-*/set weechat.look.nick_prefix "<"
-*/set weechat.look.nick_suffix ">"
-*/set weechat.look.prefix_suffix ""
-*/set weechat.completion.nick_completer ":"
-*/set weechat.plugin.path "%h/plugins"
-*/set weechat.bar.buflist.items "buflist"
-*/set weechat.bar.fset.items "fset"
-*/set weechat.bar.highmon.items "highmon"
-*/set logger.look.backlog 1000
-*/set logger.file.path "%h/logs/"
-*/set buflist.format.hotlist_separator "${color:cyan},"
-*/set fifo.file.path "%h/weechat_fifo"
-*/set xfer.file.download_path "%h/xfer"
-*/set irc.look.display_away off
-*/set irc.look.server_buffer independent
-*/set irc.look.smart_filter off
-*/set irc.server_default.msg_quit "I rarely quits, so I'm most probably testing something"
-*/set irc.server_default.realname "hedy"
+*/set irc.server_default.sasl_fail continue
 */set relay.color.status_active lightblue
 */set relay.color.status_auth_failed lightred
 */set relay.color.status_connecting yellow
