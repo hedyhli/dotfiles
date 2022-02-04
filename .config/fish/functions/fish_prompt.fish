@@ -1,3 +1,13 @@
+# Based on top of fish's built-in "informative" shell style (see fish_config)
+# I actually forgot what it's called exactly
+#
+# Most is the same. Only thing different is that it:
+# - prints leading space because my head is tired from moving to the left in
+#   internet articles, terminal programs, and prompt
+# - changes the suffix to ">"
+# - fixes git clean state char
+# - makes base name blue
+# - print user@hostname in right prompt (see fish_right_prompt)
 function fish_prompt --description 'Write out the prompt'
     set -l last_pipestatus $pipestatus
 
@@ -35,6 +45,10 @@ function fish_prompt --description 'Write out the prompt'
         set -g __fish_git_prompt_char_invalidstate "✖"
     end
     if not set -q __fish_git_prompt_char_cleanstate
+        # Switch from the check symbol to = because this fixes the width
+        # calculation problem where where the last char at the right prompt
+        # will be wrapped to the next line.
+        # Solution from stack overflow obviously, lost link though
         set -g __fish_git_prompt_char_cleanstate "="
     end
     if not set -q __fish_git_prompt_color_dirtystate
@@ -60,21 +74,34 @@ function fish_prompt --description 'Write out the prompt'
         case root toor
             if set -q fish_color_cwd_root
                 set color_cwd $fish_color_cwd_root
+                set color_cwd_base $fish_color_cwd_root
             else
                 set color_cwd $fish_color_cwd
+                set color_cwd_base blue
             end
-            set suffix '#'
+            set suffix ' #'
         case '*'
             set color_cwd $fish_color_cwd
-            set suffix '$'
+            set color_cwd_base blue
+            set suffix '>'
     end
 
+    # NOW we print the prompt :p
+
     # PWD
+    set wd (prompt_pwd)
     set_color $color_cwd
-	echo -n (prompt_pwd)
+	if not [ $wd = '~' ]
+	    # Make basename blue just because
+        echo -n (dirname $wd)'/'
+	    set_color $color_cwd_base
+	    echo -n (basename $wd)
+    else
+        echo -n ' ~'
+    end
 	set_color normal
 
-    printf '%s ' (fish_vcs_prompt)
+    printf '%s' (fish_vcs_prompt)
 
     set -l pipestatus_string (__fish_print_pipestatus "[" "] " "|" (set_color $fish_color_status) (set_color --bold $fish_color_status) $last_pipestatus)
     echo -n $pipestatus_string
