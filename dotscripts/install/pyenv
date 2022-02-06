@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+
+install() {
+    mkdir -p ~/local/src
+    cd ~/local/src
+
+    git clone https://github.com/pyenv/pyenv.git
+    cd pyenv
+}
+
+upgrade_or_install() {
+    git fetch --tags
+    latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
+    git checkout $latestTag
+
+    echo '>> src/configure && make -C src'
+    src/configure && make -C src
+    if ! [ $? -eq 0 ]; then
+        echo Previous command failed
+        read 'Quit? [Y/n] '
+        if ! [ "$REPLY" -eq n ]; then
+            exit 1
+        fi
+        echo Wow, really? ok then
+    fi
+}
+
+
+if ! command -v pyenv &> /dev/null; then
+    install && upgrade_or_install
+else
+    # Upgrade pyenv
+    echo Pyenv is already installed, attempting to upgrade it
+    path=$(which pyenv)
+    if ! [[ $path = "$HOME/local/src/pyenv/bin/pyenv" ]]; then
+        echo Unknown installation method
+        exit 1
+    fi
+    cd ~/local/src/pyenv
+    git pull
+
+    upgrade_or_install
+fi
+
+echo ----------------------------
+echo Should be good to go
+echo Run '`dot setup fish` to update the PATHs again if needed'
+echo Then run this:
+cat <<END
+status is-login; and pyenv init --path | source
+status is-interactive; and pyenv init - | source
+END

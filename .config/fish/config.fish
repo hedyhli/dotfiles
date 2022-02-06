@@ -15,3 +15,8 @@ end
 if command -sq direnv > /dev/null
     direnv hook fish | source
 end
+
+if command -sq pyenv > /dev/null
+    status is-login; and pyenv init --path | source
+    status is-interactive; and pyenv init - | source
+end

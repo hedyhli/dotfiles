@@ -1,6 +1,7 @@
 local/bin
 .local/bin
 .doomemacs/bin
+local/src/pyenv/bin
 go/bin
 node_modules/.bin
 /usr/local/go/bin
