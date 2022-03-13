@@ -101,7 +101,7 @@ if [ -d ~/.doomemacs ]; then
     1. remove the dir and continue to install doomemacs
     2. backup the dir and continue to install doomemacs [DEFAULT]
     3. skip installation (sorta dangerous!)
-    4. same as above but run git pull in the dir
+    4. same as above but run 'git pull && bin/doom upgrade' in the dir
     5. ABORT
 EOF
     read -p "${BOLD}1/2/3/4/5${RESET}> " option
@@ -119,6 +119,8 @@ EOF
             cd ~/.doomemacs
             echo "Running git pull"
             git pull
+            echo "Running bin/doom upgrade (and sync just in case)"
+            bin/doom upgrade && bin/doom sync
             install_doom=no;;
         "5")
             echo "aborting"

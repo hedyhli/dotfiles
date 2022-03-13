@@ -1,6 +1,6 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 ;; No need to run doom sync after modifying this file
-(setq user-full-name "Hedy Li"
+(setq user-full-name "hedy"
       user-mail-address "hedy@tilde.cafe")
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
