@@ -1,11 +1,11 @@
 [core]
     editor = nv
     autocrlf = input
-    excludesfile = /home/hedy/.gitignore_global
+    excludesfile = ~/.gitignore_global
     pager = diff-so-fancy | less --tabs=4 -RFX
 
 [user]
-    name = Hedy Li
+    name = hedy
     email = hedy@tilde.cafe  # email overidden in [include]
     signingkey = B51B5A8D1B176372  # and this
 
@@ -17,6 +17,7 @@
     s = status
     c = commit
     b = branch
+    a = add
     ls-alias = config --get-regexp alias
     l = log --oneline
     ll = log
@@ -28,10 +29,14 @@
     brd = branch -d
     fame = !python3 -m gitfame
     p = push
-    cmam = commit -am
+    cmam = commit -am  # rarely used; cmav and cmv are now my best friends :>
+    cmav = commit -av
+    cmv = commit -v
     pushall = !git remote | xargs -L1 git push --all
     # Same as pushall but not for all branches
     pall = !git remote | xargs -L1 git push
+    d = diff
+    ds = diff --staged
 
 [credential]
     helper = store --file="$HOME/.git_creds"
@@ -46,7 +51,7 @@
 [commit]
     gpgsign = true
 
-# sendmail conig in [include]
+# sendmail config in [include]
 
 [include]
     path = ~/.gitconfig-local
