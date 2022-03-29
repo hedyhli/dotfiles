@@ -18,6 +18,7 @@
     c = commit
     b = branch
     a = add
+    unadd = restore --staged
     ls-alias = config --get-regexp alias
     l = log --oneline
     ll = log
@@ -29,9 +30,10 @@
     brd = branch -d
     fame = !python3 -m gitfame
     p = push
-    cmam = commit -am  # rarely used; cmav and cmv are now my best friends :>
-    cmav = commit -av
-    cmv = commit -v
+    cam = commit -am  # rarely used; cav and cv are now my best friends :>
+    cav = commit -av
+    cv = commit -v
+    coops = commit --amend --no-edit  # commit... oops!
     pushall = !git remote | xargs -L1 git push --all
     # Same as pushall but not for all branches
     pall = !git remote | xargs -L1 git push
