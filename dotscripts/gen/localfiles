@@ -4,3 +4,5 @@ echo "creating local git config"
 touch ~/.gitconfig-local
 echo "creating local fish config"
 touch ~/.config/fish/config_local.fish
+echo "creating local addpath list"
+touch ~/.addpath_local
