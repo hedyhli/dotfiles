@@ -10,7 +10,7 @@ else
     cd ~/local/src/diffsofancy
     git pull
     chmod +x ~/local/src/diffsofancy/diff-so-fancy
-    ln -s ~/local/src/diffsofancy/diff-so-fancy ~/local/bin/
+    ln -f -s ~/local/src/diffsofancy/diff-so-fancy ~/local/bin/
     cd -
 fi
 
@@ -27,7 +27,9 @@ else
         echo "upgrading vim plugins"
         vim +PluginUpdate
         echo "upgrading vundle"
-        vim +PluginUpgrade
+        cd ~/.vim/bundle/Vundle.vim
+        git pull
+        cd -
     fi
 fi
 
