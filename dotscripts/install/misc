@@ -11,7 +11,7 @@ else
     git pull
     chmod +x ~/local/src/diffsofancy/diff-so-fancy
     ln -f -s ~/local/src/diffsofancy/diff-so-fancy ~/local/bin/
-    cd -
+    cd - > /dev/null
 fi
 
 if ! command -v vim &> /dev/null; then
@@ -29,7 +29,7 @@ else
         echo "upgrading vundle"
         cd ~/.vim/bundle/Vundle.vim
         git pull
-        cd -
+        cd - > /dev/null
     fi
 fi
 
@@ -43,11 +43,19 @@ else
         tmux source ~/.tmux.conf
         echo "remember to hit <prefix> + I to install tmux plugins"
     else
-        echo "upgrade tpm"
+        echo "upgrading tpm"
         cd ~/.tmux/plugins/tpm
+        # git fetch origin
+        # FIXME: don't hard code master and origin
+        # reslog=$(git log HEAD..origin/master --oneline)
+        # if [[ "${reslog}" != "" ]] ; then
+        #     git merge origin/master # completing the pull
+        #     tmux source ~/.tmux.conf
+        #     cd - > /dev/null
+        # fi
         git pull
         tmux source ~/.tmux.conf
-        cd -
+        cd - > /dev/null
     fi
 fi
 
@@ -62,4 +70,5 @@ if ! command -v tig &> /dev/null; then
     make install prefix=~/local
     cd $prevpwd
 fi
+# TODO: Also upgrade tig
 echo "done!"
