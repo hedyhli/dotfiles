@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-echo "creating local git config"
-touch ~/.gitconfig-local
-echo "creating local fish config"
-touch ~/.config/fish/config_local.fish
-echo "creating local addpath list"
-touch ~/.addpath_local
+for file in ~/.gitconfig-local ~/.config/fish/config_local.fish ~/.addpath_local; do
+    if ! [ -f "$file" ]; then
+        echo "Creating $file"
+        touch "$file"
+    fi
+done
