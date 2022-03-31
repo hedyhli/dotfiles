@@ -91,15 +91,15 @@ function fish_prompt --description 'Write out the prompt'
     # PWD
     set wd (prompt_pwd)
     set_color $color_cwd
-	if not [ $wd = '~' ]
-	    # Make basename blue just because
+    if not [ $wd = '~' ]
+        # Make basename blue just because
         echo -n (dirname $wd)'/'
-	    set_color $color_cwd_base
-	    echo -n (basename $wd)
+        set_color $color_cwd_base
+        echo -n (basename $wd)
     else
         echo -n ' ~'
     end
-	set_color normal
+    set_color normal
 
     printf '%s' (fish_vcs_prompt)
 
