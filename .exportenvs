@@ -32,3 +32,5 @@ export XDG_USER_CONFIG_DIR="$XDG_CONFIG_HOME"
 export LD_LIBRARY_PATH="$HOME/local/lib/x86_64-linux-gnu/:$HOME/local/lib"
 export PKG_CONFIG_PATH="$HOME/local/lib/x86_64-linux-gnu/pkgconfig:$HOME/local/lib/pkgconfig"
 
+export NVM_DIR="$HOME/.config/nvm"
+

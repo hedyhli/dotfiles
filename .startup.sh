@@ -16,3 +16,8 @@ if ! command -v direnv &> /dev/null; then
     # TODO: Ignore if direnv hook retured status 1
     eval "$(direnv hook $CURSHELL)"
 fi
+
+# export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+# ^ Above is commented because it's already in ~/.exportenvs
+# Load (the) nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
