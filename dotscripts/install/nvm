@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# you don't need node on every system. for me, at least, I only use node whn
+# installing some cool CLI tool made with nodeJS. even so, sticking with the
+# node version shipped with the system is enough... but still, I do have a
+# nvm.fish function and sometimes I do find the possibility of switching node
+# versions helpful.
+#
+# BTW if your nvim is < 0.5.0 and you want to use CoC, then you'd need node.
+
+echo "Installing or updating nvm"
+
+
+# probably the least efficient way to get the latest tag, smh
+# BEGIN nonsense
+prevpwd=$PWD
+mkdir ~/tmp
+cd ~/tmp
+git clone https://github.com/nvm-sh/nvm
+cd nvm
+latest=$(git describe --tags `git rev-list --tags --max-count=1`)
+cd ..
+rm -rf nvm
+cd $prevpwd
+# END nonsense
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/"$latest"/install.sh | bash
+
+echo "Should be done now"
