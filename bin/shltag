@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
 old=$(git tag | tail -n1)
+force=""
+if [[ "$2" == "-f" ]]; then
+    force="-f"
+fi
 case $1 in
 	v*)
-		git shortlog $old..HEAD | git tag -as -F - $1
+		git shortlog $old..HEAD | git tag $force -as -F - $1
 		exit;;
 	--help)
 		echo Usage: shltag '[v<version> | --help | -o ]'
