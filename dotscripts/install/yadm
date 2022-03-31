@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+if command -v yadm &> /dev/null; then
+    if ! [ -f ~/local/src/yadm/yadm ]; then
+        echo "Attempted to upgrade yadm, but it was not installed (as a git clone) at ~/local/src/yadm/."
+        exit
+    fi
+    cd ~/local/src/yadm
+    git pull
+    cd - > /dev/null
+    echo "Upgraded yadm!"
+    echo "> yadm --version"
+    yadm --version
+    exit
+fi
+
+mkdir -p ~/local/bin
+mkdir ~/local/src
+
+git clone https://github.com/TheLocehiliosan/yadm.git ~/local/src/yadm
+ln -s ~/local/src/yadm/yadm ~/local/bin/yadm
