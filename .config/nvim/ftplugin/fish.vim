@@ -10,6 +10,6 @@ setlocal textwidth=79
 " Enable folding of block structures in fish.
 setlocal foldmethod=expr
 
-# Use spaces please
+" Use spaces please
 setlocal expandtab
 setlocal tabstop=4
