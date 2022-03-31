@@ -2,6 +2,7 @@
 
 if ! command -v nvim &> /dev/null; then
     echo "ERROR: nvim not found"
+    exit
 fi
 
 DEST=${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim"
