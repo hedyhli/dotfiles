@@ -25,9 +25,13 @@ Plug 'tpope/vim-surround'           " quoting and parenthesizing plugin
 " 2. vim-autoclose - fallback if nvim < v0.5 (the installation might not have
 " the required lua files or something)
 if has('nvim-0.5')
-  Plug 'windwp/nvim-autopairs'
+  if has('nvim-0.7')
+    Plug 'windwp/nvim-autopairs'
+  else
+    Plug 'windwp/nvim-autopairs', { 'commit': 'b7672cd' }
+  endif
 	" Best IDE autocomplete setup ever
-	Plug 'neovim/nvim-lspconfig'
+	Plug 'neovim/nvim-lspconfig', { 'commit': '10ad0cca1b' }
 	Plug 'hrsh7th/nvim-compe'
 else
   Plug 'townk/vim-autoclose'
