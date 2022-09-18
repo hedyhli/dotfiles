@@ -30,9 +30,9 @@ if has('nvim-0.5')
   else
     Plug 'windwp/nvim-autopairs', { 'commit': 'b7672cd' }
   endif
-	" Best IDE autocomplete setup ever
-	Plug 'neovim/nvim-lspconfig', { 'commit': '10ad0cca1b' }
-	Plug 'hrsh7th/nvim-compe'
+  " Best IDE autocomplete setup ever
+  Plug 'neovim/nvim-lspconfig', { 'commit': '10ad0cca1b' }
+  Plug 'hrsh7th/nvim-compe'
 else
   Plug 'townk/vim-autoclose'
   " Picking the right LSP completion method, see bottom of file for more
