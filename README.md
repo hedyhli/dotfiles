@@ -7,6 +7,8 @@ These are the setup I have on almost all machines I work in, and because I work
 on many [tildes](https://tildeverse.org), I make this set of configuration as
 cross-platform as possible.
 
+Repository: [SourceHut](https://sr.ht/~hedy/dotfiles)
+
 Mirrors: [tildegit (gitea)](https://tildegit.org/hedy/dotfiles) |
 [GitHub](https://github.com/hedyhli/dotfiles)
 
