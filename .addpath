@@ -5,3 +5,4 @@ local/src/pyenv/bin
 go/bin
 node_modules/.bin
 /usr/local/go/bin
+/usr/local/sbin/
