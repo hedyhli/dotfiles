@@ -33,6 +33,7 @@
     cam = commit -am  # rarely used; cav and cv are now my best friends :>
     cav = commit -av
     cv = commit -v
+    cm = commit -m
     coops = commit --amend --no-edit  # commit... oops!
     pushall = !git remote | xargs -L1 git push --all
     # Same as pushall but not for all branches
