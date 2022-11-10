@@ -60,3 +60,4 @@
 
 ;; Scroll margin like scrolloff in vim
 (setq scroll-margin 6)
+(setq doom-themes-treemacs-variable-pitch-face nil)
