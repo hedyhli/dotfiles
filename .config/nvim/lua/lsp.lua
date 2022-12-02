@@ -54,8 +54,15 @@ local on_attach = function(client, bufnr)
 	--buf_set_keymap('n', '<localleader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 end
 
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 -- Call setup on list of wanted servers and map local keybinds
-local servers = { "gopls", "pylsp", "bashls", "vimls" }
+local servers = {
+    "gopls",   -- go install golang.org/x/tools/gopls@latest
+    "pylsp",   -- pipx install python-lsp-server
+    "bashls",  -- sudo npm i -g bash-language-server
+    "vimls",   -- sudo npm i -g vim-language-server
+    "luau_lsp",
+}
 for _, lsp in ipairs(servers) do
 	lspconfig[lsp].setup {
 		on_attach = on_attach,
