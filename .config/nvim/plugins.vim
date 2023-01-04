@@ -8,9 +8,7 @@ call plug#begin(stdpath('data') . '/plugged')
 Plug 'dracula/vim', {'name': 'dracula'} " dracula color theme (THE most important plugin, yes)
 Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'  " Show git statuses in NERDTree
-Plug 'Yggdroot/indentLine'          " No idea what it is (too lazy to check);
-                                    " something I had since a long time ago but
-                                    " didn't want to remove
+Plug 'Yggdroot/indentLine'          " Show indentation levels with vertical bars
 Plug 'tpope/vim-fugitive'           " git stuff
 Plug 'jreybert/vimagit'             " more git stuff
 Plug 'tpope/vim-surround'           " quoting and parenthesizing plugin
@@ -167,6 +165,12 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
 " tagbar
 nnoremap <leader>tt :TagbarToggle<CR>
 let g:tagbar_width = 20
+
+" Make indentLine still work, but disable conceal characters
+" eg, hiding the asterisks for a bold text in markdown is extremely annoying
+" when you want to delete or change those asterisks.
+let g:markdown_syntax_conceal=0
+let g:vim_json_conceal=0
 
 " === LSP ===
 if has("nvim-0.5")
