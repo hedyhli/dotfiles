@@ -27,3 +27,4 @@ cd $prevpwd
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/"$latest"/install.sh | bash
 
 echo "Should be done now"
+echo "Restart your shells"
