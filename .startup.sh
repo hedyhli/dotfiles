@@ -5,8 +5,22 @@
 # For fish see ~/dotscripts/setup/fish and ~/.config/fish/config.fish
 
 # Determine current running shell.
-# unix.stackexchange.com/questions/71121/ (comment by frostschutz)
-CURSHELL="$(sed -re 's/\x0.*//' /proc/$$/cmdline)"
+# https://unix.stackexchange.com/a/72475
+if test -n "$ZSH_VERSION"; then
+  CURSHELL=zsh
+elif test -n "$FISH_VERSION"; then
+  CURSHELL=fish
+elif test -n "$BASH_VERSION"; then
+  CURSHELL=bash
+elif test -n "$KSH_VERSION"; then
+  CURSHELL=ksh
+elif test -n "$FCEDIT"; then
+  CURSHELL=ksh
+elif test -n "$PS3"; then
+  CURSHELL=unknown
+else
+  CURSHELL=sh
+fi
 
 # Add the paths
 export PATH="$(~/bin/parse_addpath | sed 's/ /:/g'):$PATH"

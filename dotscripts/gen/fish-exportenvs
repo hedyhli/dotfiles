@@ -1,18 +1,19 @@
-#!/usr/bin/env fish
+#!/usr/bin/env bash
+
+# TODO: Use aerc instead
 
 # Stubbornly translates ~/.exportenvs to ~/.exportenvs.fish
 
 echo "" > ~/.exportenvs.fish # clear the file
 
-for fileline in (cat ~/.exportenvs | sed 's/#!.\+$/#!\/usr\/bin\/env fish/')
-    set line (echo "$fileline" | sed 's/export //' | sed 's/#.\+//')
-    if test -z "$line"
+while read fileline; do
+    line=$(echo "$fileline" | sed 's/#. sed 's/export //' | sed 's/#\.\+//')
+    if [ -z "$line" ]; then
         echo "Adding '$fileline' as-is"
         echo "$fileline" >> ~/.exportenvs.fish
         continue
-    end
-    set name (echo "$line" | sed 's/=.\+$//' | sed 's/^$//')
-    set content (echo "$line" | sed 's/^.\+=//' | sed 's/\$(/(/')
-    echo "Adding $name with $content"
-    echo set -x "$name" $content >> ~/.exportenvs.fish
-end
+    fi
+	tline=$(echo "$line" | sed 's/=/ /')
+	echo Adding "$tline"
+	echo "set -x $tline" >> ~/.exportenvs.fish
+done < ~/.exportenvs
