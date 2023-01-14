@@ -8,7 +8,7 @@ fi
 
 if [[ -d ~/local/share/aerc ]]; then
     echo "local/share/aerc already exists, you're all good"
-    echo "upgrade aerc (if needed) yourself because I can\'t tell how you installed it"
+    echo "upgrade aerc (if needed) yourself because I can't tell how you installed it"
     exit
 else
     if ! [[ -d /usr/share/aerc ]]; then
