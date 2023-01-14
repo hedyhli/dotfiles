@@ -1,5 +1,6 @@
 " Set up :make to use fish for syntax checking.
-compiler fish
+" Error about unknown compiler?
+" compiler fish
 
 " set indent size
 setlocal shiftwidth=4
