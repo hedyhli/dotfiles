@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+if ! command -v pash &> /dev/null; then
+    echo "installing pash"
+    mkdir -p ~/local/src
+    cd ~/local/src
+    git clone https://github.com/dylanaraps/pash
+    echo "creating symlink"
+    ln -s ~/local/src/pash ~/local/bin/pash
+    echo "done"
+    exit
+fi
+echo "upgrading pash"
+if ! [ -e ~/local/src/pash ]; then
+    echo "ERROR: pash was not cloned at ~/local/src/pash"
+    echo "please update manually"
+    exit 1
+fi
+cd ~/local/src/pash
+git pull
+echo done!
