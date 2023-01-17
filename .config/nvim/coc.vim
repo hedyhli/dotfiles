@@ -1,4 +1,6 @@
-" This file is only executed if we don't have nvim0.5, if we do, lua LSP will
+" NOTE: To be deprecated in the future
+"
+" This file is only executed if we don't have nvim-0.5, if we do, lua LSP will
 " be used instead. See plugins.vim
 "
 " ==============

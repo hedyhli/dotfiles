@@ -28,10 +28,10 @@ local on_attach = function(client, bufnr)
 	local opts = { noremap=true, silent=true }
 
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
-	buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-	buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-	buf_set_keymap('n', 'gp', '<Cmd>lua PeekDefinition()<CR>', opts)
-	buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+	buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+	buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+	buf_set_keymap('n', 'gp', '<cmd>lua PeekDefinition()<CR>', opts)
+	buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
 	-- buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
 	buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
 	-- buf_set_keymap('n', '<localleader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
@@ -50,25 +50,63 @@ local on_attach = function(client, bufnr)
         buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
         buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
     end
-	buf_set_keymap("n", "g@", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+	buf_set_keymap("n", "g@", "<cmd>lua vim.lsp.buf.format{async=true}<CR>", opts)
 	--buf_set_keymap('n', '<localleader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 end
+
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 -- Call setup on list of wanted servers and map local keybinds
 local servers = {
-    "gopls",   -- go install golang.org/x/tools/gopls@latest
-    "pylsp",   -- pipx install python-lsp-server
+    -- "gopls",   -- go install golang.org/x/tools/gopls@latest
+    -- "pylsp",   -- pipx install python-lsp-server
     "bashls",  -- sudo npm i -g bash-language-server
     "vimls",   -- sudo npm i -g vim-language-server
-    -- "luau_lsp",
 }
 for _, lsp in ipairs(servers) do
 	lspconfig[lsp].setup {
 		on_attach = on_attach,
+		capabilities = capabilities,
 		flags = {
 			debounce_text_changes = 150,
 		}
 	}
 end
 
+lspconfig["pylsp"].setup{
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        formatCommand = {"black"},
+        pylsp = {
+            plugins = {
+                pylint = { enabled = true },
+                black = { enabled = true },
+                pyls_mypy = {
+                    enabled = true,
+                    live_mode = true,
+                },
+            },
+        }
+    }
+}
+
+-- https://github.com/hrsh7th/nvim-cmp/wiki/Language-Server-Specific-Samples#golang-gopls
+lspconfig["gopls"].setup{
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        gopls = {
+            experimentalPostfixCompletions = true,
+            analyses = {
+                unusedparams = true,
+                shadow = true,
+            },
+            staticcheck = true,
+        },
+    },
+    init_options = {
+        usePlaceholders = true,
+    }
+}

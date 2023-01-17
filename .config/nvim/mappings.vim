@@ -82,7 +82,8 @@ nnoremap <leader>tp :tabprev<cr>
 " Hooray for neovim :)))))
 " Terminal mappings
 noremap <C-`> :split term://fish<cr>i
-nnoremap <leader>t :split term://fish<cr>i
+" LOL!
+nnoremap <leader>t :echom 'Deprecated. Please use C-` instead'<cr>
 tnoremap <Esc> <C-\><C-n>
 
 " Command mode mappings
@@ -90,6 +91,7 @@ cnoremap <C-p> PlugInstall<cr>
 cnoremap <C-f> Format<cr>
 
 " Quickly apply (n)vimrc changes
+" Does not load ftplugins though
 command! ReloadConfig so $HOME/.config/nvim/init.vim
 nnoremap <Leader>rc :ReloadConfig<cr>
 

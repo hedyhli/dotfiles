@@ -2,7 +2,7 @@
 " General settings
 " ================
 
-set number
+set number          " Relative number lines can be toggled, see mappings.vim
 set mouse=a         " allow mouse for all; TODO: I rarely use mouse (duh) so maybe remove this
 set cursorline      " highlight current cursor line (this is SO GOOD)
 set showcmd         " show incomplete commands
@@ -31,10 +31,12 @@ set copyindent      " Copy indentation from previous line
 
 " Settings required from coc
 " Still keeping this if we're using lua+lsp instead of CoC because why not
-set hidden
+set hidden            " Let's you switch to another file while current is unsaved.
 set cmdheight=2
-set updatetime=300
-set shortmess+=c
+" set updatetime=300  " This is horrible - can't even finish reading those
+" messages before they disappear!
+" set shortmess+=c    " This wouldve disabled ins-completion-menu messages
+" (see :help shortmes)
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
 if has("patch-8.1.1564")
