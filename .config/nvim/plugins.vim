@@ -127,21 +127,28 @@ let g:lightline = {
       \ }
 
 function! LightlineMoreLineinfo()
-  " Like lineinfo but appends total line number:
-  " 123:4/200
-  " cur line : cur col / total lines
-  return printf("%10s", line('.').':'.col('.').'/'.line('$'))
+  " Like lineinfo but appends total line number and removes col num:
+  " 123/200 (cur line / total lines)
+  " This shows current line and total lines together at a glimpse.
+  " NOTE: Current col number can be obtained using g<C-g>.
+  " The col number is used less than current line number, plus the value
+  " updates at every keystroke, hence it doesn't make the status bar very
+  " performant, so it isn't included in the status line.
+  return printf("%7s", line('.').'/'.line('$'))
+  " Left pad so his component doesn't need dynamic widths - makes status bar
+  " appear to glitch less.
 endfunction
 
 function! LightlineFugitive()
   " Referenced from Lightline docs; I'm not 100% sure what this does but seems
   " like it just grabs the current git branch
   try
-	if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*FugitiveHead')
-	  let mark = ''  " I'm not sure what this mark does either
-	  let branch = FugitiveHead()
-	  return branch !=# '' ? mark.branch : ''
-	endif
+    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' &&
+          \ exists('*FugitiveHead')
+      let mark = ''  " I'm not sure what this mark does either
+      let branch = FugitiveHead()
+      return branch !=# '' ? mark.branch : ''
+    endif
   catch
   endtry
   return ''
@@ -165,7 +172,7 @@ function! LightlineDiagnostics()
   let infos = GetDiagnosticCount('INFO')
   let hints = GetDiagnosticCount('HINT')
   if (errors + warnings + infos + hints) == 0
-    return ''
+    return ''  " Exit early even though this case is handled below
   endif
 
   let string = ''
@@ -182,11 +189,11 @@ function! LightlineDiagnostics()
     let string = string . 'H:' . hints . ' '
   endif
 
-  return substitute(string, '\s$', '', '')
+  return substitute(string, '\s$', '', '')  " Strip trailing whitespace
 endfunction
 
 
-" === Other plugins settings ===
+" === Other plugins' settings ===
 let NERDTreeWinSize = 20
 " Open current dir in nerdtree
 noremap <Leader>nf :NERDTreeFind<CR>
