@@ -63,6 +63,7 @@ local servers = {
     -- "pylsp",   -- pipx install python-lsp-server
     "bashls",  -- sudo npm i -g bash-language-server
     "vimls",   -- sudo npm i -g vim-language-server
+    "luau_lsp",
 }
 for _, lsp in ipairs(servers) do
 	lspconfig[lsp].setup {

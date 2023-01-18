@@ -24,30 +24,43 @@ cmp.setup({
         { name = 'nvim_lsp' },
         { name = 'snippy' },
     }, {
-        { name = 'buffer' },
+        -- { name = 'buffer' },
         { name = 'calc' },
         { name = 'emoji' },
         { name = "latex_symbols" },
+        { name = 'path' },
     }),
 })
 
 -- Set configuration for specific filetype.
--- cmp.setup.filetype('gitcommit', {
---     sources = cmp.config.sources({
---         { name = 'cmp_git' },
---     }, {
---         { name = 'buffer' },
---     })
--- })
+cmp.setup.filetype('gitcommit', {
+    sources = cmp.config.sources({
+        { name = 'cmp_git' },
+    }, {
+        { name = 'buffer' },
+        { name = 'path' },
+    })
+})
+cmp.setup.filetype('fish', {
+    sources = cmp.config.sources({
+        { name = 'cmp_fish' },
+    }, {
+        -- { name = 'buffer' },
+        { name = 'calc' },
+        { name = 'emoji' },
+        { name = "latex_symbols" },
+        { name = 'path' },
+    })
+})
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't
 -- work anymore).
--- cmp.setup.cmdline({ '/', '?' }, {
---     mapping = cmp.mapping.preset.cmdline(),
---     sources = {
---         { name = 'buffer' }
---     }
--- })
+cmp.setup.cmdline({ '/', '?' }, {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+        { name = 'buffer' }
+    }
+})
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't
 -- work anymore).

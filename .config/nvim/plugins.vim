@@ -58,12 +58,15 @@ Plug 'mzlogin/vim-markdown-toc'                 , { 'for': 'markdown' }
 "    integrates wth hrsh7th/nvim-cmp
 " 2. townk/vim-autoclose   - fallback if nvim < v0.5
 if has('nvim-0.5')
+  Plug 'nvim-lua/plenary.nvim'  " Helper lua functions many plugins depend on
+
   if has('nvim-0.7')
     Plug 'windwp/nvim-autopairs'
   else
     Plug 'windwp/nvim-autopairs', { 'commit': 'b7672cd' }
   endif
   " Best IDE autocomplete setup ever
+  " Please see ./lua/complete.lua
   Plug 'neovim/nvim-lspconfig'
   Plug 'hrsh7th/cmp-nvim-lsp'
   Plug 'hrsh7th/cmp-buffer'    " Completions of words in current buffer
@@ -71,6 +74,8 @@ if has('nvim-0.5')
   Plug 'hrsh7th/cmp-cmdline'   " Fire your way through the neovim cmd line
   Plug 'hrsh7th/cmp-calc'
   Plug 'hrsh7th/cmp-emoji'     " 😏 :smirk:
+  Plug 'mtoohey31/cmp-fish', { 'for': 'fish' }
+  Plug 'petertriho/cmp-git'
   Plug 'kdheepak/cmp-latex-symbols'  " τ long live \tau
   Plug 'hrsh7th/nvim-cmp'
   " Snippets
