@@ -59,6 +59,7 @@ Plug 'mzlogin/vim-markdown-toc'                 , { 'for': 'markdown' }
 " 2. townk/vim-autoclose   - fallback if nvim < v0.5
 if has('nvim-0.5')
   Plug 'nvim-lua/plenary.nvim'  " Helper lua functions many plugins depend on
+  Plug 'mfussenegger/nvim-lint'
 
   if has('nvim-0.7')
     Plug 'windwp/nvim-autopairs'
@@ -165,7 +166,7 @@ endfunction
 
 function! LightlineDiagnostics()
   " Grabs the current buffer's diagnostics count and displays it in the
-  " format 'E:x W:x I:x H:x'
+  " format 'E:x W:x i:x h:x'
   " If all 4 types of diagnostics are 0 then don't display anything
   if !has('nvim-0.5')
     " TODO: if we don't have nvim-0.5 then call some CoC function?
@@ -188,10 +189,10 @@ function! LightlineDiagnostics()
     let string = string . 'W:' . warnings . ' '
   endif
   if infos != 0
-    let string = string . 'I:' . infos . ' '
+    let string = string . 'i:' . infos . ' '
   endif
   if hints != 0
-    let string = string . 'H:' . hints . ' '
+    let string = string . 'h:' . hints . ' '
   endif
 
   return substitute(string, '\s$', '', '')  " Strip trailing whitespace
@@ -235,6 +236,9 @@ if has("nvim-0.5")
   lua require('autopair')
   lua require('lsp')
   lua require('complete')
+  if has('nvim-0.6')
+    lua require('linting')
+  endif
 else
   if has('node')
     source $HOME/.config/nvim/coc.vim
