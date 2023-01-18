@@ -3,14 +3,14 @@
 " compiler fish
 
 " set indent size
-setlocal shiftwidth=4
+setl shiftwidth=4
 
 " Set this to have long lines wrap inside comments.
-setlocal textwidth=79
+setl textwidth=79
 
 " Enable folding of block structures in fish.
-setlocal foldmethod=expr
+setl foldmethod=expr
 
 " Use spaces please
-setlocal expandtab
-setlocal tabstop=4
+setl expandtab
+setl tabstop=4
