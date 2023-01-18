@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-for file in ~/.gitconfig-local ~/.config/fish/config_local.fish ~/.addpath_local; do
+for file in ~/.gitconfig-local ~/.config/fish/config_local.fish ~/.addpath_local ~/.config/kitty/local.conf; do
     if ! [ -f "$file" ]; then
         echo "Creating $file"
         touch "$file"
