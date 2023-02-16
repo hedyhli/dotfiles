@@ -1,3 +1,4 @@
 .vim/
 # vim-obsession
 Session.vim
+.DS_Store
