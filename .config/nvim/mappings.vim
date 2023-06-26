@@ -81,7 +81,13 @@ nnoremap <leader>tp :tabprev<cr>
 " === Misc Mappings ===
 " Hooray for neovim :)))))
 " Terminal mappings
-noremap <C-`> :split term://fish<cr>i
+if has('macunix')
+  " WTF?? (I checked using C-v in insert mode)
+  " TODO: Fix in tmux
+  noremap <C-@> :split term://fish<cr>i
+else
+  noremap <C-`> :split term://fish<cr>i
+endif
 " LOL!
 nnoremap <leader>t :echom 'Deprecated. Please use C-` instead'<cr>
 tnoremap <Esc> <C-\><C-n>

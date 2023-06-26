@@ -42,6 +42,7 @@ Plug 'blankname/vim-fish'                       , { 'for': 'fish' }
 Plug 'hedyhli/vim-bun'                          , { 'for': 'bun' }
 Plug 'https://git.rawtext.club/slope-lang/slope-vim-syntax' , { 'for': 'slope' }
 Plug 'mzlogin/vim-markdown-toc'                 , { 'for': 'markdown' }
+Plug 'leafo/moonscript-vim'                     , { 'for': 'moon' }
 
 " beware, this<tab>
 " Plug 'github/copilot.vim'

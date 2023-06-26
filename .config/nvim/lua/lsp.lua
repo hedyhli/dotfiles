@@ -70,18 +70,24 @@ for _, lsp in pairs(servers) do
   }
 end
 -- pipx install python-lsp-server
+-- ~/.local/pipx/venvs/python-lsp-server/bin/python3 -m pip install python-lsp-black pylsp-mypy python-lsp-ruff
+-- Add additional symlinks!
 lspconfig.pylsp.setup{
   on_attach = on_attach,
   capabilities = capabilities,
   settings = {
-    formatCommand = {"black"},
+    -- formatCommand = {"black"},
     pylsp = {
       plugins = {
         pylint = { enabled = true },
         black = { enabled = true },
-        pyls_mypy = {
+        pylsp_mypy = {
           enabled = true,
           live_mode = true,
+        },
+        ruff = {
+          enabled = true,
+          extendSelect = { "I" },
         },
       },
     }
