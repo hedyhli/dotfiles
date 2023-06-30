@@ -25,7 +25,7 @@
     ss = status -s
     ch = checkout
     chb = checkout -b
-    mylog = log --pretty=format:'%C(yellow)%h %C(bold blue)%an, %C(green)%ar: %C(white)"%s"'
+    mylog = log --pretty=format:'%C(white)%h %C(blue)%an  %C(green)%as  %C(white)"%s"'
     lgraph = log --oneline --graph --decorate --all
     brd = branch -d
     fame = !python3 -m gitfame
