@@ -59,6 +59,7 @@ local servers = {
   "bashls",  -- sudo npm i -g bash-language-server
   "vimls",   -- sudo npm i -g vim-language-server
   "marksman", -- https://github.com/artempyanykh/marksman/releases
+  "ccls", -- https://github.com/MaskRay/ccls/wiki
 }
 for _, lsp in pairs(servers) do
   lspconfig[lsp].setup {
@@ -76,7 +77,6 @@ lspconfig.pylsp.setup{
   on_attach = on_attach,
   capabilities = capabilities,
   settings = {
-    -- formatCommand = {"black"},
     pylsp = {
       plugins = {
         pylint = { enabled = true },
@@ -112,24 +112,23 @@ lspconfig.gopls.setup{
     usePlaceholders = true,
   }
 }
--- https://github.com/sumneko/lua-language-server/wiki/Getting-Started#command-line
--- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#sumneko_lua
-lspconfig.sumneko_lua.setup {
-  settings = {
-    Lua = {
-      runtime = {
-        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-        version = 'LuaJIT',
-      },
-      diagnostics = {
-        -- Get the language server to recognize the `vim` global
-        globals = {'vim'},
-      },
-      workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file("", true),
-      },
-      telemetry = { enable = false },
-    },
-  },
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#lua_ls
+lspconfig.lua_ls.setup {
+ settings = {
+   Lua = {
+     -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+     runtime = { version = 'LuaJIT' },
+     -- Get the language server to recognize the `vim` global
+     diagnostics = {
+       globals = {'vim'},
+     },
+     -- Make the server aware of Neovim runtime files
+     workspace = {
+       library = vim.api.nvim_get_runtime_file("", true),
+       checkThirdParty = false,
+     },
+     -- Do not send telemetry data containing a randomized but unique identifier
+     telemetry = { enable = false },
+   },
+ },
 }

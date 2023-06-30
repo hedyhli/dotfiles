@@ -8,8 +8,27 @@ cmp.setup({
     end,
   },
   window = {
-    completion = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
+    completion = {
+      border = "shadow",
+      -- winhighlight = "Normal:CmpNormal",
+    },
+    documentation = {
+      border = "shadow",
+      -- winhighlight = "Normal:CmpDocNormal",
+    }
+  },
+  formatting = {
+    format = function(entry, vim_item)
+      if vim.tbl_contains({ 'path' }, entry.source.name) then
+        local icon, hl_group = require('nvim-web-devicons').get_icon(entry:get_completion_item().label)
+        if icon then
+          vim_item.kind = icon
+          vim_item.kind_hl_group = hl_group
+          return vim_item
+        end
+      end
+      return require('lspkind').cmp_format({ with_text = false })(entry, vim_item)
+    end
   },
   mapping = cmp.mapping.preset.insert({
     ['<C-u>'] = cmp.mapping.scroll_docs(-4),
@@ -79,3 +98,7 @@ cmp.event:on(
   'confirm_done',
   cmp_autopairs.on_confirm_done()
 )
+
+-- Set the completion item color of unmatched portion to white
+-- Somehow it is set to black by default ever since I switched my config to lua.
+vim.api.nvim_set_hl(0, "CmpItemAbbr", { fg=vim.g['dracula#palette.fg'] })
