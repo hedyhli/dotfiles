@@ -16,6 +16,9 @@ Used on (aka loosely tested on):
 WSL 2 would probably be a similar experience to any of those corresponding
 linux distros.
 
+Note that WSL support of clipboard pastes is deprecated on NVIM as of
+2023-06-30.
+
 Repository: [SourceHut](https://sr.ht/~hedy/dotfiles)
 
 Mirrors: [tildegit (gitea)](https://tildegit.org/hedy/dotfiles) |
@@ -29,14 +32,15 @@ Mirrors: [tildegit (gitea)](https://tildegit.org/hedy/dotfiles) |
 * [Features](#features)
 * [Installation](#installation)
 * [Shell](#shell)
-    * [Oh My Fish](#oh-my-fish)
-    * [Fish functions](#fish-functions)
-    * [Local](#local)
+  * [Oh My Fish](#oh-my-fish)
+  * [Fish functions](#fish-functions)
+  * [Local](#local)
 * [Editor](#editor)
-    * [Vim and nvim](#vim-and-nvim)
-        * [TODO for neovim](#todo-for-neovim)
-    * [Vanilla Emacs](#vanilla-emacs)
-    * [Doom emacs](#doom-emacs)
+  * [Vim and nvim](#vim-and-nvim)
+      * [New NVIM setup (lua)](#new-nvim-setup-lua)
+    * [TODO for neovim](#todo-for-neovim)
+  * [Vanilla Emacs](#vanilla-emacs)
+  * [Doom emacs](#doom-emacs)
 * [Terminal](#terminal)
 * [Gemini and Spartan client](#gemini-and-spartan-client)
 * [TODO](#todo)
@@ -211,6 +215,9 @@ auto-pairs if I remember correctly.
 Sometimes when I change a plugin for nvim and change it for vim too, if I have
 extra time.
 
+<details>
+<summary> Legacy NVIM setup </summary>
+
 I use vim-plug as my plugin manager for nvim because it is shorter to type. And
 it installs plugins asynchronously.
 
@@ -233,19 +240,99 @@ LSP servers - See comments in `.config/nvim/lua/lsp.lua`.
 I'll probably also optimize my vim config so that it can be fast and clean -
 available for quick editting. No auto-complete, no fancy themes, just some
 must-have utilities.
+</details>
+
+##### New NVIM setup (lua)
+
+Since 2023-06-30, I've switched to `init.lua` 🎉
+
+- Plugin manager: Lazy.nvim
+- Completion: nvim-cmp
+- File explorer: nvim-tree and mini.files
+- Icons: nvim-web-devicons
+- Status line: lualine
+
+A decision like this was as a difficult one to make as projects like fish
+switching from C++ to Rust (like WTF?)
+
+But my reasoning is like theirs, my startup time has improved significantly and
+this switch came with many other advantages including opening up a world of many
+modern, speedy plugins with very useful (not exactly due to being trendy)
+functionalities.
+
+Yes, I still use dracula theme.
+
+Yes, I still don't use fancy separators for my status line.
+
+Yes, I still don't use a dashboard, nor open up a sidebar of file explorer
+automatically.
+
+I like to choose plugins that are fast, customizable, and generally does not
+have feature creep.
+
+**Regarding bufferline**
+
+lualine provides tabline support, which displays the list of buffers at the top
+of the window where vim tabs are supposed to be.
+
+If there is another plugin that provides similar customization capabilities as
+lualine but does not have tabline, I would happily switch to that.
+
+Even though I don't use tabs much, I prefer to have the list of buffers at the
+bottom on the command line rather than taking up space at the top.
+
+No, I don't wish to have hover events, "x"-close buttons, filetype icons on the
+buffer line. My nvim should be a lightweight editor that has particular useful
+capabilities from IDEs.
+
+**LSP and completion**
+
+I use the official lsp-config plus nvim-cmp.
+
+For cmp, I have sources for latex (useful symbol input), emojis (useful for
+docs), buffer (sometimes useful, mostly noisy), git (oh well), calc (also useful
+for docs), path (useful for shell scripts and docs), cmdline (avoid opening the
+browser search too much), and snippy.
+
+**Linting**
+
+Linting is triggered on save. I use nvim-lint.
+
+**Treesitter**
+
+I plan to use treesitter soon. Features I'm particularly looking for is speed,
+indent context highlight (indicates current indent level), and perhaps block
+navigation.
+
+Unfortunately it requires newer nvim releases, so I wait for a bit first, like I
+did for nvim-0.5 to become more ubiquitous for switching to lua config.
+
+**Telescope**
+
+No, I don't use telescope yet due to the version requirement.
+
+For fuzzy opening of files I have mini.files and `:e fuzzy/path/autocompletion`
+provided by nvim-cmp.
+
+Or I would use a file browser outside of neovim like ranger and open from there.
+
+No, I don't use neovim like an IDE, and no I am not one of those emacs-as-an-OS
+people. It's only an editor :)
 
 **Setup**:
-- `dotscripts/setup/nvim`
+- `dotscripts/setup/nvim` (no longer needed as I no longer use vim-plug)
 - `dotscripts/install/misc` - Includes Vundle setup together with other
 software.
 
 #### TODO for neovim
 
-- [ ] Drop CoC and \<v0.5 support
-- [ ] Use Lazy.nvim package manager
-- [ ] Replace lightline with lualine
-- [ ] Set up snippets
-- [ ] Replace NERDTree with neo-tree
+- [x] Drop CoC and \<v0.5 support
+- [x] Use Lazy.nvim package manager
+- [x] Replace lightline with lualine
+- [x] Set up snippets
+- [x] Replace NERDTree with ~neo-tree~ nvim-tree
+- [ ] Make use of Lazy loading
+- [ ] Fix ftplugin + lazy ft handle
 - [ ] Use Tree sitter
 
 
