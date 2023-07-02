@@ -3,7 +3,7 @@
 [Source (SourceHut)](https://git.sr.ht/~hedy/dotfiles) |
 [Patches](https://lists.sr.ht/~hedy/inbox) |
 [Questions/Feedback](https://lists.sr.ht/~hedy/inbox) |
-[Chat](irc://ircs.libera.chat:6697/#hedy)
+Chat ([Libera](https://web.libera.chat/#hedy)/[Tilde](https://tilde.chat/kiwi/##hedy))
 
 Welcome to my personal collection of weirdish—sometimes
 unmaintained—configuration and lose organization of cool scripts!
@@ -12,17 +12,22 @@ These are the setup I have on almost all machines I work in, and because I work
 on many [tildes](https://tildeverse.org), I make this set of configuration as
 cross-platform as possible.
 
+I also try to use `$HOME` or `~` in place of `/home/name` because on Mac it's
+`/Users/name` and my username is not always the same. This also aids
+portability for others looking to reference my config.
+
 Used on (aka loosely tested on):
+- MacOS
 - Debian/Ubuntu
 - Arch
-- MacOS
-- WSL 1 (may be deprecated soon because I no longer use that)
+- ~WSL 1~ (I no longer use that)
 
 WSL 2 would probably be a similar experience to any of those corresponding
 linux distros.
 
 Note that WSL support of clipboard pastes is deprecated on NVIM as of
-2023-06-30.
+2023-06-30. Before which, you need to have a `pbcopy`/`pbpaste` binary in path
+that handles clipboard operations with windows.
 
 Repository: [SourceHut](https://sr.ht/~hedy/dotfiles)
 
@@ -49,7 +54,6 @@ Mirrors: [tildegit (gitea)](https://tildegit.org/hedy/dotfiles) |
 * [Terminal](#terminal)
 * [Gemini and Spartan client](#gemini-and-spartan-client)
 * [TODO](#todo)
-* [Remotes](#remotes)
 
 <!-- vim-markdown-toc -->
 
@@ -398,9 +402,3 @@ configuration in there yet.
 - [x] `.addpath` file
 - [ ] Wait for nvim 0.5 to because more widely adopted in system packages, then
   do the things in [nvim TODO](#todo-for-neovim)
-
-## Remotes
-
-- [SourceHut](https://sr.ht/~hedy/dotfiles)
-- [Tildegit (gitea)](https://tildegit.org/hedy/dotfiles)
-- [GitHub](https://github.com/hedyhli/dotfiles)
