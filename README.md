@@ -1,5 +1,10 @@
 # dotfiles
 
+[Source (SourceHut)](https://git.sr.ht/~hedy/dotfiles) |
+[Patches](https://lists.sr.ht/~hedy/inbox) |
+[Questions/Feedback](https://lists.sr.ht/~hedy/inbox) |
+[Chat](irc://ircs.libera.chat:6697/#hedy)
+
 Welcome to my personal collection of weirdish—sometimes
 unmaintained—configuration and lose organization of cool scripts!
 
@@ -32,18 +37,19 @@ Mirrors: [tildegit (gitea)](https://tildegit.org/hedy/dotfiles) |
 * [Features](#features)
 * [Installation](#installation)
 * [Shell](#shell)
-  * [Oh My Fish](#oh-my-fish)
-  * [Fish functions](#fish-functions)
-  * [Local](#local)
+    * [Oh My Fish](#oh-my-fish)
+    * [Fish functions](#fish-functions)
+    * [Local](#local)
 * [Editor](#editor)
-  * [Vim and nvim](#vim-and-nvim)
-      * [New NVIM setup (lua)](#new-nvim-setup-lua)
-    * [TODO for neovim](#todo-for-neovim)
-  * [Vanilla Emacs](#vanilla-emacs)
-  * [Doom emacs](#doom-emacs)
+    * [Vim and nvim](#vim-and-nvim)
+            * [New NVIM setup (lua)](#new-nvim-setup-lua)
+        * [TODO for neovim](#todo-for-neovim)
+    * [Vanilla Emacs](#vanilla-emacs)
+    * [Doom emacs](#doom-emacs)
 * [Terminal](#terminal)
 * [Gemini and Spartan client](#gemini-and-spartan-client)
 * [TODO](#todo)
+* [Remotes](#remotes)
 
 <!-- vim-markdown-toc -->
 
@@ -392,3 +398,9 @@ configuration in there yet.
 - [x] `.addpath` file
 - [ ] Wait for nvim 0.5 to because more widely adopted in system packages, then
   do the things in [nvim TODO](#todo-for-neovim)
+
+## Remotes
+
+- [SourceHut](https://sr.ht/~hedy/dotfiles)
+- [Tildegit (gitea)](https://tildegit.org/hedy/dotfiles)
+- [GitHub](https://github.com/hedyhli/dotfiles)
