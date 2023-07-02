@@ -13,7 +13,6 @@ vim.opt.completeopt = { "menuone", "noinsert", "noselect", "preview" }
 vim.cmd [[
   filetype plugin on
   filetype indent on
-  syntax on
 ]]
 
 require('lazy').setup('plugin_spec', {
