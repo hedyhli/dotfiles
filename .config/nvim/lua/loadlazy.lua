@@ -9,4 +9,15 @@ end
 vim.opt.rtp:prepend(lazypath)
 vim.opt.completeopt = { "menuone", "noinsert", "noselect", "preview" }
 
-require('lazy').setup('plugin_spec')
+-- Fix when ft = blah included in plugin spec, syntax not loaded.
+vim.cmd [[
+  filetype plugin on
+  filetype indent on
+  syntax on
+]]
+
+require('lazy').setup('plugin_spec', {
+  install = {
+    colorscheme = { "dracula" },
+  },
+})

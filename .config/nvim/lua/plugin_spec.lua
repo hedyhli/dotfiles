@@ -1,18 +1,19 @@
 -- Used by Lazy.nvim in loadlazy.lua
 return {
-  { "dracula/vim", name = "dracula", init = function()
-    -- THE most important nvim configuration
-    vim.cmd("colorscheme dracula")
-  end },
+  {
+     "dracula/vim", name = "dracula", lazy = false, priority = 10000,
+      config = function()
+        -- THE most important nvim configuration
+        vim.cmd("colorscheme dracula")
+      end,
+  },
   {
     "nvim-tree/nvim-tree.lua",
-    config = function()
-      require("nvim-tree").setup({
-        view = { width = 20, },
-        -- renderer = { group_empty = true, },
-        -- filters = { dotfiles = true, },
-      })
-    end
+    opts = {
+      view = { width = 20, },
+      -- renderer = { group_empty = true, },
+      -- filters = { dotfiles = true, },
+    },
   },
   "tpope/vim-fugitive",
   "jreybert/vimagit",  -- emacs' magit ✨
@@ -51,28 +52,44 @@ return {
   },
   {
     "lukas-reineke/indent-blankline.nvim",
-    config = function()
-      require("indent_blankline").setup({
-        -- These require treesitter
-        -- show_current_context = true,
-        -- show_current_context_start = true,
-      })
-    end,
+    opts = {
+      -- These require treesitter
+      -- show_current_context = true,
+      -- show_current_context_start = true,
+    },
   },
 
   --- File type, syntax, language helper plugins ---
   {
     url = "https://git.sr.ht/~torresjrjr/gemini.vim",
-    -- ft = "gemini",
+    ft = "gemini",
   },
-  { "cespare/vim-toml", },
-  { "blankname/vim-fish", },
+  { "cespare/vim-toml", ft = "toml" },
+  { "blankname/vim-fish", ft = "fish",
+    config = function ()
+      vim.opt_local.shiftwidth = 4
+      vim.opt_local.textwidth = 79
+      vim.opt_local.foldmethod = "expr"
+      vim.opt_local.expandtab = true
+      vim.opt_local.tabstop = 4
+    end,
+  },
   {
     url = "https://git.rawtext.club/slope-lang/slope-vim-syntax",
-    -- ft = "slope",
+    ft = "slope",
   },
-  { "mzlogin/vim-markdown-toc", },
-  { "leafo/moonscript-vim", },
+  { "mzlogin/vim-markdown-toc", ft = "markdown",
+    config = function ()
+      vim.opt_local.textwidth = 80
+    end
+  },
+  { "leafo/moonscript-vim", ft = "moon",
+    config = function ()
+      vim.opt_local.tabstop = 2
+      vim.opt_local.softtabstop = 2
+      vim.opt_local.shiftwidth = 2
+    end
+  },
 
   ------ LSP and autopair plugins ------
   -- This plugin below is really good, but whenever I'm on a commented line,
@@ -108,7 +125,7 @@ return {
   { "hrsh7th/cmp-calc", dependencies = "hrsh7th/nvim-cmp" },
   -- 😏 :smirk:
   { "hrsh7th/cmp-emoji", dependencies = "hrsh7th/nvim-cmp" },
-  { "mtoohey31/cmp-fish", dependencies = "hrsh7th/nvim-cmp" },
+  { "mtoohey31/cmp-fish", dependencies = "hrsh7th/nvim-cmp", ft="fish" },
   { "petertriho/cmp-git", dependencies = "hrsh7th/nvim-cmp" },
   -- τ long live \tau
   { "kdheepak/cmp-latex-symbols", dependencies = "hrsh7th/nvim-cmp" },
