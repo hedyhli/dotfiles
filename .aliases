@@ -8,7 +8,7 @@ alias td=termdown
 alias hdi=howdoi
 alias bom=bombadillo
 alias syscu='systemctl --user'
-alias edoom='emacs --with-profile=doom'
+alias emacspure='emacs --with-profile=vanilla'
 alias g=git
 
 # Shortcuts
