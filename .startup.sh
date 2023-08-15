@@ -35,3 +35,4 @@ fi
 # ^ Above is commented because it's already in ~/.exportenvs
 # Load (the) nvm
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$HOME/.exportenvs" ] && \. "$HOME/.exportenvs"

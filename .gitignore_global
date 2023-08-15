@@ -2,3 +2,4 @@
 # vim-obsession
 Session.vim
 .DS_Store
+*.tags
