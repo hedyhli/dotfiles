@@ -5,9 +5,13 @@
 
 # This script is horrible right now. TODO
 
+if [[ -z "$2" ]]; then
+    ~/dotscripts/bin/"$1"
+    exit
+fi
+
 type="$1"
 target="$2"
 
-# TODO: run all scripts if target not given
 
-~/dotscripts/"$1"/"$2"
+~/dotscripts/"$type"/"$target"

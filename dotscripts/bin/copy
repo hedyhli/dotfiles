@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+while read line; do
+    IFS=':' read -ra parts <<< "$line"
+
+    sourcefile="${parts[0]% }"
+    destdir=$(sed "s#^~#$HOME#" <<<"${parts[1]# }")
+    dest="$destdir/"$(basename "$sourcefile")
+
+    echo mkdir -p "$destdir"
+    mkdir -p "$destdir"
+
+    cp -v "$sourcefile" "$dest"
+done < ~/.config/doftcopy.txt
