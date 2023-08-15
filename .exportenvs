@@ -29,7 +29,8 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_USER_CONFIG_DIR="$XDG_CONFIG_HOME"
 
 # Paths
-export LD_LIBRARY_PATH="$HOME/local/lib/x86_64-linux-gnu/:$HOME/local/lib"
+export LD_LIBRARY_PATH="$HOME/local/lib/x86_64-linux-gnu/:$HOME/local/lib:/opt/pkgsrc/opt/pkg/lib"
+export DYLD_LIBRARY_PATH="/opt/pkgsrc/opt/pkg/lib"
 export PKG_CONFIG_PATH="$HOME/local/lib/x86_64-linux-gnu/pkgconfig:$HOME/local/lib/pkgconfig"
 
 export NVM_DIR="$HOME/.config/nvm"

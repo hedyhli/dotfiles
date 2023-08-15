@@ -10,6 +10,7 @@ alias bom=bombadillo
 alias syscu='systemctl --user'
 alias emacspure='emacs --with-profile=vanilla'
 alias g=git
+alias acme='acme -f /mnt/font/FiraCode-Regular/15/font'
 
 # Shortcuts
 alias newvenv='python3 -m virtualenv venv && source ./venv/bin/activate.fish'
