@@ -48,7 +48,12 @@ return {
   {  -- Neat popout window to browse dirs and manipulate within the editor!
     "echasnovski/mini.files",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    config = function() require('mini.files').setup() end,
+    config = function()
+      require('mini.files').setup()
+      vim.api.nvim_create_user_command('MiniFiles', function()
+        MiniFiles.open()
+      end, {desc = "Calls lua MiniFiles.open()" })
+    end,
   },
   {
     "lukas-reineke/indent-blankline.nvim",
