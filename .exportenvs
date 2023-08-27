@@ -6,7 +6,7 @@ export EMACSDIR=~/.doomemacs/
 export BROWSER=w3m
 export FILEMAN=ranger
 export TERM=xterm-256color
-export GPG_TTY=/dev/tty
+export GPG_TTY=$(tty)
 
 # telemetry shit
 export DO_NOT_TRACK=1  # https://consoledonottrack.com
