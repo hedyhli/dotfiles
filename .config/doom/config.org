@@ -473,7 +473,7 @@ Note that
 - MacOS: Install MacTeX, or install through MacPorts/Homebrew
 - Ubuntu/Debian/Fedora/Gentoo: package manager
 - Windows: From website
-- NetBSD:
+- NetBSD: dvisvgm is now available on pkgsrc! Thanks Thomas
 - Or use =tlmgr= to install dvisvgm after a texlive installation.
 
 #+begin_src elisp
