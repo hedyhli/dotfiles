@@ -93,3 +93,7 @@
 (advice-add #'package-initialize :after #'update-load-path)
 (update-load-path)
 (require 'init-highlight)
+
+
+(use-package imenu-list
+  :straight t)

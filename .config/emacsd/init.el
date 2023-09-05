@@ -1,6 +1,9 @@
 (setq package-enable-at-startup nil)
 (setq create-lockfiles nil)
 
+;; Display
+(set-face-attribute 'default nil :height 160)
+
 ;; I think this saves the last cursor pos or something
 (require 'saveplace)
 (setq-default save-place t)
@@ -35,14 +38,11 @@
 	    (local-set-key (kbd "C-c C-b") #'eval-buffer)))
 
 (load (expand-file-name "packages.el" user-emacs-directory))
-;; Customize shits in separate file, thanks
-(load (expand-file-name "custom.el" user-emacs-directory))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(safe-local-variable-values '((git-commit-major-mode . git-commit-elisp-text-mode)))
  '(warning-suppress-types '((comp) (comp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
