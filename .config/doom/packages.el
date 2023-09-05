@@ -37,3 +37,18 @@
 
 (package! elpher)
 (package! eww)
+(package! math-symbol-lists)
+(package! company-emoji)
+
+(if (>= emacs-major-version 27)
+  (progn
+    (unpin! org-roam)
+    (package! org-roam-ui)
+    (package! simple-httpd)
+    (package! websocket)))
+
+(package! org-bullets
+  :recipe (:host github :repo "sabof/org-bullets"))
+
+(package! org-anki)
+(package! wrap-region)
