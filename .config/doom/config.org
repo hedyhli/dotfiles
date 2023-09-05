@@ -1,17 +1,45 @@
+#+title: Doom Emacs Config
+
+* Basics & Interface
+** Basics
+#+begin_src elisp
 (setq user-full-name "hedy"
       user-mail-address "hedy@tilde.cafe")
+#+end_src
 
+Can set to relative or nil
+#+begin_src elisp
 (setq diplay-line-numbers-type t)
+#+end_src
 
+Seriously? I just want to quit. Damn. Why confirm lol
+#+begin_src elisp
 (setq confirm-kill-emacs nil)
+#+end_src
 
+Scroll margin like =scrolloff= in vim
+#+begin_src elisp
 (setq scroll-margin 6)
+#+end_src
 
+Horizontal scrolling is pain
+#+begin_src elisp
 (global-visual-line-mode t)
+#+end_src
 
+Give it the IDE vibes
+#+begin_src elisp :tangle no
+; (run-with-timer 1 nil (lambda () (save-selected-window (treemacs))))
+#+end_src
+
+Indentation
+#+begin_src elisp
 (setq evil-shift-width 2)
 (setq tab-width 4)
+#+end_src
 
+Forgot why this was needed...
+#+begin_src elisp
 (defun set-exec-path-from-shell-PATH ()
   "Set up Emacs' `exec-path' and PATH environment variable to match that used by the user's shell.
 
@@ -25,7 +53,11 @@ This is particularly useful under Mac OS X and macOS, where GUI apps are not sta
     (setq exec-path (split-string path-from-shell path-separator))))
 
 (set-exec-path-from-shell-PATH)
+#+end_src
 
+** Window management
+
+#+begin_src elisp
 ;; https://www.emacswiki.org/emacs/ToggleWindowSplit
 (defun toggle-window-split ()
   (interactive)
@@ -53,44 +85,179 @@ This is particularly useful under Mac OS X and macOS, where GUI apps are not sta
           (if this-win-2nd (other-window 1))))))
 
 (define-key ctl-x-4-map "t" 'toggle-window-split)
+#+end_src
 
+** Font
+
+Doom exposes five (optional) variables for controlling fonts in Doom. Here are the three important ones:
+
++ =doom-font=
++ =doom-variable-pitch-font=
++ =doom-big-font= -- used for =doom-big-font-mode=; use this for presentations or streaming.
+
+They all accept either a font-spec, font string =("Input Mono-12")=, or xlfd font string. You generally only need these two:
+
+#+begin_src elisp :tangle no
+(setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "sans" :size 13))
+#+end_src
+
+Here is my configuration:
+
+#+begin_src elisp
 (setq doom-font (font-spec :family "Fira Code" :size 16 :weight 'normal)
       doom-variable-pitch-font (font-spec :family "Open Sans" :size 18 :weight 'light))
+#+end_src
 
+** Theme
+
+There are two ways to load a theme. Both assume the theme is installed and available. You can either set =doom-theme= or manually load a theme with the =load-thee= function.
+
+#+begin_src elisp
 (setq doom-theme 'doom-vibrant) ;; Doom's dracula is a bit funny
+#+end_src
 
+** Configuration macros
+
+Here are some additional functions/macros that could help you configure Doom:
+
+- =load!= for loading external *.el files relative to this one
+- =use-package!= for configuring packages
+- =after!= for running code after a package has loaded
+- =add-load-path!= for adding directories to the =load-path=, relative to this file. Emacs searches the =load-path= when you load packages with =require= or =use-package=.
+- =map!= for binding new keys
+
+
+* Evil
+#+begin_src elisp
 (setq evil-split-window-below t
       evil-vsplit-window-right t)
+#+end_src
 
+** FIXING EVIL YANK DON'T USE CLIPBOARD
+Workaround from:
+
+https://discourse.doomemacs.org/t/how-to-set-up-clipboard/3742
+
+#+begin_src elisp
 ;; don't put deleted strings to X11 clipboard
 (setq select-enable-clipboard nil)
 ;; copying and pasting selected blocks in visual mode to and from X11 clipboard
 (map! "S-C-c" #'clipboard-kill-ring-save)
 (map! "S-C-v" #'clipboard-yank)
+#+end_src
 
+How to use yank/paste and system clipboard:
+
+- Anything copied outside of emacs, paste in emacs with S-C-v
+- Yank within emacs, will not override clipboard outside emacs
+- To paste yanks within emacs, use default paste bind or use p
+- Copy sth to clipboard from emacs: Use S-C-c, paste outside with normal
+  system bind
+
+
+* Org
+#+begin_src elisp
 (setq org-directory "~/org/")
+#+end_src
 
+Note that there's another directory setting at [[Org roam & Org UI]].
+
+#+begin_src elisp
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp . t)
    (python . t)))  ;; Why jupyter when you have this JK
+#+end_src
 
+Less "contained" org plugins (in the [[Plugins]] heading):
+- [[Org roam & Org UI]]
+- [[Org anki]]
+
+Also see [[Org latex]]
+
+** Org todo
+I don't use org-agenda anymore so I won't be tangling this.
+
+#+begin_src elisp :tangle no
+(setq org-todo-keyword-faces
+      '(("NOW" . "labelColor") ("CANCELED" . "systemRedColor") ("DONE" . "selectedControlColor") ("FINISH" . "selectedControlColor") ("PAST" . "controlTextColor")
+        ("RECUR" . "systemYellowColor") ("MARK" . "systemOrangeColor") ("PLAN" . "systemBrownColor")
+        ("OVERDUE". "systemRedColor") ("DUE" . "systemYellowColor") ("STARTED" . "labelColor")))
+(setq diary-file "~/Documents/diary/diary")
+#+end_src
+
+** Org bullets
+#+begin_src elisp
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+#+end_src
 
+
+* Plugins
+** Treemacs
+#+begin_src elisp
 (after! treemacs
   (setq treemacs-width 20
         treemacs-project-follow-cleanup t)
   (treemacs-load-theme "Default"))
+#+end_src
 
+** Magit
+Maybe I don't need this anymore? (Not tangled)
+
+#+begin_src elisp :tangle no
+(after! magit
+  (custom-set-faces
+   '(magit-diff-added-highlight ((((type tty)) (:background nil))))
+   '(magit-diff-context-highlight ((((type tty)) (:background nil))))
+   '(magit-diff-file-heading ((((type tty)) nil)))
+   '(magit-diff-removed ((((type tty)) (:foreground "red"))))
+   '(magit-diff-removed-highlight ((((type tty)) (:background nil))))
+   '(magit-section-highlight ((((type tty)) nil)))
+   '(magit-diff-highlight-hunk-body ((((type tty)) (:background nil))))
+   '(magit-diff-base-highlight ((((type tty)) (:background nil))))))
+#+end_src
+
+** Elfeed
+Note that I don't use elfeed anymore
+
+#+begin_src elisp
 ;; Elfeed: Use sans for articles
 (add-hook 'elfeed-show-mode-hook
       (lambda () (buffer-face-set 'variable-pitch)))
+#+end_src
 
+** Vterm
+This is no longer tangled as I sort of realized vterm + evil is kinda good.
+
+Good old neovim terminal vibes.
+#+begin_src elisp :tangle no
+(add-hook 'vterm-mode-hook
+      (lambda () (visual-line-mode) (turn-off-evil-mode)))
+#+end_src
+
+#+begin_src elisp
 (add-hook! 'vterm-mode-hook 'evil-insert)
+#+end_src
 
+** Company
+Completion everywhere is annoying. Period.
+
+Enable with =C-x C-o= or something, check with =C-x C-h= in insert mode.
+
+#+begin_src elisp
 (after! company
   (setq company-idle-delay nil))
+#+end_src
 
+*** Inline math symbols with latex
+Completion for inserting Unicode symbols.
+
+Type: =\al<C-x RET>=, and you'll get some suggestions like aleph ℵ, alpha α; accept one and what you typed will be replaced with that symbol.
+
+As with before you should check with =C-x C-h= in insert mode for all options.
+
+#+begin_src elisp
 (require 'math-symbol-lists)
 ;; This is actually for C-\, then select input "math",
 ;; then the Ω will show in the status bar.
@@ -108,7 +275,11 @@ This is particularly useful under Mac OS X and macOS, where GUI apps are not sta
       (append math-symbol-list-basic math-symbol-list-extended))
 
 (add-to-list 'company-backends 'company-math-symbols-unicode)
+#+end_src
 
+*** Emoji
+
+#+begin_src elisp
 ;; Emoji completion
 (defun --set-emoji-font (frame)
   "Adjust the font settings of FRAME so Emacs can display emoji properly."
@@ -125,7 +296,16 @@ This is particularly useful under Mac OS X and macOS, where GUI apps are not sta
 (add-hook 'after-make-frame-functions '--set-emoji-font)
 (require 'company-emoji)
 (add-to-list 'company-backends 'company-emoji)
+#+end_src
 
+** Wrap region
+This is essentially like =vim-surround= but more modern-IDE-like, y'know, how you can select some text in VS Code, press ="= and your selection is wrapped with quotes on both ends.
+
+With evil mode on, select some text within evil's insert mode, then use quotes or brackets to surround selected region with those characters.
+
+Below are definitions of more wrappers.
+
+#+begin_src elisp
 (use-package! wrap-region
   :config
   (wrap-region-add-wrappers
@@ -136,7 +316,15 @@ This is particularly useful under Mac OS X and macOS, where GUI apps are not sta
      ("*" "*" nil (markdown-mode org-mode)))))
 
 (add-hook! ('org-mode 'markdown-mode) 'wrap-region-mode)
+#+end_src
 
+This allows you to select some text in insert mode, press =`= and it will be wrapped with backticks on both sides, for example.
+
+IMO this is friendly and customizable than vim-surround.
+
+** Org roam & Org UI
+
+#+begin_src elisp
 (use-package! org-roam
   :ensure t
   :custom
@@ -169,15 +357,31 @@ This is particularly useful under Mac OS X and macOS, where GUI apps are not sta
           org-roam-ui-follow t
           org-roam-ui-update-on-save t
           org-roam-ui-open-on-start nil))
+#+end_src
 
+** Org anki
+
+#+begin_src elisp
 (customize-set-variable 'org-anki-default-deck "Doom")
+#+end_src
 
+Below is from:
+
+[[https://jeffkreeftmeijer.com/org-unable-to-resolve-link]]
+
+#+begin_src elisp
 (defun my/org-anki-sync-fix-refs ()
   "Fix 'Unable to resolve link: XXX'"
   (interactive)
   (org-id-update-id-locations
    (directory-files-recursively org-roam-directory "\\.org$")))
+#+end_src
 
+*** Templates
+
+org-anki template for card front side with breadcumb of org file headings and a link to open the file in emacs from where the card is created from.
+
+#+begin_src elisp
 (customize-set-variable 'org-anki-field-templates
  '(("Basic"
     ("Front" . (lambda (it)        ;; strip text-properties
@@ -201,11 +405,99 @@ This is particularly useful under Mac OS X and macOS, where GUI apps are not sta
                             "</div>"
                             "<h3>%s</h3>")
                     breadcrumb path it (org-get-heading)))))))))
+#+end_src
 
+Note that:
+
+The org heading originally was placed at the flashcard "front", but after some other configuration I made, it miraculously no longer showed on the flashcard...
+
+So I modified the field template above to include the =<h3>(org-get-heading)</h3>= to fetch the front of card myself.
+
+*Example AppleScript for =emacs://= handler*
+
+Notice how in my field template I included an "Open file" link that links to the org file that the flashcard is created from, preceded by a =emacs://= scheme. Below is an example of how you can make this work so that clicking on the link would open the file in emacs for MacOS.
+
+#+begin_src AppleScript :tangle no
+on open location thisURL
+    set thefile to (text 9 thru (count thisURL) of thisURL)
+    do shell script "/usr/local/bin/emacsclient -c " & thefile
+    return
+end open location
+#+end_src
+
+You can save this as a =.scpt=, open with Script Editor, export -> as Application. Then configure the default app for =emacs://= to point to the Application you just saved.
+
+AppleScript is rather delightful isn't it (not /s)
+
+*Example CSS styling for anki card top section*
+
+Top section as in the "Title: Heading1 > Heading2" and "Open file" line.
+
+Displays the entire meta in one line with breadcumb on left, "Open file" on right.
+
+#+begin_src css :tangle no
+#meta {
+  font-size: 1rem;
+}
+#breadcrumb {
+  display: inline-block;
+}
+#open-file {
+  display: inline-block;
+  float: right;
+}
+#+end_src
+
+*Example CSS for internal org links within anki*
+
+If you're using org or org-roam links within flashcards to be synced with Anki, clicking on them would not be desirable when doing flashcards.
+
+The below snippets selects all links other than the =#meta= section, and make them look muted, also unclickable.
+
+#+begin_src css :tangle no
+a:not(#meta a) {
+  color: initial;
+  text-decoration: none;
+  font-size: 1rem;
+  pointer-events: none;
+}
+#+end_src
+
+Note that
+- Setting color to initial allows anchor links to have the same color as normal flashcard text
+- font-size setting would make it smaller than normal text, and same size as the =#meta= section
+- The pointer-events setting makes it unclickable
+
+** Org latex
+*Installing dvisvgm*
+- MacOS: Install MacTeX, or install through MacPorts/Homebrew
+- Ubuntu/Debian/Fedora/Gentoo: package manager
+- Windows: From website
+- NetBSD:
+- Or use =tlmgr= to install dvisvgm after a texlive installation.
+
+#+begin_src elisp
 (setq org-latex-create-formula-image-program 'dvisvgm)
 (plist-put org-format-latex-options :scale 4.0)
 (plist-put org-format-latex-options :background nil)
+#+end_src
 
+*** TODO Scaling latex SVG overlays along with text
+Unfixed issue :'/
+
+Headings below are for my attempts to debug it...
+
+The current status is basically, I've set the :scale to be 4.0 to make it
+satisfactorily readable when generating the preview for the first time. Using
+dvisvgm also allows it to be sharper. However I cannot find ANY method to scale
+the previews along with text, NOR scale up individual SVG previews.
+
+I did try with Vanilla emacs too. No luck.
+
+I have since given up and have decided to let this issue sit for prosperity.
+
+**** For testing
+#+begin_src elisp
 (defun my/scale-current-overlay ()
   (interactive)
   (pcase major-mode
@@ -233,7 +525,20 @@ This is particularly useful under Mac OS X and macOS, where GUI apps are not sta
          (plist-put
           (cdr (overlay-get ov 'display))
           :scale 7.0))))
+#+end_src
 
+\begin{equation}
+Hello \times world!
+\end{equation}
+
+Here is an aleph $\lim\limits_{\aleph\to\infty}(blah) = BLAH$
+
+$\lim\limits_{N\to\infty} (\sum\limits_{i=0}^N else \space if) = else$
+
+**** list overlays at
+Used this when I spent HOURS figuring out how to make the latex SVG preview overlays sync with text scaling
+
+#+begin_src elisp
 (defun list-overlays-at (&optional pos)
       "Describe overlays at POS or point."
       (interactive)
@@ -264,7 +569,59 @@ This is particularly useful under Mac OS X and macOS, where GUI apps are not sta
               (when (overlay-get o p)
                 (insert (format " %15S: %S\n" p (overlay-get o p))))))
           (pop-to-buffer buf))))
+#+end_src
 
+**** (not working) Solution from JDRiverRun
+https://www.reddit.com/r/orgmode/comments/165zeuu/delighted_by_org_svg_preview/
+
+not tangled as it doesn't work for me.
+
+#+begin_src elisp :tangle no
+(defun my/resize-org-latex-overlays ()
+  (cl-loop for o in (car (overlay-lists))
+     if (eq (overlay-get o 'org-overlay-type) 'org-latex-overlay)
+     do (plist-put (cdr (overlay-get o 'display))
+		   :scale (expt text-scale-mode-step
+				text-scale-mode-amount))))
+(add-hook 'text-scale-mode-hook #'my/resize-org-latex-overlays nil t)
+#+end_src
+
+**** (not working) Solution from Karthinks
+https://karthinks.com/software/scaling-latex-previews-in-emacs/
+
+neither did this
+
+#+begin_src elisp :tangle no
+(defun my/text-scale-adjust-latex-previews ()
+  "Adjust the size of latex preview fragments when changing the
+buffer's text scale."
+  (pcase major-mode
+    ('latex-mode
+     (dolist (ov (overlays-in (point-min) (point-max)))
+       (if (eq (overlay-get ov 'category)
+               'preview-overlay)
+           (my/text-scale--resize-fragment ov))))
+    ('org-mode
+     (dolist (ov (overlays-in (point-min) (point-max)))
+       (if (eq (overlay-get ov 'org-overlay-type)
+               'org-latex-overlay)
+           (my/text-scale--resize-fragment ov))))))
+
+(defun my/text-scale--resize-fragment (ov)
+  (overlay-put
+   ov 'display
+   (cons 'image
+         (plist-put
+          (cdr (overlay-get ov 'display))
+          :scale (+ 1.0 (* 0.25 text-scale-mode-amount))))))
+#+end_src
+
+** Eshell
+Significant portions of this section is credited to:
+https://github.com/howardabrams/hamacs/blob/main/ha-eshell.org
+
+*** Opening files
+#+begin_src elisp
 (defun eshell-fn-on-files (fun1 fun2 args)
   "Call FUN1 on the first element in list, ARGS.
 Call FUN2 on all the rest of the elements in ARGS."
@@ -276,7 +633,9 @@ Call FUN2 on all the rest of the elements in ARGS."
     ;; Return an empty string, as the return value from `fun1'
     ;; probably isn't helpful to display in the `eshell' window.
     ""))
+#+end_src
 
+#+begin_src elisp
 (defun eshell/ff (&rest files)
   "find-file on first arg, find-file-other-window on rest"
   (eshell-fn-on-files 'find-file 'find-file-other-window files))
@@ -284,25 +643,49 @@ Call FUN2 on all the rest of the elements in ARGS."
 (defun eshell/f (&rest files)
   "Edit one or more files in another window."
   (eshell-fn-on-files 'find-file-other-window 'find-file-other-window files))
+#+end_src
 
+In case I somehow end up in (n)vi(m), I can possibly use my vim's <leader>q to quit, but still.
+
+Oh yeah oopsie doopsie if I end up in nvim, since my leader there is SPC, same as doom emacs... Oh Noes!
+
+#+begin_src elisp
 (defalias 'eshell/emacs 'eshell/ff)
 (defalias 'eshell/vi 'eshell/ff)
 (defalias 'eshell/vim 'eshell/ff)
 (defalias 'eshell/nv 'eshell/ff)
 (defalias 'eshell/nvim 'eshell/ff)
+#+end_src
 
+#+begin_src elisp
 (defun eshell/less (&rest files)
   "view-file-other-window"
   (view-file-other-window files))
 
 (defalias 'eshell/more 'eshell/less)
+#+end_src
 
+*** Aliases
+Some aliases >>> =eshell-aliases-file=
+#+begin_src shell :tangle ~/.doomemacs/.local/cache/eshell/alias
+alias ll exa -lahg --git -t modified
+alias clr clear 1
+alias x exit
+alias d dired $1
+#+end_src
+
+Kill window on exit
+https://stackoverflow.com/questions/51867693/emacs-eshell-kill-window-on-exit#51867960
+#+begin_src elisp
 (defun my/eshell-exit-with-window ()
   (when (not (one-window-p))
     (delete-window)))
 
 (advice-add 'eshell-life-is-too-much :after 'my/eshell-exit-with-window)
+#+end_src
 
+*** Useful functions
+#+begin_src elisp
 (defun eshell/do (&rest args)
   "Execute a command sequence over a collection of file elements.
 Separate the sequence and the elements with a `::' string.
@@ -324,7 +707,10 @@ command. So the following works as expected:
              (cmd  (car form))
              (args (cdr form)))
         (eshell-named-command cmd args)))))
+#+end_src
 
+Clog up our M-x
+#+begin_src elisp
 (defun eshell--buffer-from-dir (dir)
   "Return buffer name of an Eshell based on DIR."
   (format "*eshell: %s*"
@@ -374,7 +760,9 @@ than one eshell window."
     (goto-char (point-max))
     (insert command)
     (eshell-send-input)))
+#+end_src
 
+#+begin_src elisp
 (defun execute-command-on-file-buffer (cmd)
   "Executes a shell command, CMD, on the current buffer's file.
 Appends the filename to the command if not specified, so:
@@ -399,7 +787,10 @@ See `eshell-display-modifier-help' for details on that."
                           (concat cmd " " file-name)))))
     (message "Executing: %s" full-cmd)
     (eshell-command full-cmd)))
+#+end_src
 
+*** Use package - eshell settings
+#+begin_src elisp
 (use-package! eshell
   ;;:type built-in
   ;;:custom (eshell-banner-message '(ha-eshell-banner))
@@ -419,3 +810,4 @@ See `eshell-display-modifier-help' for details on that."
         ;; executables `chmod' and `find' and their Emacs counterpart?
         ;; Me neither, so this makes it act a bit more shell-like:
         eshell-prefer-lisp-functions nil))
+#+end_src
