@@ -348,28 +348,29 @@ software.
 
 ### Vanilla Emacs
 
-I use chemacs2 for switching emacs profiles and it allows me to use both
-vanilla emacs and doom emacs at the same time. See
+I use chemacs2 for switching emacs profiles (emacs < v29) and it allows me to
+use both vanilla emacs and doom emacs at the same time. See
 [`.emacs-profiles.el`](.emacs-profiles.el).
 
-**Setup**: `dotscripts/setup/emacs`. This script is prettty heavily tested and
+**Setup**: `dotscripts/setup/emacs`. This script is pretty heavily tested and
 it should set up everything you need to start using both emacs and doom
-normally. It installs chemacs and doom if not already.
+normally. It installs chemacs and doom if not already installed.
 
-Configuration for Vanilla should probably work for version 26 too, but I use 27+
-on almost all my machines.
+My main emacs is vanilla emacs, the configuration lives at `~/.config/emacs`. My
+primary emacs version is Emacs 29, because I need better SVG support. I use
+Emacs 28 sometimes for testing.
 
-Stuff in `.config/emacsd` are largely copied from various emacs distributions to
-suit my needs.  The [`modules`](.config/emacsd/modules) directory is
-work-in-progress.
+Configuration for both Vanilla and Doom emacs are Literate (org files that get
+exported "tangled" to indicated Elisp destinations).
 
 ### Doom emacs
 
 Doom itself requires at least emacs 27+ and git 2.23+ among other things. More
 info on the [github repo](https://github.com/hlissner/doom-emacs).
 
-There isn't much personal configuration in `.config/doom` yet, it's mostly just
-enabling or disabling doom modules and add some packages.
+2023: I started to use Doom a lot more, before switching to primarily vanilla
+emacs in 2023-09. The configuration there is somewhat up to date, but not
+guaranteed as I don't really use doom anymore.
 
 The emacs directory would be at `.doomemacs` (because `.emacs.d` is for
 chemacs).
