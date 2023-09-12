@@ -1,6 +1,6 @@
 #+title: Packages.El Literate
 :PROPERTIES:
-:tangle:   ~/.config/emacsd/packages.el
+:tangle:   ~/.config/emacs/packages.el
 :END:
 #+auto_tangle: t
 
@@ -235,8 +235,8 @@ Enjoy emacs' editting key chords while there's still a glimmer of space in your 
   :hook (org-mode . org-auto-tangle-mode)
   :config
   (setq org-auto-tangle-babel-safelist '(
-                                         "~/.config/emacsd/packages.el"
-                                         "~/.config/emacsd/init.el")))
+                                         "~/.config/emacs/packages.el"
+                                         "~/.config/emacs/init.el")))
 #+END_SRC
 
 
@@ -487,14 +487,14 @@ With references from System Crafter's crafted-emacs configuration
 #+BEGIN_SRC emacs-lisp :tangle yes
 (use-package cape
   ;;:after math-symbol-lists
-  ;;:elpaca (:repo "~/projects/cape/")
-  :elpaca (:repo "hedyhli/cape")
+  :elpaca (:repo "~/projects/cape/")
+  ;;:elpaca (:repo "hedyhli/cape")
   ;;:defer t
   :config
   ;; Add useful defaults completion sources from cape
   ;; (add-to-list 'completion-at-point-functions #'cape-file)
   ;; ;;(add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-tex)
+  ;;(add-to-list 'completion-at-point-functions #'cape-tex)
   (add-to-list 'completion-at-point-functions #'cape-emoji)
 
   ;; Silence the pcomplete capf, no errors or messages!
@@ -511,10 +511,14 @@ With references from System Crafter's crafted-emacs configuration
   ;; (define-key evil-insert-state-map (kbd "C-x C-$") (cape-company-to-capf #'company-math-symbols-unicode))
   ;; (define-key evil-insert-state-map (kbd "C-x C-:") (cape-company-to-capf #'company-emoji))
 
+  (cape-char--define math "math" ?\\)
+  (add-to-list 'completion-at-point-functions #'cape-math)
+
   :hook (eshell-mode-hook . (lambda () (setq-local corfu-quit-at-boundary t
                                                    corfu-quit-no-match t
                                                    corfu-auto nil)
                               (corfu-mode)))
+
 )
 #+END_SRC
 

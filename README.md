@@ -29,6 +29,13 @@ Note that WSL support of clipboard pastes is deprecated on NVIM as of
 2023-06-30. Before which, you need to have a `pbcopy`/`pbpaste` binary in path
 that handles clipboard operations with windows.
 
+## CHANGELOG
+
+- 2023-09: I've switched from neovim to Doom, and to my own Emacs!
+- 2023-06: (nvim) Switched from vim to full-lua set up
+
+---
+
 Repository: [SourceHut](https://sr.ht/~hedy/dotfiles)
 
 Mirrors: [tildegit (gitea)](https://tildegit.org/hedy/dotfiles) |
@@ -71,7 +78,7 @@ Mirrors: [tildegit (gitea)](https://tildegit.org/hedy/dotfiles) |
 - Editor:
    - Vim ([`.vimrc`](.vimrc))
    - Neovim ([`.config/nvim`](.config/nvim))
-   - Emacs ([`.config/emacsd`](.config/emacsd)) (with chemacs: [.emacs-profiles.el](.emacs-profiles.el))
+   - Emacs ([`.config/emacs`](.config/emacs)) (with chemacs: [.emacs-profiles.el](.emacs-profiles.el))
    - Doom ([`.config/doom`](.config/doom))
 - Gemini client:
    - [amfora](https://github.com/makeworld-the-better-one/amfora) ([`.config/amfora`](.config/amfora))
@@ -202,7 +209,7 @@ Other local files recognized:
 ## Editor
 
 - Vim: only for systems that don't have neovim installed
-- Neovim: I use this as my primary editor and IDE
+- Neovim: used to be my primary editor, but now **I've switched to emacs** 😈
 - Emacs: just to play around and learn elisp
 - Doom: looking for IDE features and inspiration for my nvim setup. I might
   drop this soon - takes so much time and resources to set it up and maintain
@@ -336,6 +343,8 @@ software.
 
 #### TODO for neovim
 
+(I might never complete these since I recently switched to emacs)
+
 - [x] Drop CoC and \<v0.5 support
 - [x] Use Lazy.nvim package manager
 - [x] Replace lightline with lualine
@@ -398,8 +407,10 @@ configuration in there yet.
 
 ## TODO
 
-- [ ] add LSP and completion to emacs
+- [x] add LSP and completion to emacs
 - [x] (n)vim mapping for gg=<backtick><backtick> (not needed anymore since we had `g@` mapping for LSP format)
 - [x] `.addpath` file
-- [ ] Wait for nvim 0.5 to because more widely adopted in system packages, then
+- [x] Wait for nvim 0.5 to because more widely adopted in system packages, then
   do the things in [nvim TODO](#todo-for-neovim)
+- [ ] Flesh out emacs config to support *most* of my needs for programming and writing
+- [ ] (planning) Drop Doom support

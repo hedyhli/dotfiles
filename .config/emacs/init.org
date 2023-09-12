@@ -79,27 +79,109 @@ I've adapted it to automatically use =emacs-lisp :tangle yes= if the file curren
 
 Otherwise (editing any other files) it will read input from the minibuffer for text to insert after the =#+BEGIN_SRC=. The original function used ido completing read with a list of known code types and I've nuked it and just let the user append what ever they want after =#+BEGIN_SRC=: this could be useful for adding =:stuff like this= after the code-type.
 
-#+begin_src emacs-lisp :tangle yes
-(defun ./org-insert-src ()
-  "Insert SRC Block with prompted code type.
+Recently I've also added ability to wrap a selected region with src instead, if a region is active, without editting it afterwards.
+
+This is useful when I transfer org documents written with fixed-pitch font environment where I relied on plain text formatting, so when editting in variable-pitch font I can wrap it within src blocks to have it be formatted properly.
+
+Most-recently I've also added deleting an empty src block (created by =./org-insert-src= itself) if point is within a src block with no content other than a single empty line.
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(defun ./org-insert-src (beg end)
+  "Insert (or wrap region with, or cancel) src block.
+
+If cursor currently on an empty line, it is wrapped in src block, with
+no other content in the src block other than the empty line, then the
+src block together with the line after it (if empty) is deleted. This
+undoes the effect of ./org-insert-src without active region, and
+cancelling org-edit-src with C-c C-k.
+
+Code type is prompted and `org-edit-src-code' called only for insert,
+not for wrap.
 
 Uses 'emacs-lisp :tangle yes' if currently in user-emacs-directory."
-  (interactive)
-  (let ((code-type (if (string=
-                        (file-truename user-emacs-directory)
-                        (file-name-directory (buffer-file-name)))
-                       "emacs-lisp :tangle yes"
-                     (read-from-minibuffer "#+BEGIN_SRC "))))
-  (progn
-    (newline)
-    (insert (format "#+BEGIN_SRC %s\n" code-type))
-    (newline)
-    (insert "#+END_SRC\n")
-    (previous-line 2)
-    (org-edit-src-code))))
+  (interactive (if (use-region-p)
+                   (list (region-beginning) (region-end))
+                 (list (point-min) (point-min))))
+  (let ((selection (buffer-substring-no-properties beg end))
+        (code-type '(if (string=
+                         (file-truename user-emacs-directory)
+                         (file-name-directory (buffer-file-name)))
+                        "emacs-lisp :tangle yes"
+                      (read-from-minibuffer "#+BEGIN_SRC "))))
+    (if (< (length selection) 2)
+        (if (./org-empty-src-p)
+            ;; Delete empty src block and exit
+            (progn
+              (previous-line)
+              (delete-line) ;; Newline also deleted
+              (delete-line)
+              (delete-line)
+              ;; Delete empty line inserted by ./org-insert-src itself
+              (if (./match-line-p "")
+                  (delete-line))) 
+          ;; Otherwise:
+          ;; Insert src block with given code type and edit
+          (progn
+            (setq code-type (eval code-type))
+            (deactivate-mark)
+            (beginning-of-line)
+            (newline)
+            (insert (format "#+BEGIN_SRC %s\n" code-type))
+            (newline)
+            (insert "#+END_SRC\n")
+            (previous-line 2)
+            (org-edit-src-code)))
+      ;; Wrap selected region
+      ;;(setq code-type (eval code-type))
+      (goto-char beg)
+      (previous-line) (end-of-line)
+      (newline)
+      (insert "#+BEGIN_SRC ")
+      ;; save-excursion doesn't seem to work here
+      (goto-char (+ end 11)) (end-of-line)
+      (newline)
+      (insert "#+END_SRC")
+      ;; FIXME: putting cursor at the begin src part afterwards doesn't work
+      (re-search-backward "^\\s-*#\\+BEGIN_SRC")
+      (end-of-line))))
+
+(defun ./match-line-p (regexp &optional move keep-pos start)
+  "Wrapper around string-match-p to use contents of current line.
+
+Returns whether current line, after moving down by MOVE lines, can be
+matched with REGEXP.
+
+If REGEXP is an empty string, return t for empty line, nil otherwise.
+MOVE argument is passed to `next-line'.
+
+If REGEXP and is non-nil, REGEXP and START is passed to
+`string-match-p' with no changes, and its return-value is returned
+as-is.
+
+MOVE argument is passed as-is to `next-line' immediately.
+
+If KEEP-POS is non-nil, pass MOVE argument to `previous-line' after obtaining
+contents of the required line."
+  (next-line move)
+  (let ((line (buffer-substring-no-properties (line-beginning-position) (line-end-position))))
+    (if keep-pos
+        (previous-line move))
+    (if (= (length regexp) 0)
+        (if (= (length line) 0)
+            t nil)
+      (string-match-p regexp line start))))
+
+(defun ./org-empty-src-p ()
+  "Return whether point is within a org src block with a single empty line."
+  (let ((line))
+    (save-excursion
+      (if (./match-line-p "^\\s-*#\\+begin_src" -1)
+          (if (./match-line-p "" +1)
+              (if (./match-line-p "^\\s-*#\\+end_src" +1)
+                  t nil) nil) nil))))
 #+END_SRC
 
-This is also another helper function for editing my literate configuration. It uses the =#+BEGIN_SRC= content from the current code block (that the cursor is in) and splits the block into two by inserting =#+END_SRC= and copying whatever =#+BEGIN_SRC <...>= that was used in the current code block.
+Below is also another helper function for editing my literate configuration. It uses the =#+BEGIN_SRC= content from the current code block (that the cursor is in) and splits the block into two by inserting =#+END_SRC= and copying whatever =#+BEGIN_SRC <...>= that was used in the current code block.
 
 - ~save-excursion~ allows execution of some expressions then move the point back to where it was (before the save-excursion call).
 - Note that the ~re-search-backward~ seems to be case-insensitive, surprisingly, so both =BEGIN_SRC= and =begin_src= could be matched.
