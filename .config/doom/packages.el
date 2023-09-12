@@ -52,3 +52,7 @@
 
 (package! org-anki)
 (package! wrap-region)
+(package! eat)
+(package! pos-tip
+  :recipe (:source melpa))
+(package! company-quickhelp)

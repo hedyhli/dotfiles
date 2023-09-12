@@ -17,8 +17,8 @@ Seriously? I just want to quit. Damn. Why confirm lol
 (setq confirm-kill-emacs nil)
 #+end_src
 
-Scroll margin like =scrolloff= in vim
-#+begin_src elisp
+Scroll margin like =scrolloff= in vim (not tangled)
+#+begin_src elisp :tangle no
 (setq scroll-margin 6)
 #+end_src
 
@@ -53,6 +53,11 @@ This is particularly useful under Mac OS X and macOS, where GUI apps are not sta
     (setq exec-path (split-string path-from-shell path-separator))))
 
 (set-exec-path-from-shell-PATH)
+#+end_src
+
+** UI
+#+begin_src elisp
+(setq doom-modeline-height 40)
 #+end_src
 
 ** Window management
@@ -248,6 +253,50 @@ Enable with =C-x C-o= or something, check with =C-x C-h= in insert mode.
 #+begin_src elisp
 (after! company
   (setq company-idle-delay nil))
+(after! company-quickhelp
+  (setq company-quickhelp-mode t))
+#+end_src
+
+#+begin_src elisp
+(use-package! company
+  :config
+  (setq company-tooltip-align-annotations nil)
+  (setq company-icon-size '(auto-scale . 64))
+  (setq company-box-icons-all-the-icons
+        (let ((all-the-icons-scale-factor 10.0))
+          `((Unknown       . ,(all-the-icons-material "find_in_page"             :face 'all-the-icons-purple))
+            (Text          . ,(all-the-icons-material "text_fields"              :face 'all-the-icons-green))
+            (Method        . ,(all-the-icons-material "functions"                :face 'all-the-icons-red))
+            (Function      . ,(all-the-icons-material "functions"                :face 'all-the-icons-red))
+            (Constructor   . ,(all-the-icons-material "functions"                :face 'all-the-icons-red))
+            (Field         . ,(all-the-icons-material "functions"                :face 'all-the-icons-red))
+            (Variable      . ,(all-the-icons-material "adjust"                   :face 'all-the-icons-blue))
+            (Class         . ,(all-the-icons-material "class"                    :face 'all-the-icons-red))
+            (Interface     . ,(all-the-icons-material "settings_input_component" :face 'all-the-icons-red))
+            (Module        . ,(all-the-icons-material "view_module"              :face 'all-the-icons-red))
+            (Property      . ,(all-the-icons-material "settings"                 :face 'all-the-icons-red))
+            (Unit          . ,(all-the-icons-material "straighten"               :face 'all-the-icons-red))
+            (Value         . ,(all-the-icons-material "filter_1"                 :face 'all-the-icons-red))
+            (Enum          . ,(all-the-icons-material "plus_one"                 :face 'all-the-icons-red))
+            (Keyword       . ,(all-the-icons-material "filter_center_focus"      :face 'all-the-icons-red))
+            (Snippet       . ,(all-the-icons-material "short_text"               :face 'all-the-icons-red))
+            (Color         . ,(all-the-icons-material "color_lens"               :face 'all-the-icons-red))
+            (File          . ,(all-the-icons-material "insert_drive_file"        :face 'all-the-icons-red))
+            (Reference     . ,(all-the-icons-material "collections_bookmark"     :face 'all-the-icons-red))
+            (Folder        . ,(all-the-icons-material "folder"                   :face 'all-the-icons-red))
+            (EnumMember    . ,(all-the-icons-material "people"                   :face 'all-the-icons-red))
+            (Constant      . ,(all-the-icons-material "pause_circle_filled"      :face 'all-the-icons-red))
+            (Struct        . ,(all-the-icons-material "streetview"               :face 'all-the-icons-red))
+            (Event         . ,(all-the-icons-material "event"                    :face 'all-the-icons-red))
+            (Operator      . ,(all-the-icons-material "control_point"            :face 'all-the-icons-red))
+            (TypeParameter . ,(all-the-icons-material "class"                    :face 'all-the-icons-red))
+            (Template      . ,(all-the-icons-material "short_text"               :face 'all-the-icons-green))
+            (ElispFunction . ,(all-the-icons-material "functions"                :face 'all-the-icons-red))
+            (ElispVariable . ,(all-the-icons-material "check_circle"             :face 'all-the-icons-blue))
+            (ElispFeature  . ,(all-the-icons-material "stars"                    :face 'all-the-icons-orange))
+            (ElispFace     . ,(all-the-icons-material "format_paint"             :face 'all-the-icons-pink)))))
+)
+
 #+end_src
 
 *** Inline math symbols with latex
@@ -811,3 +860,27 @@ See `eshell-display-modifier-help' for details on that."
         ;; Me neither, so this makes it act a bit more shell-like:
         eshell-prefer-lisp-functions nil))
 #+end_src
+
+*** EAT
+#+begin_src elisp
+(use-package eat
+  :after eshell
+  :bind
+  (map! :map eat-mode-map "C-c C-d" #'eat-self-input)
+  :hook (eshell-load . #'eat-eshell-mode))
+#+end_src
+
+** LSP
+Don't show errors & warnings at the side. Show them when my point is on it.
+
+#+begin_src elisp
+(use-package! lsp
+  :config
+  (setq lsp-ui-sideline-enable nil)
+  (setq lsp-headerline-breadcrumb-enable t)
+  (setq lsp-lens-enable t))
+
+
+#+end_src
+
+**NOTE**: Flycheck mode can be toggled in doom with =SPC t f=

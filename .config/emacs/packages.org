@@ -1,0 +1,647 @@
+#+title: Packages.El Literate
+:PROPERTIES:
+:tangle:   ~/.config/emacsd/packages.el
+:END:
+#+auto_tangle: t
+
+Helper variables adopted from Doom Emacs I'm not sure if I'll ever use.
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(defconst IS-MAC      (eq system-type 'darwin))
+(defconst IS-LINUX    (memq system-type '(gnu gnu/linux gnu/kfreebsd berkeley-unix)))
+(defconst IS-WINDOWS  (memq system-type '(cygwin windows-nt ms-dos)))
+(defconst IS-BSD      (memq system-type '(darwin berkeley-unix gnu/kfreebsd)))
+(defconst HAS-EMACS28+    (> emacs-major-version 27))
+(defconst HAS-EMACS29+    (> emacs-major-version 28))
+(defconst HAS-DYNMODULES  (featurep 'dynamic-modules))
+(defconst HAS-NATIVECOMP  (featurep 'native-compile))
+#+END_SRC
+
+TODO: autoload emoji
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+;; FIXME: Doesn't work
+(use-package diminish
+  :demand t
+  :init
+  (diminish 'buffer-face-mode)
+  (diminish 'org-auto-tangle-mode)
+  (diminish 'eldoc-mode)
+  (diminish 'auto-revert-mode)
+  (diminish 'visual-line-mode)
+  (diminish 'org-indent-mode)
+  (diminish 'subword-mode)
+)
+#+END_SRC
+
+* Theme
+
+The chosen theme has partial zenburn vibes (orange) but less brown.
+
+NGL it's so cute. Primary accent is like light brownish orange yet user-interaction accents use pink. :p
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package timu-spacegrey-theme
+  :after (org corfu vertico)
+  :config
+  ;;(load-theme 'modus-vivendi t)
+  (load-theme 'timu-spacegrey t)
+
+  (defface ./theme-completion-popup
+    '((t :inherit 'fixed-pitch))
+    "Face for completion popup.")
+  (defface ./theme-completion-selected
+    '((t :background "gray25" :weight normal))
+    "Face for selected completion item.")
+  (set-face-attribute 'corfu-default nil :inherit './theme-completion-popup)
+  (set-face-attribute 'corfu-current nil :inherit './theme-completion-selected :weight 'normal)
+  (set-face-attribute 'corfu-bar nil :background "gray40")
+  (setq corfu-bar-width 0.8)
+  (set-face-attribute 'vertico-current nil :inherit './theme-completion-selected)
+  (set-face-attribute 'completions-first-difference nil :weight 'normal)
+  ;;(set-face-attribute 'line-number nil :background "bg")
+  ;; Color from modulus vivendi
+  (set-face-attribute 'show-paren-match nil :background "#6f3355")
+  (set-face-attribute 'cursor nil :background "textcolor")
+
+  :init
+  (setq timu-spacegrey-mode-line-border t)
+  (setq timu-spacegrey-org-intense-colors t
+        timu-spacegrey-scale-org-document-title 1.7
+        timu-spacegrey-scale-org-document-info 1.4
+        timu-spacegrey-scale-org-level-1 1.6
+        timu-spacegrey-scale-org-level-2 1.3
+        timu-spacegrey-scale-org-level-3 1.2)
+)
+#+END_SRC
+
+XXX: Somehow putting the org scale settings in =:init= works? And putting it in =:config= doesn't work?!
+
+* Tab bar
+
+https://www.gnu.org/software/emacs/manual/html_node/emacs/Tab-Bars.html
+
+This makes the tabs in the tab bar fill the entire frame width, similar to qutebrowser.
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(setq tab-bar-auto-width-max nil)
+#+END_SRC
+
+Go to =*scratch*= buffer when opening new tabs, like browsers. I guess!
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(setq tab-bar-new-tab-choice "*scratch*")
+#+END_SRC
+
+Slightly more contrast
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+;; FIXME: Doesn't work
+(set-face-attribute 'tab-bar-tab-inactive nil :background "textBackgroundColor")
+#+END_SRC
+
+Tabs in emacs appears to be similar to Vim, where each tab can hold window split layouts.
+
+** Default key-binds
+Tab bar keys have prefix =C-x t=, use which-key to explore the options from there.
+
+Switching tabs can be done with =C-TAB= and =S-C-TAB=
+
+* Evil
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package evil
+  :demand t
+  :init
+  (setq evil-search-module 'evil-search)
+  :config
+  (setq evil-ex-search-vim-style-regexp t
+        evil-ex-visual-char-range t  ; column range for ex commands
+        evil-mode-line-format 'nil
+        ;; more vim-like behavior
+        evil-symbol-word-search t
+        ;; if the current state is obvious from the cursor's color/shape, then
+        ;; we won't need superfluous indicators to do it instead.
+        evil-default-cursor 'box
+        evil-normal-state-cursor 'box
+        ;;evil-emacs-state-cursor  '(box +evil-emacs-cursor-fn)
+        evil-insert-state-cursor 'bar
+        evil-visual-state-cursor 'hollow
+        ;; Only do highlighting in selected window so that Emacs has less work
+        ;; to do highlighting them all.
+        evil-ex-interactive-search-highlight 'selected-window
+        ;; It's infuriating that innocuous "beginning of line" or "end of line"
+        ;; errors will abort macros, so suppress them:
+        evil-kbd-macro-suppress-motion-error t
+        ;; Adopt vim's C-u and C-d scrolling
+        evil-want-C-u-scroll t
+        evil-visual-update-x-selection-p nil
+        ;; Set < and > to shifting 2 spaces, this allows adding up shifts to do 4 spaces.
+        evil-shift-width 2
+        )
+  ;; REVIEW: Is this needed if evil-redo-function is set?
+  (setq evil-undo-system 'undo-redo)  ;; 'undo-redo from Emacs 28
+  (setq evil-undo-function 'undo)
+  (setq evil-redo-function 'undo-redo)
+
+  ;; Don't put vim yanks into system clipboard
+  ;; But use shift C-v / C-c to paste/copy from system clipboard instead
+  (setq select-enable-clipboard nil)
+  (global-set-key (kbd "S-C-c") #'clipboard-kill-ring-save)
+  (global-set-key (kbd "S-C-v") #'clipboard-yank)
+
+  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+  (evil-mode 1)
+  (defun ./evil-off ()
+    "Call `turn-off-evil-mode' and show a message"
+    (interactive)
+    (turn-off-evil-mode)
+    (message "Evil mode is turned off"))
+
+  :hook
+  (elpaca-ui-mode . (lambda () (evil-insert-state 1)))
+  )
+#+END_SRC
+
+Turning off evil mode doesn't seem to work so for elpaca hook I decided to just enter insert instead.
+
+* Misc
+
+Other plugins (or apps) with not that much configuration.
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package elpher)
+;; Seems to be having problems with eww for elpaca
+;;(use-package eww)
+(use-package imenu-list
+  :config
+  (setq imenu-list-auto-resize t)
+  ;; Auto-update Ilist buffer
+  :hook (imenu-list-major-mode . (lambda ()
+                                   (imenu-list-minor-mode 1)
+                                   (visual-line-mode 1)  ;; REVIEW
+                                   (display-line-numbers-mode -1)
+                                   (evil-insert-state 1))))
+
+(use-package math-symbol-lists
+  :after cape
+  :config
+  ;; This is actually for C-\, then select input "math",
+  ;; then the Ω will show in the status bar.
+  (quail-define-package "math" "UTF-8" "Ω" t)
+  ;; (quail-define-rules ; add whatever extra rules you want to define here...
+  ;;  ("\\from"    #X2190)
+  ;;  ("\\to"      #X2192)
+  ;;  ("\\lhd"     #X22B2)
+  ;;  ("\\rhd"     #X22B3)
+  ;;  ("\\unlhd"   #X22B4)
+  ;;  ("\\unrhd"   #X22B5))
+  (mapc (lambda (x)
+          (if (cddr x)
+              (quail-defrule (cadr x) (car (cddr x)))))
+        (append math-symbol-list-basic math-symbol-list-extended))
+  ) 
+#+END_SRC
+
+Maybe I'll figure out a better way to organize list of modes where display-line-numbers-mode should be disabled.
+
+#+BEGIN_SRC emacs-lisp :tangle no
+;; (use-package help
+;;   :elpaca nil
+;;   :hook
+;;   ((help-mode Custom-mode) . (lambda () (display-line-numbers-mode -1)))
+;;   )
+#+END_SRC
+
+Dang Custom-mode is actually capitalized
+
+** Minibuffer
+
+Enjoy emacs' editting key chords while there's still a glimmer of space in your emacs that forces you to use it, child.
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(add-hook 'minibuffer-setup-hook (lambda () (setq cursor-type 'bar)))
+(add-hook 'minibuffer-exit-hook (lambda () (setq cursor-type 'box)))
+#+END_SRC
+
+
+** Org auto tangle
+
+*Especially* useful for my literate emacs config.
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package org-auto-tangle
+  :defer t
+  :hook (org-mode . org-auto-tangle-mode)
+  :config
+  (setq org-auto-tangle-babel-safelist '(
+                                         "~/.config/emacsd/packages.el"
+                                         "~/.config/emacsd/init.el")))
+#+END_SRC
+
+
+** Wrap region
+
+This plugin gives you true IDE-like behaviour of selecting some text, press ="= then it'll wrap your selection with quotes.
+
+It enables this for quotes and brackets by default, below I've added some more useful wrappers, some of which are also suggested from the wrap region README.
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package wrap-region
+  :config
+  (wrap-region-add-wrappers
+   '(("/* " " */" "#" (java-mode javascript-mode css-mode))
+     ("`" "`" nil (markdown-mode org-mode))
+     ("=" "=" nil (org-mode))
+     ("~" "~" nil (org-mode))
+     ("*" "*" nil (markdown-mode org-mode))))
+  :hook
+  ((org-mode markdown-mode) . wrap-region-mode)
+)
+#+END_SRC
+
+** Magit
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package magit)
+#+END_SRC
+
+** Breadcrumb
+
+By the owner of both eglot and yasnippet: breadcrumb context in your headerline that uses project.el or imenu in that order!
+
+And yes you can even click on the breadcrumb components to jump to things like imenu.
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package breadcrumb
+  :diminish breadcrumb-mode
+  :init
+  (breadcrumb-mode 1))
+#+END_SRC
+
+
+* Vertico
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package vertico
+  :init
+  (vertico-mode)
+  ;; Grow and shrink the Vertico minibuffer
+  (setq vertico-resize t)
+  ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
+  (setq vertico-cycle t)
+  )
+;; Use the `orderless' completion style. Additionally enable
+;; `partial-completion' for file path expansion. `partial-completion' is
+;; important for wildcard support. Multiple files can be opened at once
+;; with `find-file' if you enter a wildcard. You may also give the
+;; `initials' completion style a try.
+(use-package orderless
+  :init
+  (setq completion-styles '(orderless)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
+;; Persist history over Emacs restarts. Vertico sorts by history position.
+(use-package savehist
+  :elpaca nil
+  :init
+  (savehist-mode))
+;; Pasted from vertico
+(use-package emacs
+  :elpaca nil
+  :init
+  ;; Add prompt indicator to `completing-read-multiple'.
+  ;; Alternatively try `consult-completing-read-multiple'.
+  (defun crm-indicator (args)
+    (cons (concat "[CRM] " (car args)) (cdr args)))
+  (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+  ;; Do not allow the cursor in the minibuffer prompt
+  (setq minibuffer-prompt-properties
+        '(read-only t cursor-intangible t face minibuffer-prompt))
+  (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+  ;; Emacs 28: Hide commands in M-x which do not work in the current mode.
+  ;; Vertico commands are hidden in normal buffers.
+  ;; (setq read-extended-command-predicate
+  ;;       #'command-completion-default-include-p)
+  ;; Enable recursive minibuffers
+  (setq enable-recursive-minibuffers t)
+  ;; From corfu
+  ;; TAB cycle if there are only few candidates
+  (setq completion-cycle-threshold 3)
+
+  ;; Emacs 28: Hide commands in M-x which do not apply to the current mode.
+  ;; Corfu commands are hidden, since they are not supposed to be used via M-x.
+  ;; (setq read-extended-command-predicate
+  ;;       #'command-completion-default-include-p)
+)
+#+END_SRC
+
+Marginalia shows description of each candidate in minibuffer completion next to candidates.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package marginalia
+  :diminish
+  :config
+  (setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
+  (marginalia-mode 1)
+)
+#+END_SRC
+
+
+* Consult
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package consult
+  :config
+  (global-set-key (kbd "C-s") 'consult-line)
+  (global-set-key (kbd "C-c g") 'consult-org-heading)
+  (global-set-key (kbd "C-x C-b") 'consult-buffer)
+  (define-key minibuffer-local-map (kbd "C-r") 'consult-history)
+
+  (setq completion-in-region-function #'consult-completion-in-region)
+)
+#+END_SRC
+
+
+* Corfu
+
+Note that some color settings are set in [[Theme]]
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package corfu
+  :custom
+  (corfu-cycle t) ;; Enable cycling for `corfu-next/previous'
+  ;; Default is M-SPC, if M-SPC is bound like I have on my Mac (Alfred) S-M-SPC also works
+  ;;(corfu-separator ?\s) ;; Orderless separator
+  ;; separator: Quit at boundary if no `corfu-separator' inserted
+  (corfu-quit-at-boundary 'separator)
+  ;; separator: only stay alive if no match and `corfu-separator' inserted
+  (corfu-quit-no-match 'separator)
+  ;; Don't change what I typed to what I selected when previewing completions
+  (corfu-preview-current nil)
+  (corfu-preselect 'first)
+  ;; Default = #'insert. Options: quit, nil
+  ;;(corfu-on-exact-match nil)
+  ;; Prevent last/first item being hidden behind windows
+  ;; FIXME: Doesn't work
+  (corfu-scroll-margin 2)
+  (corfu-right-margin-width 2)
+
+  ;; Enable Corfu only for certain modes.
+  ;; :hook ((prog-mode . corfu-mode)
+  ;;        (shell-mode . corfu-mode)
+  ;;        (eshell-mode . corfu-mode))
+
+  :custom-face
+  (corfu-border ((t (:background "slate gray" :weight bold))))
+
+  :init
+  ;; Recommended: Enable Corfu globally.
+  ;; This is recommended since Dabbrev can be used globally (M-/).
+  ;; See also `global-corfu-modes'.
+  (global-corfu-mode)
+  (corfu-popupinfo-mode 1)
+
+  :config
+  (defun corfu-enable-always-in-minibuffer ()
+    "Enable Corfu in the minibuffer if Vertico/Mct are not active."
+    (unless (or (bound-and-true-p mct--active)
+                (bound-and-true-p vertico--input)
+                (eq (current-local-map) read-passwd-map))
+      ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
+      (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
+                  corfu-popupinfo-delay '(0 . 0)) ;; Use popupinfo in minibuffer too, why not?
+      (corfu-mode 1)))
+  (add-hook 'minibuffer-setup-hook #'corfu-enable-always-in-minibuffer 1)
+
+  (setq corfu-popupinfo-delay '(0 . 0))
+)
+#+END_SRC
+
+** Kind-icon + Corfu
+
+This is like one of those (few) times that I've cherished Custom's convenience.
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package kind-icon
+  :after corfu
+  :custom
+  (kind-icon-mapping ; These are fetched (and cached) from pictogrammers.com/library/mdi
+    '((array "ar" :icon "code-brackets" :face font-lock-type-face)
+      (boolean "b" :icon "circle-half-full" :face font-lock-builtin-face)
+      (class "C" :icon "view-grid-plus-outline" :face font-lock-type-face)
+      (color "#" :icon "palette" :face success)
+      (command ">_" :icon "code-greater-than" :face default)
+      (constant "c$" :icon "lock-remove-outline" :face font-lock-constant-face)
+      (constructor "c+" :icon "table-column-plus-after" :face font-lock-function-name-face)
+      (enummember "em" :icon "order-bool-ascending-variant" :face font-lock-builtin-face)
+      (enum-member "em" :icon "order-bool-ascending-variant" :face font-lock-builtin-face)
+      (enum "e" :icon "format-list-bulleted-square" :face font-lock-builtin-face)
+      (event "ev" :icon "lightning-bolt-outline" :face font-lock-warning-face)
+      (field "fd" :icon "application-braces-outline" :face font-lock-variable-name-face)
+      (file "F" :icon "file-document-outline" :face font-lock-string-face)
+      (folder "D" :icon "folder" :face font-lock-doc-face)
+      (interface "if" :icon "application-brackets-outline" :face font-lock-type-face)
+      (keyword "kw" :icon "key-variant" :face font-lock-keyword-face)
+      (macro "mc" :icon "lambda" :face font-lock-keyword-face)
+      (magic "ma" :icon "auto-fix" :face font-lock-builtin-face)
+      (method "m" :icon "function-variant" :face font-lock-function-name-face)
+      (function "f" :icon "function" :face font-lock-function-name-face)
+      (module "mo" :icon "package-variant-closed" :face font-lock-preprocessor-face)
+      (numeric "0" :icon "numeric" :face font-lock-builtin-face)
+      (operator "÷" :icon "division" :face font-lock-comment-delimiter-face)
+      (param "pa" :icon "cog-outline" :face default)
+      (property "pr" :icon "wrench" :face font-lock-variable-name-face)
+      (reference "rf" :icon "library" :face font-lock-variable-name-face)
+      (snippet "S" :icon "note-text-outline" :face font-lock-string-face)
+      (string "\"" :icon "text-box" :face font-lock-string-face)
+      (struct "{}" :icon "code-braces" :face font-lock-variable-name-face)
+      (text "" :icon "text-short" :face font-lock-doc-face)
+      (typeparameter "tp" :icon "format-list-bulleted-type" :face font-lock-type-face)
+      (type-parameter "tp" :icon "format-list-bulleted-type" :face font-lock-type-face)
+      (unit "un" :icon "square-rounded-outline" :face font-lock-constant-face)
+      (value "va" :icon "plus-circle-outline" :face font-lock-builtin-face)
+      (variable "v" :icon "variable" :face font-lock-variable-name-face)
+      (t "." :icon "crosshairs-question" :face font-lock-warning-face)))
+    (kind-icon-blend-background nil)
+  :custom-face
+  (kind-icon-default-face ((t (:background nil))))
+
+  :config
+  ;;(setq kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
+  (setq kind-icon-use-icons nil)
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+#+END_SRC
+
+Note on "use-icons": Kind-icon + Corfu does not support highlighting the icon portion for completion current selection popup. After digging into Emacs SVG a little I did not find an easy way to foce svg-lib to fetch transparent icons, even if that could work, I don't think emacs can handle dynamic icons properly anyway, I believe it will set the background to be the frame background color, so when current selection arrives at a given icon, the "transparent" icon's background would not change accordingly.
+
+Using text icons allows the kind-icon part to also be highlighted by corfu-current highlightor.
+
+According to jdsmith Company achieves what I want, but it would downloaded two background colors for each icon (one for unselected, one for selected).
+
+It's sad that Emacs being a graphical program does not (ATM) support SVGs well. It was literally only until Emacs 29 that frame's alpha-background, and SVG scaling (on Mac) is supported properly.
+
+** Cape + Corfu
+
+With references from System Crafter's crafted-emacs configuration
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package cape
+  ;;:after math-symbol-lists
+  ;;:elpaca (:repo "~/projects/cape/")
+  :elpaca (:repo "hedyhli/cape")
+  ;;:defer t
+  :config
+  ;; Add useful defaults completion sources from cape
+  ;; (add-to-list 'completion-at-point-functions #'cape-file)
+  ;; ;;(add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-tex)
+  (add-to-list 'completion-at-point-functions #'cape-emoji)
+
+  ;; Silence the pcomplete capf, no errors or messages!
+  ;; Important for corfu
+  (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
+
+  ;; Ensure that pcomplete does not write to the buffer
+  ;; and behaves as a pure `completion-at-point-function'.
+  (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)
+
+  (define-key evil-insert-state-map (kbd "C-x C-f") 'cape-file)
+  (define-key evil-insert-state-map (kbd "C-x C-d") 'cape-dict)
+  (define-key evil-insert-state-map (kbd "C-x C-w") 'cape-dabbrev)
+  ;; (define-key evil-insert-state-map (kbd "C-x C-$") (cape-company-to-capf #'company-math-symbols-unicode))
+  ;; (define-key evil-insert-state-map (kbd "C-x C-:") (cape-company-to-capf #'company-emoji))
+
+  :hook (eshell-mode-hook . (lambda () (setq-local corfu-quit-at-boundary t
+                                                   corfu-quit-no-match t
+                                                   corfu-auto nil)
+                              (corfu-mode)))
+)
+#+END_SRC
+
+I disabled adding dabbrev to CAPF to prevent =corfu-candidate-overlay= (see below) from suggesting arbitrary text completions when I'm in comments or strings or whatever. It's annoying.
+
+** Corfu Candidate Overlay
+
+It's like how copilot gives you a completion after your cursor... but this is corfu! (first candidate)
+
+Also like fish's autosuggestion.
+
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package corfu-candidate-overlay
+  :config
+  (corfu-candidate-overlay-mode 1) ;; This is global
+  (set-face-attribute 'corfu-candidate-overlay-face nil :foreground "dim grey")
+  ;; Use TAB to accept a completion, how cool is that!
+  (define-key evil-insert-state-map (kbd "TAB") 'corfu-candidate-overlay-complete-at-point)
+)
+#+END_SRC
+
+
+* Which-Key
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package which-key
+  :diminish
+  :config
+  (which-key-setup-side-window-right)
+  (which-key-mode 1))
+#+END_SRC
+
+
+* Org
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (use-package org
+    :elpaca nil
+    :config
+    ;; Enable indenting paragraphs under headings by default
+    (setq org-startup-indented t)
+    ;; Don't indent stuff in SRC. What's the point (defaulted to 2 spaces)
+    (setq org-edit-src-content-indentation 0)
+
+    ;; Indent sub-list items
+    (setq org-list-indent-offset 2)
+
+    (custom-theme-set-faces
+     'user
+     '(org-block ((t (:inherit fixed-pitch))))
+     '(org-code ((t (:inherit (shadow fixed-pitch)))))
+     '(org-document-info ((t (:foreground "dark orange"))))
+     '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
+     '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
+     '(org-link ((t (:foreground "deep sky blue" :underline t))))
+     '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+     '(org-property-value ((t (:inherit fixed-pitch))) t)
+     '(org-block-begin-line ((t (:inherit (font-lock-comment-face fixed-pitch)))) t)
+     '(org-block-end-line ((t (:inherit (font-lock-comment-face fixed-pitch)))) t)
+     '(org-drawer ((t (:inherit fixed-pitch))) t)
+     '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+     '(org-table ((t (:inherit fixed-pitch))))
+     '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
+     '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
+
+    :hook
+    (org-mode . (lambda ()
+                   (visual-line-mode 1)
+                   (variable-pitch-mode)
+                   (display-line-numbers-mode -1)))
+    )
+#+END_SRC
+
+Org superstar is like org-bullets but with additional customizations as well as styling plain lists
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package org-superstar
+  :config
+  (setq org-superstar-configure-like-org-bullets t)
+  :hook
+  (org-mode . (lambda () (org-superstar-mode 1))))
+#+END_SRC
+
+* Eglot & tree sitter
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package eglot
+  :elpaca nil
+  :defer t
+  :hook
+  ((python-ts-mode go-ts-mode) . eglot-ensure)
+)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+;; Open python files in tree-sitter mode.
+(add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
+(add-to-list 'auto-mode-alist
+             '("\\.go\\'" . (lambda ()
+                               (go-ts-mode)
+                               )))
+(add-to-list 'auto-mode-alist
+             '("go.mod\\'" . (lambda ()
+                               (go-mod-ts-mode)
+                               )))
+#+END_SRC
+
+* Modules
+
+The function used is defined in init.el
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(./load-directory (concat user-emacs-directory "modules/"))
+#+END_SRC
+
+* Diminish
+Diminish allows us to use minor modes without showing it.
+
+Calling =diminish= to specify the mode to hide, (or specify 2nd argument for the alternative display text).
+
+#+BEGIN_SRC emacs-lisp :tangle no
+(diminish 'buffer-face-mode)
+(diminish 'org-auto-tangle-mode)
+(diminish 'eldoc-mode)
+(diminish 'auto-revert-mode)
+(diminish 'visual-line-mode)
+(diminish 'org-indent-mode)
+(diminish 'subword-mode)
+#+END_SRC

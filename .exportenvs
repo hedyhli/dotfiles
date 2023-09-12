@@ -37,3 +37,8 @@ export NVM_DIR="$HOME/.config/nvm"
 
 # GPG
 export PASH_KEYID="F92200AF40D013F0"
+
+# Ugh
+export HOMEBREW_PREFIX="/opt/homebrew"
+export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
+export HOMEBREW_REPOSITORY="/opt/homebrew"
