@@ -1,12 +1,12 @@
-#+title: Packages.El Literate
-:PROPERTIES:
-:tangle:   ~/.config/emacs/packages.el
-:END:
+#+TITLE: Packages.El Literate
+#+PROPERTY: header-args:elisp  :tangle ~/.config/emacs/dotslash-modules/packages.el
 #+auto_tangle: t
+
+* Helpers
 
 Helper variables adopted from Doom Emacs I'm not sure if I'll ever use.
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+#+BEGIN_SRC elisp
 (defconst IS-MAC      (eq system-type 'darwin))
 (defconst IS-LINUX    (memq system-type '(gnu gnu/linux gnu/kfreebsd berkeley-unix)))
 (defconst IS-WINDOWS  (memq system-type '(cygwin windows-nt ms-dos)))
@@ -19,28 +19,96 @@ Helper variables adopted from Doom Emacs I'm not sure if I'll ever use.
 
 TODO: autoload emoji
 
-#+BEGIN_SRC emacs-lisp :tangle yes
-;; FIXME: Doesn't work
-(use-package diminish
-  :demand t
-  :init
-  (diminish 'buffer-face-mode)
-  (diminish 'org-auto-tangle-mode)
-  (diminish 'eldoc-mode)
-  (diminish 'auto-revert-mode)
-  (diminish 'visual-line-mode)
-  (diminish 'org-indent-mode)
-  (diminish 'subword-mode)
+* Theme
+
+I sometimes switch between these (sub-headings). To switch, set =:tangle yes/no=.
+
+#+BEGIN_SRC elisp
+(set-face-attribute 'completions-first-difference nil :weight 'normal)
+
+(defvar ./corfu-bar-color "gray20" ;; Default value is for dark themes
+  "Color for the corfu scroll bar.")
+(defvar ./cursor-color "white"
+  "Color for cursor")
+(defvar ./theme-type "dark"
+  "Dark or light")
+#+END_SRC
+
+TODO:
+- Put all variable declarations in =init.org=
+- These theme configurations, define them as modules so I can easily switch between them at run time (and load my customizations for each theme together)
+- Also maybe (if possible) if I were to switch at run time ensure previous theme setting aren't retained.
+
+** Nord
+
+Used by Rougier's NANO-emacs. The dark theme is kinda nice, like dracula but less purple, no pink, more cyan. But the muted colors are too unreadable (such as docstrings or comments). TODO: Customize the lower-contrast nord colors to be more readable.
+
+#+BEGIN_SRC elisp :tangle no
+(use-package nord-theme
+  :config
+  (load-theme 'nord t)
+  )
+#+END_SRC
+
+** EF-themes (ef-light)
+
+Dazzling, tacky, elegant light theme.
+
+#+BEGIN_SRC elisp :tangle no
+(use-package ef-themes
+  ;; :init
+  ;; (set-face-attribute 'ef-themes-ui-variable-pitch nil :inherit 'variable-pitch)
+  :config
+  (load-theme 'ef-light t)
+  (set-face-attribute 'font-lock-builtin-face nil :weight 'normal)
+  (set-face-attribute 'font-lock-keyword-face nil :weight 'normal)
+  (set-face-attribute 'font-lock-variable-name-face nil :foreground "black")
+  (set-face-attribute 'font-lock-property-name-face nil :foreground "black")
+  (set-face-attribute 'font-lock-constant-face nil :foreground "black")
+  (set-face-attribute 'font-lock-string-face nil :foreground "dark green")
+
+  (set-face-attribute 'window-divider nil :foreground "gray90")
+  (set-face-attribute 'window-divider-first-pixel nil :foreground "white")
+  (set-face-attribute 'window-divider-last-pixel nil :foreground "white")
+
+  (setq ./corfu-bar-color "gray80")
+
+  (set-face-attribute 'org-link nil :foreground "DodgerBlue3" :underline t)
+  )
+#+END_SRC
+
+** EF-themes (ef-elea-dark)
+
+Current preferred dark theme.
+
+The pink accent and the brownish background reminds me of gruvbox, but the purple and the green makes it look different. Overall it's quite ugly; and that is the beauty of it!
+
+#+BEGIN_SRC elisp
+(use-package ef-themes
+  :config
+  (load-theme 'ef-elea-dark t)
+  (set-face-attribute 'cursor nil :background "white")
+  (set-face-attribute 'font-lock-builtin-face nil :weight 'normal)
+  (set-face-attribute 'font-lock-keyword-face nil :weight 'normal)
+  (set-face-attribute 'font-lock-variable-name-face nil :foreground "white")
+  (set-face-attribute 'font-lock-property-name-face nil :foreground "white")
+  (set-face-attribute 'font-lock-constant-face nil :foreground "white")
+
+  (set-face-attribute 'window-divider nil :foreground "gray20")
+  (set-face-attribute 'window-divider-first-pixel nil :foreground "black")
+  (set-face-attribute 'window-divider-last-pixel nil :foreground "black")
 )
 #+END_SRC
 
-* Theme
+** Timu Spacegrey (dark)
 
-The chosen theme has partial zenburn vibes (orange) but less brown.
+This theme has partial zenburn vibes (orange) but less brown.
 
 NGL it's so cute. Primary accent is like light brownish orange yet user-interaction accents use pink. :p
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+This was my second ever emacs preferred theme (it was zenburn first then this).
+
+#+BEGIN_SRC elisp :tangle no
 (use-package timu-spacegrey-theme
   :after (org corfu vertico)
   :config
@@ -50,19 +118,22 @@ NGL it's so cute. Primary accent is like light brownish orange yet user-interact
   (defface ./theme-completion-popup
     '((t :inherit 'fixed-pitch))
     "Face for completion popup.")
+
   (defface ./theme-completion-selected
     '((t :background "gray25" :weight normal))
     "Face for selected completion item.")
+
   (set-face-attribute 'corfu-default nil :inherit './theme-completion-popup)
   (set-face-attribute 'corfu-current nil :inherit './theme-completion-selected :weight 'normal)
   (set-face-attribute 'corfu-bar nil :background "gray40")
-  (setq corfu-bar-width 0.8)
+
   (set-face-attribute 'vertico-current nil :inherit './theme-completion-selected)
-  (set-face-attribute 'completions-first-difference nil :weight 'normal)
   ;;(set-face-attribute 'line-number nil :background "bg")
   ;; Color from modulus vivendi
   (set-face-attribute 'show-paren-match nil :background "#6f3355")
   (set-face-attribute 'cursor nil :background "textcolor")
+
+  (set-face-attribute 'org-link nil :foreground "deep sky blue" :underline t)
 
   :init
   (setq timu-spacegrey-mode-line-border t)
@@ -77,25 +148,35 @@ NGL it's so cute. Primary accent is like light brownish orange yet user-interact
 
 XXX: Somehow putting the org scale settings in =:init= works? And putting it in =:config= doesn't work?!
 
+** Common settings for themes
+
+#+BEGIN_SRC elisp
+(setq ./theme-type (symbol-name (frame-parameter nil 'background-mode)))
+(setq ./cursor-color (if (string= ./theme-type "dark") "white" "black"))
+(set-face-attribute 'cursor nil :background ./cursor-color)
+;; TODO: Do this for window divider and corfu UI items, and magit diff backgrounds.
+;; and org-link
+#+END_SRC
+
 * Tab bar
 
 https://www.gnu.org/software/emacs/manual/html_node/emacs/Tab-Bars.html
 
 This makes the tabs in the tab bar fill the entire frame width, similar to qutebrowser.
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+#+BEGIN_SRC elisp
 (setq tab-bar-auto-width-max nil)
 #+END_SRC
 
 Go to =*scratch*= buffer when opening new tabs, like browsers. I guess!
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+#+BEGIN_SRC elisp
 (setq tab-bar-new-tab-choice "*scratch*")
 #+END_SRC
 
 Slightly more contrast
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+#+BEGIN_SRC elisp
 ;; FIXME: Doesn't work
 (set-face-attribute 'tab-bar-tab-inactive nil :background "textBackgroundColor")
 #+END_SRC
@@ -108,68 +189,229 @@ Tab bar keys have prefix =C-x t=, use which-key to explore the options from ther
 Switching tabs can be done with =C-TAB= and =S-C-TAB=
 
 * Evil
-#+BEGIN_SRC emacs-lisp :tangle yes
+
+My setup allows using Vim bindings in normal "mode" and emacs bindings in insert "mode".
+
+https://stackoverflow.com/questions/25542097/
+
+I previously used this setting for achieve it:
+
+#+BEGIN_SRC elisp :tangle no
+;;  Use emacs keybindings in insert state 😱
+(setq evil-disable-insert-state-bindings t)
+#+END_SRC
+
+It worked, but the bindings I've set for =evil-insert-state-map= elsewhere didn't take effect, so I opted for an alternative solutions from the stackoverflow question.
+
+Below is the =use-package= block for evil. Noweb references are used, which are defined later on in this section.
+
+#+BEGIN_SRC elisp :noweb yes
 (use-package evil
   :demand t
   :init
-  (setq evil-search-module 'evil-search)
+  <<evil-init>>
+
   :config
-  (setq evil-ex-search-vim-style-regexp t
-        evil-ex-visual-char-range t  ; column range for ex commands
-        evil-mode-line-format 'nil
-        ;; more vim-like behavior
-        evil-symbol-word-search t
-        ;; if the current state is obvious from the cursor's color/shape, then
-        ;; we won't need superfluous indicators to do it instead.
-        evil-default-cursor 'box
-        evil-normal-state-cursor 'box
-        ;;evil-emacs-state-cursor  '(box +evil-emacs-cursor-fn)
-        evil-insert-state-cursor 'bar
-        evil-visual-state-cursor 'hollow
-        ;; Only do highlighting in selected window so that Emacs has less work
-        ;; to do highlighting them all.
-        evil-ex-interactive-search-highlight 'selected-window
-        ;; It's infuriating that innocuous "beginning of line" or "end of line"
-        ;; errors will abort macros, so suppress them:
-        evil-kbd-macro-suppress-motion-error t
-        ;; Adopt vim's C-u and C-d scrolling
-        evil-want-C-u-scroll t
-        evil-visual-update-x-selection-p nil
-        ;; Set < and > to shifting 2 spaces, this allows adding up shifts to do 4 spaces.
-        evil-shift-width 2
-        )
-  ;; REVIEW: Is this needed if evil-redo-function is set?
-  (setq evil-undo-system 'undo-redo)  ;; 'undo-redo from Emacs 28
-  (setq evil-undo-function 'undo)
-  (setq evil-redo-function 'undo-redo)
+  <<evil-config>>
 
-  ;; Don't put vim yanks into system clipboard
-  ;; But use shift C-v / C-c to paste/copy from system clipboard instead
-  (setq select-enable-clipboard nil)
-  (global-set-key (kbd "S-C-c") #'clipboard-kill-ring-save)
-  (global-set-key (kbd "S-C-v") #'clipboard-yank)
+  <<evil-maps>>
 
-  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-
-  (evil-mode 1)
   (defun ./evil-off ()
     "Call `turn-off-evil-mode' and show a message"
     (interactive)
     (turn-off-evil-mode)
     (message "Evil mode is turned off"))
 
-  :hook
-  (elpaca-ui-mode . (lambda () (evil-insert-state 1)))
+  ;; Disable evil in some modes
+  (dolist (mode '(elpaca-ui-mode
+                  dired-mode
+                  magit-mode))
+    (evil-set-initial-state mode 'emacs))
+
+  (evil-mode 1)
   )
 #+END_SRC
 
 Turning off evil mode doesn't seem to work so for elpaca hook I decided to just enter insert instead.
 
+This allows Elpaca's shortcut keys to work, eg, =q=, =I=, =s=.
+
+** Init
+These values must be set before evil load for them to take into effect.
+
+- Using =evil-search= allows search results to be kept highlighted when using =/=. I-search is still available in =C-s= in emacs state (see [[Consult]]).
+- Still unsure whether to stick to emacs regexp or use vim for evil-related searches, but this is adopted from doom.
+
+#+BEGIN_SRC elisp :noweb-ref evil-init :tangle no
+(setq evil-search-module 'evil-search
+      evil-ex-search-vim-style-regexp t)
+#+END_SRC
+
+These are subject to change (REVIEW), adopted from doom.
+
+#+BEGIN_SRC elisp :noweb-ref evil-init :tangle no
+(setq evil-ex-visual-char-range t  ; column range for ex commands
+      evil-mode-line-format 'nil
+      ;; more vim-like behavior
+      evil-symbol-word-search t)
+#+END_SRC
+
+Set cursor to indicate the evil state. Generally =bar= means it's writable, =box= means movable, =hollow= means special.
+
+#+BEGIN_SRC elisp :noweb-ref evil-init :tangle no
+(setq evil-default-cursor 'box
+      evil-normal-state-cursor 'box
+      evil-emacs-state-cursor  'bar
+      evil-insert-state-cursor 'bar
+      evil-visual-state-cursor 'hollow)
+#+END_SRC
+
+These are copied from doom.
+
+#+BEGIN_SRC elisp :noweb-ref evil-init :tangle no
+      ;; Only do highlighting in selected window so that Emacs has less work
+      ;; to do highlighting them all.
+(setq evil-ex-interactive-search-highlight 'selected-window
+      ;; It's infuriating that innocuous "beginning of line" or "end of line"
+      ;; errors will abort macros, so suppress them:
+      evil-kbd-macro-suppress-motion-error t)
+#+END_SRC
+
+Adopt vim's C-u and C-d scrolling
+#+BEGIN_SRC elisp :noweb-ref evil-init :tangle no
+(setq evil-want-C-u-scroll t) ; must be set in :init
+#+END_SRC
+
+I read somewhere that you can access X-Selection in linux from a vim register, forgot which one of =+= or === it was. Well that's kinda neat, but how would it be useful? If you want to paste, you can copy. Unless you want to paste two things, so you copy one, and leave the selection on another, so you can do ="+p= for one and ="=p= for the other?
+
+Oh well, I won't need that here (and possibly don't want that either, I'd like my clipboard to only contain things I explicitly copied).
+
+#+BEGIN_SRC elisp :noweb-ref evil-config :tangle no
+(setq evil-visual-update-x-selection-p nil)
+#+END_SRC
+
+Set =<= and =>= to shifting 2 spaces, this allows adding up shifts to do 4 spaces.
+
+Odd-numbered space indents is, well, um, weird (like 3). Sure if you can't decide between 2 and 4, but if you can't decide you can flip a coin, enforce it in =.editorconfig=, or use tabs and less the viewer decide!
+
+Indenting by 1 space possibly only exist in lisp where the entire program is a rather obtuse array-like structure, and we tend to align arguments that span multiple lines by the function name, which means any arbitrary indent width is possible. Well, for that I will be relying on my editor to automatically indent for me. So in conclusion, setting shift-width to 2 is the best option as of now.
+
+TODO: Like my neovim config, keep visual selection after shifting width.
+
+#+BEGIN_SRC elisp :noweb-ref evil-config :tangle no
+(setq evil-shift-width 2)
+#+END_SRC
+
+Set undo system to allow redos.
+
+TODO:
+- Save undos in undodir like vim, so when opening new files there's undo data
+- Should I use undo-tree?
+
+#+BEGIN_SRC elisp :noweb-ref evil-init :tangle no
+;; REVIEW: Is this needed if evil-redo-function is set?
+(setq evil-undo-system 'undo-redo)  ;; 'undo-redo from Emacs 28
+(setq evil-undo-function 'undo)
+(setq evil-redo-function 'undo-redo)
+#+END_SRC
+
+** Maps
+
+*** Misc maps
+
+This allows me to use emacs motion key bindings in evil insert mode. Super useful -- best of both worlds!
+
+#+BEGIN_SRC elisp :noweb-ref evil-maps :tangle no
+;; Emacs keybindings in evil insert state - must be set in :config
+(setq evil-insert-state-map (make-sparse-keymap))
+(define-key evil-insert-state-map (kbd "<escape>") 'evil-normal-state)
+(define-key evil-emacs-state-map (kbd "<escape>") 'evil-normal-state)
+#+END_SRC
+
+=C-e= and =C-y= are already bound in emacs state, so I use shift of them instead.
+
+#+BEGIN_SRC elisp :noweb-ref evil-maps :tangle no
+(define-key evil-insert-state-map (kbd "S-C-e") 'evil-scroll-line-down)
+(define-key evil-emacs-state-map (kbd "S-C-e") 'evil-scroll-line-down)
+(define-key evil-insert-state-map (kbd "S-C-y") 'evil-scroll-line-up)
+(define-key evil-emacs-state-map (kbd "S-C-y") 'evil-scroll-line-up)
+#+END_SRC
+
+=S-C-v/c= for clipboard:
+This is a solution I found on Doom Emacs forum. The problem was that if I use the system clipboard shortcut to copy things elsewhere, and I go to emacs, edit some text with =d=, =y= etc, then if I use the system clipboard shortcut to paste what I copied earlier, results from =d=/=y= are pasted instead. This setting bindings different keys for pasting from system clipboard within emacs - Ctrl shift C and V. It may be a little unergonomic going between these
+
+#+BEGIN_SRC elisp :noweb-ref evil-maps :tangle no
+;; Don't put vim yanks into system clipboard
+;; But use shift C-v / C-c to paste/copy from system clipboard instead
+(setq select-enable-clipboard nil)
+(global-set-key (kbd "S-C-c") #'clipboard-kill-ring-save)
+(global-set-key (kbd "S-C-v") #'clipboard-yank)
+
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+#+END_SRC
+
+Add some useful keys for command line (=:=) and global buffer switching using evil functions.
+
+#+BEGIN_SRC elisp :noweb-ref evil-maps :tangle no
+;; FIXME
+(evil-set-leader nil (kbd "S-C-SPC")) ;; C-SPC is mark set
+(evil-set-leader 'normal (kbd "SPC"))
+
+(define-key evil-command-line-map "\C-a" 'move-beginning-of-line)
+(define-key evil-command-line-map "\C-e" 'move-end-of-line)
+;; (define-key evil-command-line-map "\C-d" nil t)
+;; (define-key evil-command-line-map "\C-l" nil t)
+
+(global-set-key (kbd "s-<left>") #'previous-buffer)
+(global-set-key (kbd "s-<right>") #'next-buffer)
+(global-set-key (kbd "S-s-<down>") #'evil-window-down)
+(global-set-key (kbd "S-s-<up>") #'evil-window-up)
+(global-set-key (kbd "S-s-<left>") #'evil-window-left)
+(global-set-key (kbd "S-s-<right>") #'evil-window-right)
+#+END_SRC
+
+*** Leader maps
+
+This solution for binding leader prefixes is found on evil-guide: https://github.com/noctuid/evil-guide?tab=readme-ov-file#leader-key
+
+#+BEGIN_SRC elisp :noweb-ref evil-maps :tangle no
+(defvar ./leader-map (make-sparse-keymap)
+  "Keymap for leader shortcuts")
+(define-key evil-normal-state-map (kbd "SPC") ./leader-map)
+(define-key ./leader-map "q" #'evil-quit)
+(define-key ./leader-map "w" #'save-buffer)
+(define-key ./leader-map "x" #'evil-save-modified-and-close)
+
+(defvar ./leader-buffer-map (make-sparse-keymap)
+  "Keymap for leader shortcuts for buffers")
+(define-key ./leader-map "b" ./leader-buffer-map)
+(define-key ./leader-buffer-map "b" #'consult-buffer)
+(define-key ./leader-buffer-map "s" #'save-buffer)
+(define-key ./leader-buffer-map "d" #'evil-delete-buffer)
+
+(defvar ./leader-file-map (make-sparse-keymap)
+  "Keymap for leader shortcuts for files")
+(define-key ./leader-map "f" ./leader-file-map)
+(define-key ./leader-file-map "f" #'find-file)
+(define-key ./leader-file-map "r" #'consult-recent-file)
+(define-key ./leader-file-map "p" #'project-find-file)
+
+(defvar ./leader-frame-map (make-sparse-keymap)
+  "Keymap for leader shortcuts for frames")
+(define-key ./leader-map "F" ./leader-frame-map)
+(define-key ./leader-frame-map "q" #'delete-frame)
+(define-key ./leader-frame-map "d" #'delete-frame)
+(define-key ./leader-frame-map "u" #'undelete-frame)
+(define-key ./leader-frame-map "R" #'rename-frame)
+(define-key ./leader-frame-map "o" #'other-frame)
+(define-key ./leader-frame-map "c" #'clone-frame)
+#+END_SRC
+
 * Misc
 
 Other plugins (or apps) with not that much configuration.
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+#+BEGIN_SRC elisp
 (use-package elpher)
 ;; Seems to be having problems with eww for elpaca
 ;;(use-package eww)
@@ -205,7 +447,7 @@ Other plugins (or apps) with not that much configuration.
 
 Maybe I'll figure out a better way to organize list of modes where display-line-numbers-mode should be disabled.
 
-#+BEGIN_SRC emacs-lisp :tangle no
+#+BEGIN_SRC elisp :tangle no
 ;; (use-package help
 ;;   :elpaca nil
 ;;   :hook
@@ -215,30 +457,41 @@ Maybe I'll figure out a better way to organize list of modes where display-line-
 
 Dang Custom-mode is actually capitalized
 
+** Dired
+
+#+BEGIN_SRC elisp
+;; (use-package dired
+  ;; :elpaca nil
+  ;; :config
+  (setq delete-by-moving-to-trash t
+        ;; Emacs 29
+        dired-make-directory-clickable t
+        dired-mouse-drag-files t
+        )
+
+  ;;:hook
+  ;; FIXME: replicate evil state cursor style switching here
+  (defun ./cursor-toggle-readonly ()
+    (if buffer-read-only
+        (progn
+          (setq cursor-type 'box)
+          (set-cursor-color "orange"))
+      (setq cursor-type 'bar)
+      (set-cursor-color ./cursor-color)))
+
+  (add-hook 'read-only-mode-hook #'./cursor-toggle-readonly)
+  (add-hook 'dired-mode-hook (lambda () (hl-line-mode) (./cursor-toggle-readonly)))
+  ;; )
+#+END_SRC
+
 ** Minibuffer
 
 Enjoy emacs' editting key chords while there's still a glimmer of space in your emacs that forces you to use it, child.
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+#+BEGIN_SRC elisp
 (add-hook 'minibuffer-setup-hook (lambda () (setq cursor-type 'bar)))
 (add-hook 'minibuffer-exit-hook (lambda () (setq cursor-type 'box)))
 #+END_SRC
-
-
-** Org auto tangle
-
-*Especially* useful for my literate emacs config.
-
-#+BEGIN_SRC emacs-lisp :tangle yes
-(use-package org-auto-tangle
-  :defer t
-  :hook (org-mode . org-auto-tangle-mode)
-  :config
-  (setq org-auto-tangle-babel-safelist '(
-                                         "~/.config/emacs/packages.el"
-                                         "~/.config/emacs/init.el")))
-#+END_SRC
-
 
 ** Wrap region
 
@@ -246,7 +499,7 @@ This plugin gives you true IDE-like behaviour of selecting some text, press ="= 
 
 It enables this for quotes and brackets by default, below I've added some more useful wrappers, some of which are also suggested from the wrap region README.
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+#+BEGIN_SRC elisp
 (use-package wrap-region
   :config
   (wrap-region-add-wrappers
@@ -262,7 +515,7 @@ It enables this for quotes and brackets by default, below I've added some more u
 
 ** Magit
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+#+BEGIN_SRC elisp
 (use-package magit)
 #+END_SRC
 
@@ -272,17 +525,16 @@ By the owner of both eglot and yasnippet: breadcrumb context in your headerline 
 
 And yes you can even click on the breadcrumb components to jump to things like imenu.
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+#+BEGIN_SRC elisp
 (use-package breadcrumb
   :diminish breadcrumb-mode
   :init
   (breadcrumb-mode 1))
 #+END_SRC
 
-
 * Vertico
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+#+BEGIN_SRC elisp
 (use-package vertico
   :init
   (vertico-mode)
@@ -290,12 +542,11 @@ And yes you can even click on the breadcrumb components to jump to things like i
   (setq vertico-resize t)
   ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
   (setq vertico-cycle t)
+  :hook
+  ;; For find-file, remove old file path if I start typing a new one
+  ('rfn-eshadow-update-overlay-hook . #'vertico-directory-tidy)
   )
-;; Use the `orderless' completion style. Additionally enable
-;; `partial-completion' for file path expansion. `partial-completion' is
-;; important for wildcard support. Multiple files can be opened at once
-;; with `find-file' if you enter a wildcard. You may also give the
-;; `initials' completion style a try.
+
 (use-package orderless
   :init
   (setq completion-styles '(orderless)
@@ -337,7 +588,7 @@ And yes you can even click on the breadcrumb components to jump to things like i
 #+END_SRC
 
 Marginalia shows description of each candidate in minibuffer completion next to candidates.
-#+BEGIN_SRC emacs-lisp :tangle yes
+#+BEGIN_SRC elisp
 (use-package marginalia
   :diminish
   :config
@@ -346,27 +597,29 @@ Marginalia shows description of each candidate in minibuffer completion next to 
 )
 #+END_SRC
 
-
 * Consult
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+#+BEGIN_SRC elisp
 (use-package consult
   :config
   (global-set-key (kbd "C-s") 'consult-line)
+  (define-key evil-insert-state-map (kbd "C-s") 'isearch-forward)
+  (define-key evil-emacs-state-map (kbd "C-s") 'isearch-forward)
   (global-set-key (kbd "C-c g") 'consult-org-heading)
   (global-set-key (kbd "C-x C-b") 'consult-buffer)
+  ;; Doesn't work?
+  (global-set-key [?\C-\t] 'consult-buffer)
   (define-key minibuffer-local-map (kbd "C-r") 'consult-history)
 
   (setq completion-in-region-function #'consult-completion-in-region)
-)
+  )
 #+END_SRC
-
 
 * Corfu
 
 Note that some color settings are set in [[Theme]]
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+#+BEGIN_SRC elisp
 (use-package corfu
   :custom
   (corfu-cycle t) ;; Enable cycling for `corfu-next/previous'
@@ -391,8 +644,12 @@ Note that some color settings are set in [[Theme]]
   ;;        (shell-mode . corfu-mode)
   ;;        (eshell-mode . corfu-mode))
 
+  ;; FIXME: doesn't work: evil insert/emacs keybinds takes higher precendence it seems
+  (define-key corfu-map (kbd "<escape>") 'corfu-quit)
+
   :custom-face
-  (corfu-border ((t (:background "slate gray" :weight bold))))
+  (corfu-border ((t (:background "gray20" :weight bold))))
+  (corfu-default ((t (:inherit fixed-pitch))))
 
   :init
   ;; Recommended: Enable Corfu globally.
@@ -402,6 +659,8 @@ Note that some color settings are set in [[Theme]]
   (corfu-popupinfo-mode 1)
 
   :config
+  (setq corfu-bar-width 0.8)
+  (set-face-attribute 'corfu-bar nil :background ./corfu-bar-color)
   (defun corfu-enable-always-in-minibuffer ()
     "Enable Corfu in the minibuffer if Vertico/Mct are not active."
     (unless (or (bound-and-true-p mct--active)
@@ -421,30 +680,30 @@ Note that some color settings are set in [[Theme]]
 
 This is like one of those (few) times that I've cherished Custom's convenience.
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+#+BEGIN_SRC elisp
 (use-package kind-icon
   :after corfu
   :custom
-  (kind-icon-mapping ; These are fetched (and cached) from pictogrammers.com/library/mdi
+  (kind-icon-mapping ;; These are fetched (and cached) from pictogrammers.com/library/mdi
     '((array "ar" :icon "code-brackets" :face font-lock-type-face)
-      (boolean "b" :icon "circle-half-full" :face font-lock-builtin-face)
-      (class "C" :icon "view-grid-plus-outline" :face font-lock-type-face)
+      (boolean "b" :face font-lock-builtin-face)
+      (class "C" :face font-lock-type-face) ;; family-tree could be used. but too dense
       (color "#" :icon "palette" :face success)
-      (command ">_" :icon "code-greater-than" :face default)
-      (constant "c$" :icon "lock-remove-outline" :face font-lock-constant-face)
-      (constructor "c+" :icon "table-column-plus-after" :face font-lock-function-name-face)
+      (command ">_" :face default)
+      (constant "cn" :icon "lock-remove-outline" :face font-lock-constant-face)
+      (constructor "C+" :icon "plus-circle-multiple" :face font-lock-function-name-face)
       (enummember "em" :icon "order-bool-ascending-variant" :face font-lock-builtin-face)
       (enum-member "em" :icon "order-bool-ascending-variant" :face font-lock-builtin-face)
       (enum "e" :icon "format-list-bulleted-square" :face font-lock-builtin-face)
       (event "ev" :icon "lightning-bolt-outline" :face font-lock-warning-face)
-      (field "fd" :icon "application-braces-outline" :face font-lock-variable-name-face)
+      (field "fd" :face font-lock-variable-name-face)
       (file "F" :icon "file-document-outline" :face font-lock-string-face)
       (folder "D" :icon "folder" :face font-lock-doc-face)
       (interface "if" :icon "application-brackets-outline" :face font-lock-type-face)
-      (keyword "kw" :icon "key-variant" :face font-lock-keyword-face)
+      (keyword "kw" :face font-lock-keyword-face)
       (macro "mc" :icon "lambda" :face font-lock-keyword-face)
-      (magic "ma" :icon "auto-fix" :face font-lock-builtin-face)
-      (method "m" :icon "function-variant" :face font-lock-function-name-face)
+      (magic "ma" :icon "shimmer" :face font-lock-builtin-face)
+      (method "me" :face font-lock-function-name-face)
       (function "f" :icon "function" :face font-lock-function-name-face)
       (module "mo" :icon "package-variant-closed" :face font-lock-preprocessor-face)
       (numeric "0" :icon "numeric" :face font-lock-builtin-face)
@@ -452,39 +711,30 @@ This is like one of those (few) times that I've cherished Custom's convenience.
       (param "pa" :icon "cog-outline" :face default)
       (property "pr" :icon "wrench" :face font-lock-variable-name-face)
       (reference "rf" :icon "library" :face font-lock-variable-name-face)
-      (snippet "S" :icon "note-text-outline" :face font-lock-string-face)
+      (snippet "S" :face font-lock-string-face)
       (string "\"" :icon "text-box" :face font-lock-string-face)
       (struct "{}" :icon "code-braces" :face font-lock-variable-name-face)
-      (text "" :icon "text-short" :face font-lock-doc-face)
+      (text " " :face font-lock-doc-face) ; text-short could be used
       (typeparameter "tp" :icon "format-list-bulleted-type" :face font-lock-type-face)
       (type-parameter "tp" :icon "format-list-bulleted-type" :face font-lock-type-face)
-      (unit "un" :icon "square-rounded-outline" :face font-lock-constant-face)
-      (value "va" :icon "plus-circle-outline" :face font-lock-builtin-face)
-      (variable "v" :icon "variable" :face font-lock-variable-name-face)
-      (t "." :icon "crosshairs-question" :face font-lock-warning-face)))
+      (unit "u" :icon "square-rounded-outline" :face font-lock-constant-face)
+      (value "vl" :icon "plus-circle-outline" :face font-lock-builtin-face)
+      (variable "v" :face font-lock-variable-name-face)
+      (t "?" :face font-lock-warning-face)))
     (kind-icon-blend-background nil)
   :custom-face
   (kind-icon-default-face ((t (:background nil))))
 
   :config
   ;;(setq kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
-  (setq kind-icon-use-icons nil)
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 #+END_SRC
-
-Note on "use-icons": Kind-icon + Corfu does not support highlighting the icon portion for completion current selection popup. After digging into Emacs SVG a little I did not find an easy way to foce svg-lib to fetch transparent icons, even if that could work, I don't think emacs can handle dynamic icons properly anyway, I believe it will set the background to be the frame background color, so when current selection arrives at a given icon, the "transparent" icon's background would not change accordingly.
-
-Using text icons allows the kind-icon part to also be highlighted by corfu-current highlightor.
-
-According to jdsmith Company achieves what I want, but it would downloaded two background colors for each icon (one for unselected, one for selected).
-
-It's sad that Emacs being a graphical program does not (ATM) support SVGs well. It was literally only until Emacs 29 that frame's alpha-background, and SVG scaling (on Mac) is supported properly.
 
 ** Cape + Corfu
 
 With references from System Crafter's crafted-emacs configuration
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+#+BEGIN_SRC elisp
 (use-package cape
   ;;:after math-symbol-lists
   :elpaca (:repo "~/projects/cape/")
@@ -531,7 +781,7 @@ It's like how copilot gives you a completion after your cursor... but this is co
 Also like fish's autosuggestion.
 
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+#+BEGIN_SRC elisp
 (use-package corfu-candidate-overlay
   :config
   (corfu-candidate-overlay-mode 1) ;; This is global
@@ -541,10 +791,9 @@ Also like fish's autosuggestion.
 )
 #+END_SRC
 
-
 * Which-Key
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+#+BEGIN_SRC elisp
 (use-package which-key
   :diminish
   :config
@@ -552,50 +801,77 @@ Also like fish's autosuggestion.
   (which-key-mode 1))
 #+END_SRC
 
-
 * Org
 
-#+BEGIN_SRC emacs-lisp :tangle yes
-  (use-package org
-    :elpaca nil
-    :config
-    ;; Enable indenting paragraphs under headings by default
-    (setq org-startup-indented t)
-    ;; Don't indent stuff in SRC. What's the point (defaulted to 2 spaces)
-    (setq org-edit-src-content-indentation 0)
+#+BEGIN_SRC elisp :noweb yes
+(use-package org
+  :elpaca nil
+  :config
+  <<org-config>>
 
-    ;; Indent sub-list items
-    (setq org-list-indent-offset 2)
-
-    (custom-theme-set-faces
-     'user
-     '(org-block ((t (:inherit fixed-pitch))))
-     '(org-code ((t (:inherit (shadow fixed-pitch)))))
-     '(org-document-info ((t (:foreground "dark orange"))))
-     '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
-     '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
-     '(org-link ((t (:foreground "deep sky blue" :underline t))))
-     '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-     '(org-property-value ((t (:inherit fixed-pitch))) t)
-     '(org-block-begin-line ((t (:inherit (font-lock-comment-face fixed-pitch)))) t)
-     '(org-block-end-line ((t (:inherit (font-lock-comment-face fixed-pitch)))) t)
-     '(org-drawer ((t (:inherit fixed-pitch))) t)
-     '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-     '(org-table ((t (:inherit fixed-pitch))))
-     '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
-     '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
-
-    :hook
-    (org-mode . (lambda ()
-                   (visual-line-mode 1)
-                   (variable-pitch-mode)
-                   (display-line-numbers-mode -1)))
-    )
+  ;; (dolist (item '( ;; Newline used to add prefix to tangled file
+  ;;                <<org-font-attributes>>))
+  ;;   (apply #'set-face-attribute item))
+  (custom-theme-set-faces
+   'user
+   <<org-font-attributes>>
+   )
+  :hook
+  (org-mode . (lambda () (visual-line-mode 1)
+                (variable-pitch-mode)
+                (display-line-numbers-mode -1)))
+  )
 #+END_SRC
+
+REVIEW:
+
+Using =set-face-attribute= rather than =custom-theme-set-faces= doesn't work! Says =org-indent= invalid face...
+
+** Org font faces
+
+#+BEGIN_SRC elisp :noweb-ref org-font-attributes :tangle no
+'(org-block ((t (:inherit fixed-pitch))))
+'(org-code ((t (:inherit (shadow fixed-pitch)))))
+'(org-document-info ((t (:foreground "dark orange"))))
+'(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
+'(org-indent ((t (:inherit (org-hide fixed-pitch)))))
+'(org-link ((t (:foreground "deep sky blue" :underline t))))
+'(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+'(org-property-value ((t (:inherit fixed-pitch))) t)
+'(org-block-begin-line ((t (:inherit (font-lock-comment-face fixed-pitch)))) t)
+'(org-block-end-line ((t (:inherit (font-lock-comment-face fixed-pitch)))) t)
+'(org-drawer ((t (:inherit fixed-pitch))) t)
+'(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+'(org-table ((t (:inherit fixed-pitch))))
+'(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
+'(org-verbatim ((t (:inherit (shadow fixed-pitch)))))
+#+END_SRC
+
+
+** Org config
+
+These have noweb-ref "org-config" and are put in the =:config= of =use-package= above.
+
+Enable indenting paragraphs under headings by default
+#+BEGIN_SRC elisp :noweb-ref org-config :tangle no
+(setq org-startup-indented t)
+#+END_SRC
+
+Don't indent stuff in SRC. They show up on exports and when viewers copy the entire SRC block the indents are also copied! (defaulted to 2 spaces).
+#+BEGIN_SRC elisp :noweb-ref org-config :tangle no
+(setq org-edit-src-content-indentation 0)
+#+END_SRC
+
+Indent sub-list items
+#+BEGIN_SRC elisp :noweb-ref org-config :tangle no
+(setq org-list-indent-offset 2)
+#+END_SRC
+
+** Org superstar
 
 Org superstar is like org-bullets but with additional customizations as well as styling plain lists
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+#+BEGIN_SRC elisp
 (use-package org-superstar
   :config
   (setq org-superstar-configure-like-org-bullets t)
@@ -603,9 +879,26 @@ Org superstar is like org-bullets but with additional customizations as well as 
   (org-mode . (lambda () (org-superstar-mode 1))))
 #+END_SRC
 
+** Org auto tangle
+
+*Especially* useful for my literate emacs config.
+
+#+BEGIN_SRC elisp
+(use-package org-auto-tangle
+  :defer t
+  :hook (org-mode . org-auto-tangle-mode)
+  :config
+  (setq org-auto-tangle-babel-safelist '(
+                                         "~/.config/emacs/packages.org"
+                                         "~/.config/emacs/init.org")))
+#+END_SRC
+
+
 * Eglot & tree sitter
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+Eglot is now included in Emacs from version 29.
+
+#+BEGIN_SRC elisp
 (use-package eglot
   :elpaca nil
   :defer t
@@ -614,7 +907,42 @@ Org superstar is like org-bullets but with additional customizations as well as 
 )
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+Tree-sitter as well, but you must manually clone the treesitter repo and =./build= for each language, the copy the output file to =<user-emacs-directory>/tree-sitter/=
+
+- Clone https://github.com/casouri/tree-sitter-module
+- Run =./build <language>=
+- Copy the file in =./dist/= to =<user-emacs-directory>/tree-sitter/=
+
+I wrote a patch for =./build= to have it automatically copy the resulting file into where I want:
+
+#+BEGIN_SRC diff :tangle no
+diff --git a/build.sh b/build.sh
+index 25b5c1e..75a01b3 100755
+--- a/build.sh
++++ b/build.sh
+@@ -5,6 +5,7 @@ set -e
+ 
+ lang=$1
+ topdir="$PWD"
++destdir=$2
+ 
+ if [ "$(uname)" == "Darwin" ]
+ then
+@@ -151,3 +152,7 @@ mkdir -p "${topdir}/dist"
+ cp "libtree-sitter-${lang}.${soext}" "${topdir}/dist"
+ cd "${topdir}"
+ rm -rf "${lang}"
++
++if [ -n $destdir ]; then
++    mv "$topdir/dist/libtree-sitter-$lang.$soext" $destdir/
++fi
+#+END_SRC
+
+After applying this patch (you can save the file as =add-destdir.patch=, then run =git apply add-destdir.patch= from within the cloned repo), you can then use =./build.sh python ../tree-sitter=, which would build the tree sitter module for python, then copy the result into =../tree-sitter=. This is if your =tree-sitter= repo is cloned at =<user-emacs-directory>/tree-sitter-repo= for example.
+
+Configuration below enables tree-sitter mode for each major language mode I want to have tree-sitter for.
+
+#+BEGIN_SRC elisp
 ;; Open python files in tree-sitter mode.
 (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
 (add-to-list 'auto-mode-alist
@@ -627,25 +955,236 @@ Org superstar is like org-bullets but with additional customizations as well as 
                                )))
 #+END_SRC
 
-* Modules
-
-The function used is defined in init.el
-
-#+BEGIN_SRC emacs-lisp :tangle yes
-(./load-directory (concat user-emacs-directory "modules/"))
-#+END_SRC
-
 * Diminish
+
 Diminish allows us to use minor modes without showing it.
 
 Calling =diminish= to specify the mode to hide, (or specify 2nd argument for the alternative display text).
 
-#+BEGIN_SRC emacs-lisp :tangle no
-(diminish 'buffer-face-mode)
-(diminish 'org-auto-tangle-mode)
-(diminish 'eldoc-mode)
-(diminish 'auto-revert-mode)
-(diminish 'visual-line-mode)
-(diminish 'org-indent-mode)
-(diminish 'subword-mode)
+#+BEGIN_SRC elisp
+;; FIXME
+(use-package diminish
+  :config
+  (diminish 'buffer-face-mode)
+  (diminish 'org-auto-tangle-mode)
+  (diminish 'eldoc-mode)
+  (diminish 'auto-revert-mode)
+  (diminish 'visual-line-mode)
+  (diminish 'org-indent-mode)
+  (diminish 'subword-mode)
+  )
 #+END_SRC
+
+* Eshell
+
+Significant portions of this section is credited to:
+https://github.com/howardabrams/hamacs/blob/main/ha-eshell.org
+
+** Opening files
+#+begin_src elisp
+(defun ./eshell-fn-on-files (fun1 fun2 args)
+  "Call FUN1 on the first element in list, ARGS.
+Call FUN2 on all the rest of the elements in ARGS."
+  (unless (null args)
+    (let ((filenames (flatten-list args)))
+      (funcall fun1 (car filenames))
+      (when (cdr filenames)
+        (mapcar fun2 (cdr filenames))))
+    ;; Return an empty string, as the return value from `fun1'
+    ;; probably isn't helpful to display in the `eshell' window.
+    ""))
+#+end_src
+
+#+begin_src elisp
+(defun eshell/ff (&rest files)
+  "find-file on first arg, find-file-other-window on rest"
+  (./eshell-fn-on-files 'find-file 'find-file-other-window files))
+
+(defun eshell/f (&rest files)
+  "Edit one or more files in another window."
+  (./eshell-fn-on-files 'find-file-other-window 'find-file-other-window files))
+#+end_src
+
+In case I somehow end up in (n)vi(m), I can possibly use my vim's <leader>q to quit, but still.
+
+Oh yeah oopsie doopsie if I end up in nvim, since my leader there is SPC, same as doom emacs... Oh Noes!
+
+#+begin_src elisp
+(defalias 'eshell/emacs 'eshell/ff)
+(defalias 'eshell/vi 'eshell/ff)
+(defalias 'eshell/vim 'eshell/ff)
+(defalias 'eshell/nv 'eshell/ff)
+(defalias 'eshell/nvim 'eshell/ff)
+#+end_src
+
+#+begin_src elisp
+(defun eshell/less (&rest files)
+  "view-file-other-window"
+  (view-file-other-window files))
+
+(defalias 'eshell/more 'eshell/less)
+#+end_src
+
+** Aliases
+
+Some aliases >>> =eshell-aliases-file=
+
+#+begin_src shell :tangle ~/.config/emacs/eshell/alias
+alias ll exa -lahg --git -t modified
+alias clr clear 1
+alias x exit
+alias d dired $1
+#+end_src
+
+Kill window on exit
+https://stackoverflow.com/questions/51867693/emacs-eshell-kill-window-on-exit#51867960
+
+#+begin_src elisp
+(defun ./eshell-exit-with-window ()
+  (when (not (one-window-p))
+    (delete-window)))
+
+(advice-add 'eshell-life-is-too-much :after './eshell-exit-with-window)
+#+end_src
+
+** Useful functions
+
+#+begin_src elisp
+(defun eshell/do (&rest args)
+  "Execute a command sequence over a collection of file elements.
+Separate the sequence and the elements with a `::' string.
+For instance:
+
+    do chown _ angela :: *.org(u'oscar')
+
+The function substitutes the `_' sequence to a single filename
+element, and if not specified, it appends the file name to the
+command. So the following works as expected:
+
+    do chmod a+x :: *.org"
+  (seq-let (forms elements) (-split-on "::" args)
+    (dolist (element (-flatten (-concat elements)))
+      (message "Working on %s ... %s" element forms)
+      (let* ((form (if (-contains? forms "_")
+                       (-replace "_" element forms)
+                     (-snoc forms element)))
+             (cmd  (car form))
+             (args (cdr form)))
+        (eshell-named-command cmd args)))))
+#+end_src
+
+Clog up our M-x
+
+#+begin_src elisp
+(defun ./eshell--buffer-from-dir (dir)
+  "Return buffer name of an Eshell based on DIR."
+  (format "*eshell: %s*"
+          (thread-first dir
+                        (split-string "/" t)
+                        (last)
+                        (car))))
+
+(defun ./eshell-there (parent)
+  "Open an eshell session in a PARENT directory.
+The window is smaller and named after this directory.
+If an Eshell is already present that has been named
+after PARENT, pop to that buffer instead."
+  (if-let* ((term-name (./eshell--buffer-from-dir parent))
+            (buf-name  (seq-contains (buffer-list) term-name
+                                     (lambda (a b) (string-equal (buffer-name b) a)))))
+      (pop-to-buffer buf-name)
+
+    (let* ((default-directory parent)
+           (height (/ (window-total-height) 3)))
+      (split-window-vertically (- height))
+      (other-window 1)
+      (setq eshell-buffer-name term-name)
+      (eshell))))
+
+(defun ./eshell-here ()
+  "Opens a new shell in the directory of the current buffer.
+Renames the eshell buffer to match that directory to allow more
+than one eshell window."
+  (interactive)
+  (./eshell-there (if (buffer-file-name)
+                    (file-name-directory (buffer-file-name))
+                  default-directory)))
+
+(bind-key "C-`" './eshell-here)
+
+(defun ./eshell-send (command &optional dir)
+  "Send COMMAND to the Eshell buffer named with DIR.
+  The Eshell may have moved away from the directory originally
+  opened with DIR, but it should have the name of the buffer.
+  See `eshell--buffer-from-dir'."
+  (interactive "sCommand to Send: ")
+  (unless dir
+    (setq dir (projectile-project-root)))
+  (save-window-excursion
+    (eshell-there dir)
+    (goto-char (point-max))
+    (insert command)
+    (eshell-send-input)))
+#+end_src
+
+#+begin_src elisp
+(defun ./execute-command-on-file-buffer (cmd)
+  "Executes a shell command, CMD, on the current buffer's file.
+Appends the filename to the command if not specified, so:
+
+    chmod a+x
+
+Works as expected. We replace the special variable `$$' with the
+filename of the buffer. Note that `eshell-command' executes this
+command, so eshell modifiers are available, for instance:
+
+    mv $$ $$(:r).txt
+
+Will rename the current file to now have a .txt extension.
+See `eshell-display-modifier-help' for details on that."
+  (interactive "sExecute command on File Buffer: ")
+  (let* ((file-name (buffer-file-name))
+         (full-cmd (cond ((string-match (rx "$$") cmd)
+                          (replace-regexp-in-string (rx "$$") file-name cmd))
+                         ((and file-name (string-match (rx (literal file-name)) cmd))
+                          cmd)
+                         (t
+                          (concat cmd " " file-name)))))
+    (message "Executing: %s" full-cmd)
+    (eshell-command full-cmd)))
+#+end_src
+
+** Use package - eshell settings
+
+#+begin_src elisp
+(use-package eshell
+  :elpaca nil
+  :init
+  (setq eshell-error-if-no-glob t
+        ;; This jumps back to the prompt:
+        eshell-scroll-to-bottom-on-input 'all
+        eshell-hist-ignoredups t
+        eshell-save-history-on-exit t
+
+        ;; Since eshell starts fast, let's dismiss it on exit:
+        eshell-kill-on-exit t
+        eshell-destroy-buffer-when-process-dies t
+
+        ;; Parameter differences could be hard to remember. Maybe next time
+        eshell-prefer-lisp-functions nil))
+#+end_src
+
+** EAT
+
+#+begin_src elisp
+(use-package eat
+  :config
+  (define-key eat-mode-map (kbd "C-c C-d") #'eat-self-input)
+  ;; :hook
+  ;; (eshell-mode . #'eat-eshell-mode)
+  )
+#+end_src
+
+#+begin_src elisp
+  (provide 'packages)
+#+end_src

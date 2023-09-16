@@ -1,0 +1,4 @@
+dotslash-modules
+================
+
+These are extracted, modularized configuration for packages. The package.org file tangles into packages.el here. It `provide's packages `packages'.
