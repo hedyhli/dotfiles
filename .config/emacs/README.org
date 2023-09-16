@@ -1,0 +1,63 @@
+#+title: README for my emacs config
+#+auto_tangle: nil
+
+* Introduction
+
+This repository contains files related to my emacs config for vanilla emacs, Doom config lives in =~/.config/doom=.
+
+If you're reading this from a Git forge, files that are tracked would be *Literate Org configuration* (more on this below) files that are responsible for producing files like =init.el=, =dotslash-modules/packages.el= (and possibly more). Please view source if the Git forge you are viewing this file from does not show Org file properties in its preview, if it has a review at all.
+
+Things to look out for when viewing the Org sources are:
+- Document header properties
+    - =auto_tangle=: this is used by org-auto-tangle plugin to auto tangle on save (=t= or =nil=)
+    - =header_args:elisp=: specifies default SRC block header arguments for code type elisp
+- SRC block header arguments
+    - =tangle=: May be set to no for obsolete configuration snippets for =elisp= code type, or for =noweb= portions (see below)
+    - =noweb: yes=: It means that substitions are used in the code block, definitions of which may be found later (I generally like to define the layout -- blocks that make use of the individual portions first, before the actual portions)
+    - =noweb-ref: <name>=: It specifies the name of the "substitution" for use in the SRC block that references it (see above)
+
+I do wish forges like GitHub shows metadata information like how it shows YAML/JSON/TOML header metadata for markdown files. If you know a userscript CSS or extension to improve this, do let me know! My inbox is open at hedy (@) tilde (.) cafe.
+
+If you're not reading this from a Git forge, be informed that this =*.org= files that are tangled, this file, =early-init.el=, and =dotslash-*= directories are tracked with Git and available on the web via these URLs:
+
+- SourceHut: https://sr.ht/~hedy/dotfiles
+- GitHub: https://github.com/hedyhli/dotfiles
+- TildeGit (gitea instance for the [[https://tildeverse.org][Tildeverse]]): https://tildegit.org/hedy/dotfiles
+
+* On Literate Programming
+
+Using Literate Programming for my emacs config is a great idea IMO, because it forces myself to document each snippet of code I am tangling. If the entire Org document is essentially a =init.el= but wrapped in =BEGIN_SRC= and =END_SRC=, I would consciously want to add some text for it.
+
+Extended readings on "Literate Programming":
+- https://en.wikipedia.org/wiki/Literate_programming
+- https://www-cs-faculty.stanford.edu/~knuth/lp.html (Knuth's book)
+- https://orgmode.org/manual/Extracting-Source-Code.html
+
+Furthermore, headings can easily be used to leverage orgmode outlines so I can quickly jump to a position in my config. You can possibly set this up yourself for any arbitrary elisp file, but since we're talking about the emacs config here -- sort of like "frontliners" or "editting in production" -- meaning if something in my config breaks and all my packages do not load, I can still use imenu (or a outline command) to jump to an org heading, with some basic completion to fix my config in Org!
+
+Another advantage is that since it's an Org document, you can embed not only elisp, but also other code blocks in other languages. There are two use-cases for me:
+
+1. Eshell aliases can be defined together with my Eshell package configuration! I can simply set the code type to something other than =elisp= (or nothing at all), and add =:tangle ~/.config/emacs/eshell/alias= (for example). If I weren't using Org for my emacs config, the alias file and my Eshell config would be completely detached; when I want to lookup the source of a command, I have to check both the Eshell section of my config and also (remember to check) the alias file.
+
+2. Embedding other languages as example.
+
+   As of writing, I have not yet set up the org-anki package. But in my Doom configuration I have and you can see that I have included CSS and AppleScript code blocks. These are simply example supplementary configurations for Anki card templates and =emacs://= URL scheme handlers, respectively, that are supposed to be used in conjunction with my Org-anki custom card templates.
+
+   If you are not familiar with Anki or Anki integrations, you can ignore the previous paragraph; the gist is that I can group related thigns together with my emacs config to assist in providing a referrable and maintainable emacs config rather than navigating code like any other programming project.
+
+Read more on =noweb=:
+- https://orgmode.org/manual/Noweb-Reference-Syntax.html
+- (details on noweb itself linked in the footnotes of the above Org manual page)
+
+
+* TODO A note on copying other people's configuration
+
+* TODO Suggested references to other =.emacs= (or emacs distributions) shared on the web
+
+- Prot's
+- Doom emacs
+- Centaur
+- Ha-emacs
+- Purcell
+
+I have heavily (or sparingly) taken inspirations from the first 4 of which, in no particular order within my own =.emacs=.
