@@ -1,0 +1,5 @@
+(setq package-enable-at-startup nil)
+(setq inhibit-startup-message t)
+(tool-bar-mode -1)
+(set-fringe-mode 10)
+(modify-all-frames-parameters '((width . 100) (height . 50)))
