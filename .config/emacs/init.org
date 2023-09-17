@@ -126,6 +126,8 @@ Hopefully I'll be consistent with the convention of using =./= for all self-defi
 
 To search for these in completion systems, use =\./= (\o/ :D). =./= stands for DOTSLASH
 
+** Org insert src
+
 The function below is adapted from a blog post (link lost, sorry) which describes how you can define a function to quickly insert a src code block.
 
 I've adapted it to automatically use =elisp :tangle yes= if the file currently being edited is in the =user-emacs-directory=, since I use a literate emacs configuration and the only time I'll use this function when I'm in the user emacs directory is when I'm editing my literate org configuration.
@@ -199,7 +201,9 @@ Uses 'elisp' if currently in user-emacs-directory."
       (end-of-line))))
 #+END_SRC
 
-Below is two helper functions used by the above helper function.
+** Utility functions for 'org-insert-src'
+
+Used by the above function.
 
 #+BEGIN_SRC elisp
 (defun ./match-line-p (regexp &optional move keep-pos start)
@@ -238,6 +242,8 @@ contents of the required line."
                   t nil) nil) nil))))
 #+END_SRC
 
+** Org split src
+
 Below is also another helper function for editing my literate configuration. It uses the =#+BEGIN_SRC= content from the current code block (that the cursor is in) and splits the block into two by inserting =#+END_SRC= and copying whatever =#+BEGIN_SRC <...>= that was used in the current code block.
 
 This is extremely useful when I want to paste some chunk of code into a big code block, then I decide to split them up in order to add documentation for them.
@@ -258,13 +264,19 @@ Retains src properties."
   (previous-line))
 #+END_SRC
 
+FIXME: Sometimes retaining the src properties of the backward closest to point =BEGIN_SRC= line doesn't work. When I'm editting packages.org and at some position outside of the Evil heading, using the split src function copies a =BEGIN_SRC= containing =:noweb-ref evil-config= somehow.
+
 ** Load file and directory
 
 https://www.emacswiki.org/emacs/LoadingLispFiles#h5o-2 -- Thanks!
 
 This is used for loading my =modules/= dir in =packages.el=.
 
-#+BEGIN_SRC elisp
+2023-09-15 ish: Not anymore. After taking inspiration from Prot's emacs config I've decided to put modules and lisp directories into load path and =require= them rather than =load=.
+
+I've also decided not to tangle this to not clog up my namespace (not that it matters that much lol).
+
+#+BEGIN_SRC elisp no
 (defun ./load-directory (dir)
   "Load *.el files in a given directory"
   (let ((load-it (lambda (f)
@@ -274,7 +286,7 @@ This is used for loading my =modules/= dir in =packages.el=.
 
 TBH this is such a small function but like, does save some parens y'know.
 
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp no
 (defun ./load-file-if-exists (file)
   "Same as load-file but NOP if file does not exist"
   (if (file-exists-p file)
@@ -377,11 +389,13 @@ Enable =use-package= for elpaca and load my package definitions in packages.org
   ;;(elpaca-wait)
 #+END_SRC
 
-* Fontaine
+* TODO Fontaine
 
 This package is the only =use-package= package that is defined outside of =packages.el=.
 
 FIXME: This doesn't work. Does this have to do with foundries?
+
+Currently not tangled as I still have to test this.
 
 #+BEGIN_SRC elisp :noweb yes :noweb-prefix no :tangle no
 (use-package fontaine

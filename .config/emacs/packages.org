@@ -17,8 +17,6 @@ Helper variables adopted from Doom Emacs I'm not sure if I'll ever use.
 (defconst HAS-NATIVECOMP  (featurep 'native-compile))
 #+END_SRC
 
-TODO: autoload emoji
-
 * Theme
 
 I sometimes switch between these (sub-headings). To switch, set =:tangle yes/no=.
@@ -300,6 +298,12 @@ TODO: Like my neovim config, keep visual selection after shifting width.
 
 #+BEGIN_SRC elisp :noweb-ref evil-config :tangle no
 (setq evil-shift-width 2)
+#+END_SRC
+
+Allow evil motion keys to go across lines. If point is at beginning of line, and I use left arrow or =h=, point will then be at the end of the previous line.
+
+#+BEGIN_SRC elisp :noweb-ref evil-config :tangle no
+(setq evil-cross-lines t)
 #+END_SRC
 
 Set undo system to allow redos.
@@ -737,9 +741,6 @@ With references from System Crafter's crafted-emacs configuration
 #+BEGIN_SRC elisp
 (use-package cape
   ;;:after math-symbol-lists
-  :elpaca (:repo "~/projects/cape/")
-  ;;:elpaca (:repo "hedyhli/cape")
-  ;;:defer t
   :config
   ;; Add useful defaults completion sources from cape
   ;; (add-to-list 'completion-at-point-functions #'cape-file)
@@ -780,16 +781,110 @@ It's like how copilot gives you a completion after your cursor... but this is co
 
 Also like fish's autosuggestion.
 
-
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :noweb yes
 (use-package corfu-candidate-overlay
   :config
   (corfu-candidate-overlay-mode 1) ;; This is global
   (set-face-attribute 'corfu-candidate-overlay-face nil :foreground "dim grey")
   ;; Use TAB to accept a completion, how cool is that!
-  (define-key evil-insert-state-map (kbd "TAB") 'corfu-candidate-overlay-complete-at-point)
+  <<insert-state-tab-cmd>>
+  (define-key evil-insert-state-map (kbd "TAB") './insert-state-tab)
 )
 #+END_SRC
+
+The function below is the handler for the TAB key in evil insert state. The gist of what it does starts in the =(if at-heading [...])= block. The extra code before which is explained in the comment.
+
+The last time I used Doom, it doesn't support using =org-cycle= if point is at the end of line on an org heading. I have to move it *ON* the heading text for it to =org-cycle=.
+
+The first snippet below was my first attempt at this issue, before I checked the source code for corfu candidate overlay to obtain code for checking whether CAP is possible at point. The first snippet sort of works but is not as good, see the excessive comments.
+
+The second snippet is the tangled one, it works (for now).
+
+#+BEGIN_SRC elisp :tangle no
+(defun ./insert-state-tab ()
+  "Handle TAB key in insert state.
+
+Confirm candidate overlay or call `org-cycle' depending on position of
+current point.
+
+If it is at an org heading, or at the end of line that contains a
+folded org heading, then `org-cycle' is called. Otherwise
+`corfu-candidate-overlay-complete-at-point'."
+  (interactive)
+    (if (org-at-heading-p)
+        (org-cycle)
+      (let ((current-char (buffer-substring-no-properties (point) (+ (point) 1)))
+            (current-line (buffer-substring-no-properties
+                           (line-beginning-position) (line-end-position))))
+        (if (and (string= current-char "\n") (org-invisible-p2))
+            ;; If point is at the very end of an org heading
+            ;; `org-at-heading-p' returns nil so I have to check it
+            ;; another way.
+            ;; I'm honestly not sure if there is a case where the
+            ;; condition above evaluates to true but we don't actually
+            ;; want to `org-cycle', so I added a message.
+            (progn
+              ;;(end-of-line)
+              ;; `end-of-line' actually moves point to position BEFORE
+              ;; the ellipsis char where as evil's end of line moves
+              ;; it after (as with if position is selected with mouse,
+              ;; click at the end of line of folded org heading).
+              ;; Initially I wanted to use this to put point in the
+              ;; "visible" end of line position and use `org-cycle',
+              ;; which should work (when called interactively). But
+              ;; for some reason it didn't work when using this
+              ;; function so I decided to use `evil-open-fold'
+              ;; instead.
+              ;; 
+              ;; Surprisingly evil's fold on org works even if point
+              ;; is on the (weird) end of folded heading line
+              ;; position, which as mentioned above is where
+              ;; `org-at-heading-p' returns nil.
+              ;;
+              ;; TODO: Possibly a bug with org itself?
+              (save-excursion ;; Point is still moved out of the heading line!
+                (evil-open-fold)
+                (message "Assumed to be at end of folded org heading line. \
+  If org-cycle is unwanted here. Please edit ./insert-state-tab function")))
+          ;; Reaching here if '(and (string= [...]) [...])' not true.
+          ;; REVIEW: A way to fix all the excessive comments above is
+          ;; to have a way of determining whether corfu-candidate CAP
+          ;; could act, rather than checking with org. If
+          ;; candidate-overlay cannot act I could just call
+          ;; `evil-open-fold' and not bother with `org-cycle' at all.
+          (corfu-candidate-overlay-complete-at-point)
+          ))
+      ;; Is it possible with this implementation to add further
+      ;; functionality to this TAB key? I need a way to check if
+      ;; candidate-overlay is visible.
+      ))
+
+#+END_SRC
+
+Even though it ends up with repeated =corfu-candidate-overlay= checks, it's a cleaner and easier to maintain (and extend) implementation than the one above.
+
+#+BEGIN_SRC elisp :noweb-ref insert-state-tab-cmd :tangle no
+(defun ./insert-state-tab ()
+  "Handle TAB key in insert state.
+
+If corfu-candidate-overlay's overlay is active, calls
+`corfu-candidate-overlay--get-overlay-property', otherwise
+`evil-toggle-fold'. See my packages.org for this section for why I
+didn't use `org-cycle' here."
+  (if (overlayp corfu-candidate-overlay--overlay)
+      (progn
+        ;; This check is taken exactly from the implementation of
+        ;; `corfu-candidate-overlay-complete-at-point's (as of
+        ;; writing).
+        (corfu-candidate-overlay--show)
+        (if (and (overlayp corfu-candidate-overlay--overlay)
+                 (not (string= (corfu-candidate-overlay--get-overlay-property 'after-string) "")))
+            (corfu-candidate-overlay-complete-at-point)
+          (evil-toggle-fold)))
+    (evil-toggle-fold) ;; This shows a helpful message too, if cannot fold at point!
+    ))
+#+END_SRC
+
 
 * Which-Key
 
@@ -892,7 +987,6 @@ Org superstar is like org-bullets but with additional customizations as well as 
                                          "~/.config/emacs/packages.org"
                                          "~/.config/emacs/init.org")))
 #+END_SRC
-
 
 * Eglot & tree sitter
 

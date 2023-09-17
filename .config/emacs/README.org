@@ -58,6 +58,9 @@ Read more on =noweb=:
 - Doom emacs
 - Centaur
 - Ha-emacs
+- Crafted emacs
+- DistoTube emacs config (doom)
 - Purcell
+- Spacemacs
 
-I have heavily (or sparingly) taken inspirations from the first 4 of which, in no particular order within my own =.emacs=.
+I have heavily (or sparingly) taken inspirations from the first 6 of which, in no particular order within my own =.emacs=.
