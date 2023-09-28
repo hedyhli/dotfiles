@@ -8,7 +8,7 @@ alias td=termdown
 alias hdi=howdoi
 alias bom=bombadillo
 alias syscu='systemctl --user'
-alias emacspure='emacs --with-profile=vanilla'
+alias edoom='emacs --with-profile=doom'
 alias g=git
 alias acme='acme -f /mnt/font/FiraCode-Regular/15/font'
 
