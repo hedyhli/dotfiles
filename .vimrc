@@ -39,18 +39,69 @@ if has('termguicolors')
 	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 	colorscheme dracula
 else
-	colorscheme darkblue  " Looks like dracula but BLUEEEE
+	colorscheme lunaperche
+	" Other good ones:
+	" - darkblue - Looks like dracula but BLUEEEE
+	" - desert - reminds me of zenburn
+	" - elflord - like modus operandi in emacs! - but not as appealing
+	" - habamax - looks like monokai... - mild contrast everywhere
+	" - lunaperche - good contrast for comments - like modus operandi! but
+	"   less purples
+	" - quiet - light
+	" - shine - light (best light theme?)
+	" - slate - blue - low contrast for comments
+	" TODO: Use a non-dracula theme but ensure correct background for each
+	" theme is set correctly just like dracula, so terminal bg is not used
+	" when the text does not fit on entire width of terminal.
+	" FIXME: My attempt to replicate dracula's selection but keep fg
+	" highlights feature...
+	" TODO: Ensure search highlights are non-obstrusive like in emacs for all
+	" themes.
+	let g:dracula#palette           = {}
+	let g:dracula#palette.selection = ['#44475A', 239]
+	let s:none      = ['NONE', 'NONE']
+	let s:selection = g:dracula#palette.selection
+	function! s:h(scope, fg, ...) " bg, attr_list, special
+		let l:fg = copy(a:fg)
+		let l:bg = get(a:, 1, ['NONE', 'NONE'])
+		let l:attr_list = filter(get(a:, 2, ['NONE']), 'type(v:val) == 1')
+		let l:attrs = len(l:attr_list) > 0 ? join(l:attr_list, ',') : 'NONE'
+		let l:special = get(a:, 3, ['NONE', 'NONE'])
+		if l:special[0] !=# 'NONE' && l:fg[0] ==# 'NONE' && !g:dracula_full_special_attrs_support
+			let l:fg[0] = l:special[0]
+			let l:fg[1] = l:special[1]
+		endif
+		let l:hl_string = [
+					\ 'highlight', a:scope,
+					\ 'guifg=' . l:fg[0], 'ctermfg=' . l:fg[1],
+					\ 'guibg=' . l:bg[0], 'ctermbg=' . l:bg[1],
+					\ 'gui=' . l:attrs, 'cterm=' . l:attrs,
+					\ 'guisp=' . l:special[0],
+					\]
+		execute join(l:hl_string, ' ')
+	endfunction
+	call s:h('DraculaSelection', s:none, s:selection)
+	hi! link PmenuSel     DraculaSelection
+	hi! link PmenuThumb   DraculaSelection
+	hi! link Visual       DraculaSelection
 endif
 
-let mapleader=";" " setting leader key to ';'
-set number
+" space is used in my neovim and emacs
+" and I just learnt after using emacs evil mode that `;` existed, so I
+" can't set it to that either...
+" ALSO this is insane but I had no idea before learning `;` that f and t
+" existed 🤦
+" So I gave up exercising muscle memory for different leaders across neovim,
+" vim, emacs evil mode...
+let mapleader=" "
+set relativenumber
 syntax on
 set mouse=a " allow mouse for all
 set undofile " save undo to a file
 set hlsearch " highlight search
 set showcmd  " show incomplete commands
 set wildmenu  " command line's tab complete in a menu
-set cursorline  " highlight cursor line
+" set cursorline  " highlight cursor line
 set noerrorbells  " no beeps
 set visualbell  " flash screen instead
 set title  " set window title to file name
@@ -61,7 +112,7 @@ set shiftwidth=4
 set wrap  " dont wrap
 set incsearch  " find next match while typing search
 set linebreak  " wrap lines at convenient points
-set scrolloff=6  " screen lines to keep above and below cursor
+" set scrolloff=6  " screen lines to keep above and below cursor
 set sidescrolloff=8  " screen columns to keep on left and right of cursor
 set confirm  " display confirmation when closing unsaved file
 set encoding=utf-8  " set encoding with Unicode
@@ -102,7 +153,8 @@ endif
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 " highlight extra whitespace
-match ErrorMsg '\s\+$'
+" Was using ErrorMsg, was scary.
+match Underlined '\s\+$'
 
 """""""""""
 " Mappings
@@ -139,7 +191,8 @@ nnoremap <Leader>rg :registers<CR>
 " other mappings
 " dot command in visual mode
 vnoremap . :normal.<CR>
-nnoremap Q :q<CR>
+" Lets try Ex Mode!
+" nnoremap Q :q<CR>
 " move visual selection
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
