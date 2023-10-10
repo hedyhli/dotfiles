@@ -14,7 +14,7 @@ fi
 
 rootdir="$(pwd)"
 while [[ "$rootdir" != "" && ! -x "$rootdir/bin/$1" ]]; do
-    rootdir=${path%/*}
+    rootdir=${rootdir%/*}
 done
 
 if [[ ! -x "$rootdir/bin/$1" ]]; then
