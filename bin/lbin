@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [[ -z "$1" || "$1" == "--help" || "$1" == "-h" ]]; then
+    cat <<EOF
+Usage: $(basename $0) [ prog ]
+
+Searches recursively for 'bin/prog' executable from current directory and
+parent directories, and executes it if successfully found.
+EOF
+    exit
+fi
+
+rootdir="$(pwd)"
+while [[ "$rootdir" != "" && ! -x "$rootdir/bin/$1" ]]; do
+    rootdir=${path%/*}
+done
+
+if [[ ! -x "$rootdir/bin/$1" ]]; then
+    echo "No executable found in bin of parent directories."
+    exit 1
+fi
+
+"$rootdir/bin/$1"

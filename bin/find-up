@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# https://unix.stackexchange.com/questions/6463
+# Modified:
+# - Add usage
+# - Don't print anything and exit 1 if not found
+
+if [[ -z "$1" || "$1" == "--help" || "$1" == "-h" ]]; then
+    cat <<EOF
+Usage: $(basename $0) [ file ]
+
+Searches recursively for file from current directory
+and parent directories until found or root reached.
+EOF
+    exit
+fi
+
+path=$(pwd)
+while [[ "$path" != "" && ! -e "$path/$1" ]]; do
+   path=${path%/*}
+done
+
+if [[ -z "$path" ]]; then
+    exit 1
+fi
+
+echo "$path"
