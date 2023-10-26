@@ -23,6 +23,9 @@ return {
   { "sam4llis/nvim-tundra",
     config = function () require("plugins/tundra") end,
   },
+  -- Use 'gf' with dot.separated.modules in lua.
+  -- Put the cursor at the argument in "require" and press "gf" to see the effect.
+  "sam4llis/nvim-lua-gf",
   { "nvim-tree/nvim-tree.lua",
     cmd = {"NvimTreeOpen", "NvimTreeToggle", "NvimTreeFindFile", "NvimTreeFocus", "NvimTreeFindFileToggle"},
     opts = {
@@ -31,8 +34,6 @@ return {
       -- filters = { dotfiles = true, },
     },
   },
-  -- Unfortunately I've never had a need for this...
-  -- "tpope/vim-fugitive",
   -- "jreybert/vimagit",  -- emacs' magit ✨
   -- So anyways apparently almost every plugin that was popular in vim had to
   -- be rewritten in lua.
