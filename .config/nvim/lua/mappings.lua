@@ -1,21 +1,24 @@
+-- Note that plugins config may set more mappings.
+
 local silent = { silent = true }
+local function d(s) return { desc = s } end
 local function map(...) vim.keymap.set(...) end
 -- ==============-=
 -- Leader mappings
 -- ===============
-map("n", "<Leader>rn", '<cmd>set relativenumber!<cr>')
+map("n", "<Leader>rn", "<cmd>set relativenumber!<cr>", d "toggle rel num")
 -- Open all folds in current buffer (Reduce)
-map("n", "<Leader>z", "zR")
+map("n", "<Leader>z", "zR", d "zR (open all folds)")
 -- The 3 mappings that I use most often out of all vim mappings :D
-map("n", "<Leader>w", "<cmd>w<CR>")
-map("n", "<Leader>x", "<cmd>xa<CR>")
-map("n", "<Leader>q", "<cmd>qa<CR>")
+map("n", "<Leader>w", "<cmd>w<CR>", d "write")
+map("n", "<Leader>x", "<cmd>xa<CR>", d "x all")
+map("n", "<Leader>q", "<cmd>qa<CR>", d "quit all")
 -- Clear search
-map("n", "<Leader>nh", "<cmd>noh<CR>")
+map("n", "<Leader>nh", "<cmd>noh<CR>", d ":noh")
 -- Paste (rarely used because I commonly work in ssh'ed environments)
-map("n", "<Leader>pa", "+p")
+map("n", "<Leader>pa", "+p", d "System clipboard paste")
 -- Show what registers contain
-map("n", "<Leader>rg", "<cmd>registers<CR>")
+map("n", "<Leader>rg", "<cmd>registers<CR>", d "Show registers")
 
 
 -- =============================
@@ -34,7 +37,7 @@ map("", "<M-J>", "<cmd>t.<CR>==")
 map("", "<M-K>", "<cmd>t.-1<CR>==")
 
 -- ===============
--- VIsual mappings
+-- Visual mappings
 -- ===============
 -- dot command in visual mode
 map("v", ".", "<cmd>normal.<CR>")
@@ -52,67 +55,47 @@ map("v", "#", "<cmd><C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>", sil
 map("v", "<", "<gv")
 map("v", ">", ">gv")
 
+-- Yet another "modern" IDE-like behavior
+map("v", "<BS>", "x")
+
 
 -- ==========================
 -- Window/Buffer/Tab mappings
 -- ==========================
 -- Better way to move between windows
-map("", "<C-j>", "<C-W>j")
-map("", "<C-k>", "<C-W>k")
-map("", "<C-h>", "<C-W>h")
-map("", "<C-l>", "<C-W>l")
+map("", "<C-j>", "<C-W>j", d "bottom window")
+map("", "<C-k>", "<C-W>k", d "top window")
+map("", "<C-h>", "<C-W>h", d "right window")
+map("", "<C-l>", "<C-W>l", d "left window")
 
 -- Managing buffers
 -- map("n", "<leader>bd", "<cmd>bd<cr>")  -- I now use moll/vim-bbye, see plugin_spec.lua
-map("n", "<leader>bn", "<cmd>bnext<cr>")
-map("n", "<leader>bp", "<cmd>bprev<cr>")
+map("n", "<leader>bn", "<cmd>bnext<cr>", d "bnext")
+map("n", "<leader>bp", "<cmd>bprev<cr>", d "bprev")
 
 -- Useful mappings for managing tabs
 -- Tab create
-map("n", "<leader>tc", "<cmd>tabnew<cr>")
-map("n", "<leader>to", "<cmd>tabonly<cr>")
+map("n", "<leader>tc", "<cmd>tabnew<cr>", d "tabnew")
+map("n", "<leader>to", "<cmd>tabonly<cr>", d "tabonly")
 -- Tab delete
-map("n", "<leader>td", "<cmd>tabclose<cr>")
+map("n", "<leader>td", "<cmd>tabclose<cr>", d "tabclose")
 -- I rarely have >3 tabs, let alone organize their placements <cmd>D but it's here
 -- because why not
-map("n", "<leader>tm", "<cmd>tabmove<cr>")
+map("n", "<leader>tm", "<cmd>tabmove<cr>", d "tabmove")
 -- Switching tabs
-map("n", "<leader>tn", "<cmd>tabnext<cr>")
-map("n", "<leader>tp", "<cmd>tabprev<cr>")
+map("n", "<leader>tn", "<cmd>tabnext<cr>", d "tabnext")
+map("n", "<leader>tp", "<cmd>tabprev<cr>", d "tabprev")
 
 
 if vim.fn.has("macunix") == 1 then
   -- WTF?? (I checked using C-v in insert mode)
   -- TODO: Fix in tmux
-  map("", "<C-@>", "<cmd>split term://fish<cr>i")
+  map("", "<C-@>", "<cmd>split term://fish<cr><cmd>resize -7<cr>i")
 else
-  map("", "<C-`>", "<cmd>split term://fish<cr>i")
+  map("", "<C-`>", "<cmd>split term://fish<cr><cmd>resize -7<cr>i",
+    d "Open terminal below" )
 end
-map("n", "<leader>t", "<cmd>echom 'Deprecated. Please use C-` instead'<cr>")
-map("t", "<Esc>", "<C-\\><C-n>")
-
--- SHUSH
-map("n", "<Leader>lsh", "<cmd>LspStop")
-map("n", "<Leader>lst", "<cmd>LspStart")
-
-
-vim.api.nvim_create_autocmd("BufReadPost", {
-    pattern = "*",
-    callback = function()
-      vim.b.lsp_lines_enabled = false
-    end
-})
-
-map("n", "<Leader>lx", function()
-    require("lsp_lines").toggle()
-    -- Disable virtual_text since it's redundant due to lsp_lines.
-    if vim.b.lsp_lines_enabled then
-      -- IT was enabled, now it's disabled.
-      vim.diagnostic.config({ virtual_text = true })
-      vim.b.lsp_lines_enabled = false
-    else
-      vim.diagnostic.config({ virtual_text = false })
-      vim.b.lsp_lines_enabled = true
-    end
-  end
-)
+-- <leader>t prefix is used for tab navigation mappings
+-- map("n", "<leader>t", "<cmd>echom 'Deprecated. Please use C-` instead'<cr>"
+--   {desc = "Please use <C-`>"})
+map("t", "<Esc>", "<C-\\><C-n>", d "Esc in terminal mode")

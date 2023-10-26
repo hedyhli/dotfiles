@@ -59,7 +59,7 @@ local servers = {
   "bashls",  -- sudo npm i -g bash-language-server
   "vimls",   -- sudo npm i -g vim-language-server
   "marksman", -- https://github.com/artempyanykh/marksman/releases
-  "ccls", -- https://github.com/MaskRay/ccls/wiki
+  -- "ccls", -- https://github.com/MaskRay/ccls/wiki
 }
 for _, lsp in pairs(servers) do
   lspconfig[lsp].setup {

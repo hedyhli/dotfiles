@@ -15,8 +15,42 @@ vim.cmd [[
   filetype indent on
 ]]
 
-require('lazy').setup('plugin_spec', {
+require("lazy").setup("plugin_spec", {
   install = {
-    colorscheme = { "dracula" },
+    colorscheme = { "tundra" },
+  },
+  change_detection = {
+    -- I still have to quit and reopen nvim after a new plugin install anyway,
+    -- so this feature is useless and annoying.
+    enabled = false,
+    notify = false,
+  },
+  ui = {
+    -- a number <1 is a percentage., >1 is a fixed size
+    size = { width = 1, height = 1 },
+    icons = {
+      cmd = "⌘",
+      config = "",
+      event = "",
+      ft = " ",
+      init = " ",
+      import = " ",
+      keys = " ",
+      lazy = "󰒲 ",
+      loaded = "●",
+      not_loaded = "○",
+      plugin = " ",
+      runtime = " ",
+      require = "󰢱 ",
+      source = " ",
+      start = "",
+      task = "✔ ",
+      list = {
+        "●",
+        "➜",
+        "★",
+        "‒",
+      },
+    },
   },
 })

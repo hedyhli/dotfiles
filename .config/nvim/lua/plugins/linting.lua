@@ -6,7 +6,7 @@ lint.linters_by_ft = {
   mail = {'proselint'},
   template = {'proselint'},
   c = {'cpplint'},
-  cpp = {'cpplint'},
+  -- cpp = {'cpplint'},
 }
 
 vim.api.nvim_create_autocmd("BufWritePost", { pattern = "*", callback = function() lint.try_lint() end })
