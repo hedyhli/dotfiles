@@ -18,6 +18,9 @@ Helper variables adopted from Doom Emacs I'm not sure if I'll ever use.
 #+END_SRC
 
 * Theme
+:PROPERTIES:
+:ID: theme-test
+:END:
 
 I sometimes switch between these (sub-headings). To switch, set =:tangle yes/no=.
 
@@ -385,6 +388,7 @@ This solution for binding leader prefixes is found on evil-guide: https://github
 (define-key ./leader-map "q" #'evil-quit)
 (define-key ./leader-map "w" #'save-buffer)
 (define-key ./leader-map "x" #'evil-save-modified-and-close)
+(define-key ./leader-map "1" #'delete-other-windows)
 
 (defvar ./leader-buffer-map (make-sparse-keymap)
   "Keymap for leader shortcuts for buffers")
@@ -417,8 +421,13 @@ Other plugins (or apps) with not that much configuration.
 
 #+BEGIN_SRC elisp
 (use-package elpher)
-;; Seems to be having problems with eww for elpaca
+;; eww is part of emacs now?!!
 ;;(use-package eww)
+
+(use-package visual-fill-column
+  :init
+  (setq-default visual-fill-column-center-text t))
+
 (use-package imenu-list
   :config
   (setq imenu-list-auto-resize t)
@@ -871,6 +880,7 @@ If corfu-candidate-overlay's overlay is active, calls
 `corfu-candidate-overlay--get-overlay-property', otherwise
 `evil-toggle-fold'. See my packages.org for this section for why I
 didn't use `org-cycle' here."
+  (interactive)
   (if (overlayp corfu-candidate-overlay--overlay)
       (progn
         ;; This check is taken exactly from the implementation of
@@ -880,9 +890,23 @@ didn't use `org-cycle' here."
         (if (and (overlayp corfu-candidate-overlay--overlay)
                  (not (string= (corfu-candidate-overlay--get-overlay-property 'after-string) "")))
             (corfu-candidate-overlay-complete-at-point)
-          (evil-toggle-fold)))
-    (evil-toggle-fold) ;; This shows a helpful message too, if cannot fold at point!
-    ))
+          (if (string-match-p
+               "^\*+ "
+               (buffer-substring-no-properties
+                (line-beginning-position)
+                (line-end-position)))
+          (evil-toggle-fold)
+          (indent)
+              )
+          ))
+          (if (string-match-p
+               "^\*+ "
+               (buffer-substring-no-properties
+                (line-beginning-position)
+                (line-end-position)))
+          (evil-toggle-fold)
+          (indent-for-tab-command)
+    )))
 #+END_SRC
 
 
@@ -911,6 +935,33 @@ didn't use `org-cycle' here."
    'user
    <<org-font-attributes>>
    )
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (python . t)
+     (lua . t)
+     (js . t)))
+
+  (defun org-babel-execute:nim (body params)
+    "Execute a block of Nim code with org-babel."
+    (let ((in-file (org-babel-temp-file "n" ".nim"))
+          (verbosity (or (cdr (assq :verbosity params)) 0)))
+      (with-temp-file in-file
+        (insert body))
+      (org-babel-eval
+       (format "nim compile --verbosity=%d --run %s" verbosity
+               (org-babel-process-file-name in-file))
+       "")))
+
+  (defun org-babel-execute:moonscript (body params)
+    "Execute a block of MoonScript code with org-babel."
+    (let ((in-file (org-babel-temp-file "m" ".moon")))
+      (with-temp-file in-file
+        (insert body))
+      (org-babel-eval
+       (format "moon %s" (org-babel-process-file-name in-file)) "")))
+
   :hook
   (org-mode . (lambda () (visual-line-mode 1)
                 (variable-pitch-mode)
@@ -990,6 +1041,17 @@ Org superstar is like org-bullets but with additional customizations as well as 
 
 * Eglot & tree sitter
 
+** Some languages
+
+#+BEGIN_SRC elisp
+(use-package lua-mode)
+(use-package moonscript)
+(use-package nim-mode)
+#+END_SRC
+
+
+** Eglot
+
 Eglot is now included in Emacs from version 29.
 
 #+BEGIN_SRC elisp
@@ -997,7 +1059,7 @@ Eglot is now included in Emacs from version 29.
   :elpaca nil
   :defer t
   :hook
-  ((python-ts-mode go-ts-mode) . eglot-ensure)
+  ((python-ts-mode go-ts-mode lua-mode) . eglot-ensure)
 )
 #+END_SRC
 
