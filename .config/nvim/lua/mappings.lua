@@ -110,7 +110,7 @@ map({"i", "c"}, "<C-f>", "<right>")
 map({"i", "c"}, "<A-b>", "<S-left>")
 map({"i", "c"}, "<A-f>", "<S-right>")
 map("i", "<C-a>", "<C-o>0")
-map("i", "<C-e>", "<C-o>$")
+-- map("i", "<C-e>", "<C-o>$")
 map("c", "<C-a>", "<C-b>") -- SMH
 -- Command mode already supports <C-e>
 map("i", "<M-Tab>", "<C-x><C-o>")

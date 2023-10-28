@@ -269,37 +269,6 @@ return {
 		end,
 		enabled = false, -- Somehow wasn't working for me
   },
-  { "folke/noice.nvim",
-    -- enabled = vim.fn.has("nvim-0.8") == 1,
-    enabled = false,
-    event = "VeryLazy",
-    opts = {
-      -- This setting doesn't work?
-      -- view = "split",
-      lsp = {
-        -- override markdown rendering so that cmp and other plugins use Treesitter
-        override = {
-          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-          ["vim.lsp.util.stylize_markdown"] = true,
-          ["cmp.entry.get_documentation"] = true,
-        },
-      },
-      -- you can enable a preset for easier configuration
-      presets = {
-        bottom_search = true, -- use a classic bottom cmdline for search
-        command_palette = true, -- position the cmdline and popupmenu together
-        long_message_to_split = true,
-        inc_rename = false, -- enables an input dialog for inc-rename.nvim
-        lsp_doc_border = true, -- add a border to hover docs and signature help
-      },
-    },
-    dependencies = {
-      -- If you lazy-load any plugin below, make sure to add proper `module="..."` entries
-      "MunifTanjim/nui.nvim",
-      -- If not available, we use `mini` as the fallback
-      "rcarriga/nvim-notify",
-    }
-  },
 
   --- File type, syntax, language helper plugins ---
   { url = "https://git.sr.ht/~torresjrjr/gemini.vim", ft = "gemini" },
@@ -358,6 +327,43 @@ return {
       require('plugins/lsp')
     end
   },
+  { "ray-x/lsp_signature.nvim",
+    event = "VeryLazy",
+    config = function(_, opts) require'lsp_signature'.setup(opts) end,
+    opts = {
+      doc_lines = 10,
+      -- set to 0 if you DO NOT want any API comments be shown
+      -- This setting only take effect in insert mode, it does not affect signature help in normal
+      -- mode, 10 by default
+      max_height = 12,
+      max_width = 80,
+      noice = false,
+      wrap = true,
+      floating_window = false,
+      floating_window_above_cur_line = true,
+      floating_window_off_x = 1,
+      floating_window_off_y = 0, -- -2 move window up 2 lines; 2 move down 2 lines
+      -- can be either number or function, see examples
+      close_timeout = 4000,
+      fix_pos = false,  -- don't auto-close the floating window all parameters finished
+      hint_enable = true, -- virtual hint
+      hint_prefix = ": ",
+      hint_scheme = "String",
+      hint_inline = function() return vim.fn.has('nvim-0.10') == 1 end,
+      hi_parameter = "LspSignatureActiveParameter",
+      handler_opts = { border = "rounded" },
+      always_trigger = false,
+      auto_close_after = nil,
+      extra_trigger_chars = {","},
+      zindex = 200,
+      padding = '',
+      transparency = nil, -- 1~100
+      timer_interval = 200, -- lower to reduce latency
+      toggle_key = '<M-s>', -- toggle floating window key (must set below to true)
+      toggle_key_flip_floatwin_setting = true,
+      select_signature_key = '<M-n>', -- next signature for (eg) overloads
+    },
+  },
   -- Treesitter!
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate",
     version = false,
@@ -382,10 +388,9 @@ return {
   -- Begin completion framework
   -- Please see ./lua/complete.lua
   { "hrsh7th/nvim-cmp",
-    version = false,
-    event = "InsertEnter",
+    -- version = false,
+    event = { "InsertEnter", "CmdlineEnter" },
     config = function() require('plugins/complete') end,
-    enabled = false,
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
       -- "hrsh7th/cmp-buffer",     -- Completions of words in current buffer
@@ -396,57 +401,22 @@ return {
       "mtoohey31/cmp-fish",
       "petertriho/cmp-git",
       "kdheepak/cmp-latex-symbols", -- τ long live \tau
-      "dcampos/nvim-snippy",
+      -- "dcampos/nvim-snippy",
       "dcampos/cmp-snippy",
     },
   },
-  {
-    "dcampos/nvim-snippy",
+  { "dcampos/nvim-snippy",
+    opts = {
+      -- mappings to navigate expansion fields are merged in plugins/complete.lua
+      mappings = {
+        is = {},
+        nx = {
+          ['<leader>sx'] = 'cut_text',
+        },
+      },
+    }
   },
   { "onsails/lspkind.nvim",
-    -- Symbols in the completion
-    config = function () 
-      require('lspkind').init({
-        mode = 'symbol',
-        -- default symbol map
-        -- can be either 'default' (requires nerd-fonts font) or
-        -- 'codicons' for codicon preset (requires vscode-codicons font)
-        --
-        -- default: 'default'
-        preset = 'codicons',
-
-        -- override preset symbols
-        --
-        -- default: {}
-        symbol_map = {
-          Text = "󰉿",
-          Method = "󰆧",
-          Function = "󰊕",
-          Constructor = "",
-          Field = "󰜢",
-          Variable = "󰀫",
-          Class = "󰠱",
-          Interface = "",
-          Module = "",
-          Property = "󰜢",
-          Unit = "󰑭",
-          Value = "󰎠",
-          Enum = "",
-          Keyword = "󰌋",
-          Snippet = "",
-          Color = "󰏘",
-          File = "󰈙",
-          Reference = "󰈇",
-          Folder = "󰉋",
-          EnumMember = "",
-          Constant = "󰏿",
-          Struct = "󰙅",
-          Event = "",
-          Operator = "󰆕",
-          TypeParameter = "tp",
-        },
-      })
-    end
   },
   { "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     config = function()
@@ -594,7 +564,5 @@ return {
       },
     }
   },
-  { "folke/neodev.nvim", opts = {
-    setup_jsonls = false,
-  }},
+  "folke/neodev.nvim",
 }

@@ -95,12 +95,7 @@ require('lualine').setup {
       end
       return str
     end }},
-    lualine_b = {
-      -- Somehow this icon shows up correctly in editor but shows chinese
-      -- character on statusline.
-      -- { 'branch', icon = '', icons_enabled = true },
-      'diff'
-    },
+    lualine_b = {},
     lualine_c = {
       { 'buffers',
         mode = 4,
@@ -117,7 +112,7 @@ require('lualine').setup {
         },
       }
     },
-    lualine_x = {'encoding', { 'fileformat',
+    lualine_x = {'diff', 'encoding', { 'fileformat',
         icons_enabled = true,
         -- symbols = { unix = 'LF', dos = 'CRLF', mac = 'CR', },
       }, 'filetype'},
