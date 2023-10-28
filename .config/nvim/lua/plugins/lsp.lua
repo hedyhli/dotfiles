@@ -38,20 +38,14 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<localleader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  if vim.fn.has('nvim-0.6') == 1 then
-    buf_set_keymap('n', '<localleader>e', '<cmd>lua vim.diagnostic.show_line_diagnostics()<CR>', opts)
-    buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-    buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-  else
-    buf_set_keymap('n', '<localleader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-    buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-    buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  end
+  buf_set_keymap('n', '<localleader>e', '<cmd>lua vim.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap("n", "g@", "<cmd>lua vim.lsp.buf.format{async=true}<CR>", opts)
   --buf_set_keymap('n', '<localleader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 end
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 -- Call setup on list of wanted servers and map local keybinds
@@ -64,7 +58,7 @@ local servers = {
 for _, lsp in pairs(servers) do
   lspconfig[lsp].setup {
     on_attach = on_attach,
-    capabilities = capabilities,
+    -- capabilities = capabilities,
     flags = {
       debounce_text_changes = 150,
     }
@@ -75,7 +69,7 @@ end
 -- Add additional symlinks!
 lspconfig.pylsp.setup{
   on_attach = on_attach,
-  capabilities = capabilities,
+  -- capabilities = capabilities,
   settings = {
     pylsp = {
       plugins = {
@@ -97,7 +91,7 @@ lspconfig.pylsp.setup{
 -- https://github.com/hrsh7th/nvim-cmp/wiki/Language-Server-Specific-Samples#golang-gopls
 lspconfig.gopls.setup{
   on_attach = on_attach,
-  capabilities = capabilities,
+  -- capabilities = capabilities,
   settings = {
     gopls = {
       experimentalPostfixCompletions = true,
@@ -114,21 +108,22 @@ lspconfig.gopls.setup{
 }
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#lua_ls
 lspconfig.lua_ls.setup {
- settings = {
-   Lua = {
-     -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-     runtime = { version = 'LuaJIT' },
-     -- Get the language server to recognize the `vim` global
-     diagnostics = {
-       globals = {'vim'},
-     },
-     -- Make the server aware of Neovim runtime files
-     workspace = {
-       library = vim.api.nvim_get_runtime_file("", true),
-       checkThirdParty = false,
-     },
-     -- Do not send telemetry data containing a randomized but unique identifier
-     telemetry = { enable = false },
-   },
- },
+  on_attach = on_attach,
+  settings = {
+    Lua = {
+      -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+      runtime = { version = 'LuaJIT' },
+      -- Get the language server to recognize the `vim` global
+      diagnostics = {
+        globals = {'vim'},
+      },
+      -- Make the server aware of Neovim runtime files
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true),
+        checkThirdParty = false,
+      },
+      -- Do not send telemetry data containing a randomized but unique identifier
+      telemetry = { enable = false },
+    },
+  },
 }

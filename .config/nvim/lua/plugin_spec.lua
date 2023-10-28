@@ -28,11 +28,16 @@ return {
   "sam4llis/nvim-lua-gf",
   { "nvim-tree/nvim-tree.lua",
     cmd = {"NvimTreeOpen", "NvimTreeToggle", "NvimTreeFindFile", "NvimTreeFocus", "NvimTreeFindFileToggle"},
-    opts = {
-      view = { width = 20, },
-      -- renderer = { group_empty = true, },
-      -- filters = { dotfiles = true, },
-    },
+    keys = { "<leader>e" },
+    config = function ()
+      vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<cr>",
+        { desc = "NvimTreeToggle" })
+      require("nvim-tree").setup {
+        view = { width = 20, },
+        -- renderer = { group_empty = true, },
+        -- filters = { dotfiles = true, },
+      }
+    end,
   },
   -- "jreybert/vimagit",  -- emacs' magit ✨
   -- So anyways apparently almost every plugin that was popular in vim had to
@@ -93,42 +98,43 @@ return {
     -- lists the items in order as defined in source code.
     enabled = vim.fn.has("nvim-0.7") == 1,
     cmd = "SymbolsOutline",
+    keys = { "<leader>tt" },
     config = function()
       vim.keymap.set("n", "<leader>tt", "<cmd>SymbolsOutline<CR>",
         { desc = "SymbolsOutline" })
+      require("symbols-outline").setup {
+        symbols = {
+          File = { icon = "", hl = "@text.uri" },
+          Module = { icon = "M", hl = "@namespace" },
+          Namespace = { icon = "N", hl = "@namespace" },
+          Package = { icon = "", hl = "@namespace" },
+          Class = { icon = "c", hl = "@type" },
+          Method = { icon = "m", hl = "@method" },
+          Property = { icon = "", hl = "@method" },
+          Field = { icon = "F", hl = "@field" },
+          Constructor = { icon = "", hl = "@constructor" },
+          Enum = { icon = "ℰ", hl = "@type" },
+          Interface = { icon = "I", hl = "@type" },
+          Function = { icon = "", hl = "@function" },
+          Variable = { icon = "α", hl = "@constant" },
+          Constant = { icon = "", hl = "@constant" },
+          String = { icon = "\"", hl = "@string" },
+          Number = { icon = "#", hl = "@number" },
+          Boolean = { icon = "", hl = "@boolean" },
+          Array = { icon = "A", hl = "@constant" },
+          Object = { icon = "⦿", hl = "@type" },
+          Key = { icon = "🔐", hl = "@type" },
+          Null = { icon = "NULL", hl = "@type" },
+          EnumMember = { icon = "", hl = "@field" },
+          Struct = { icon = "𝓢", hl = "@type" },
+          Event = { icon = "", hl = "@type" },
+          Operator = { icon = "+", hl = "@operator" },
+          TypeParameter = { icon = "𝙏", hl = "@parameter" },
+          Component = { icon = "C", hl = "@function" },
+          Fragment = { icon = "g", hl = "@constant" },
+        },
+      }
     end,
-    opts = {
-      symbols = {
-        File = { icon = "", hl = "@text.uri" },
-        Module = { icon = "📦", hl = "@namespace" },
-        Namespace = { icon = "", hl = "@namespace" },
-        Package = { icon = "", hl = "@namespace" },
-        Class = { icon = "𝓒", hl = "@type" },
-        Method = { icon = "ƒ", hl = "@method" },
-        Property = { icon = "", hl = "@method" },
-        Field = { icon = "F", hl = "@field" },
-        Constructor = { icon = "", hl = "@constructor" },
-        Enum = { icon = "ℰ", hl = "@type" },
-        Interface = { icon = "I", hl = "@type" },
-        Function = { icon = "", hl = "@function" },
-        Variable = { icon = "α", hl = "@constant" },
-        Constant = { icon = "", hl = "@constant" },
-        String = { icon = "", hl = "@string" },
-        Number = { icon = "#", hl = "@number" },
-        Boolean = { icon = "", hl = "@boolean" },
-        Array = { icon = "a", hl = "@constant" },
-        Object = { icon = "", hl = "@type" },
-        Key = { icon = "🔐", hl = "@type" },
-        Null = { icon = "NULL", hl = "@type" },
-        EnumMember = { icon = "", hl = "@field" },
-        Struct = { icon = "𝓢", hl = "@type" },
-        Event = { icon = "ev", hl = "@type" },
-        Operator = { icon = "×", hl = "@operator" },
-        TypeParameter = { icon = "𝙏", hl = "@parameter" },
-        Component = { icon = "com", hl = "@function" },
-        Fragment = { icon = "frag", hl = "@constant" },
-      },
-    },
   },
   -- "bling/vim-bufferline", -- I prefer this over taking over the tabline space thanks
   -- Fair well vim-bufferline! You have served my vim and nvim experience well.
@@ -379,9 +385,10 @@ return {
     version = false,
     event = "InsertEnter",
     config = function() require('plugins/complete') end,
+    enabled = false,
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-buffer",     -- Completions of words in current buffer
+      -- "hrsh7th/cmp-buffer",     -- Completions of words in current buffer
       "hrsh7th/cmp-path",       -- File paths
       "hrsh7th/cmp-cmdline",    -- Fire your way through the neovim cmd line
       "hrsh7th/cmp-calc",       -- Somehwat useful.. But emacs M-x calc FTW!
@@ -391,13 +398,60 @@ return {
       "kdheepak/cmp-latex-symbols", -- τ long live \tau
       "dcampos/nvim-snippy",
       "dcampos/cmp-snippy",
-      "dcampos/nvim-snippy",
     },
   },
-  "onsails/lspkind.nvim",  -- Symbols in the completion
+  {
+    "dcampos/nvim-snippy",
+  },
+  { "onsails/lspkind.nvim",
+    -- Symbols in the completion
+    config = function () 
+      require('lspkind').init({
+        mode = 'symbol',
+        -- default symbol map
+        -- can be either 'default' (requires nerd-fonts font) or
+        -- 'codicons' for codicon preset (requires vscode-codicons font)
+        --
+        -- default: 'default'
+        preset = 'codicons',
+
+        -- override preset symbols
+        --
+        -- default: {}
+        symbol_map = {
+          Text = "󰉿",
+          Method = "󰆧",
+          Function = "󰊕",
+          Constructor = "",
+          Field = "󰜢",
+          Variable = "󰀫",
+          Class = "󰠱",
+          Interface = "",
+          Module = "",
+          Property = "󰜢",
+          Unit = "󰑭",
+          Value = "󰎠",
+          Enum = "",
+          Keyword = "󰌋",
+          Snippet = "",
+          Color = "󰏘",
+          File = "󰈙",
+          Reference = "󰈇",
+          Folder = "󰉋",
+          EnumMember = "",
+          Constant = "󰏿",
+          Struct = "󰙅",
+          Event = "",
+          Operator = "󰆕",
+          TypeParameter = "tp",
+        },
+      })
+    end
+  },
   { "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     config = function()
       require("lsp_lines").setup()
+
       vim.diagnostic.config({ virtual_lines = false })
       vim.api.nvim_create_autocmd("BufReadPost", {
         pattern = "*",
@@ -447,7 +501,9 @@ return {
   },
   { "folke/which-key.nvim",
     -- The most mind blowing steal from ever
+
     event = "VeryLazy",
+    enabled = false,
     init = function()
       vim.o.timeout = true
       vim.o.timeoutlen = 600
@@ -537,5 +593,8 @@ return {
         filetypes = {},
       },
     }
-  }
+  },
+  { "folke/neodev.nvim", opts = {
+    setup_jsonls = false,
+  }},
 }

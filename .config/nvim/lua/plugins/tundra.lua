@@ -3,6 +3,12 @@ local s = require('nvim-tundra.stylesheet.arctic')
 -- See also: statusline.lua for statusline colors (which I also use tundra's
 -- stylesheet)
 
+-- bg.cursorline is used elsewhere, rather than digging into all the places
+-- that they are used and make it lighter (increase contrast) I'd change change
+-- the field here, and optionally set the actual Cursorline highlight group
+-- back if needed.
+s.bg.cursorline = s.cp.gray._700
+
 require("nvim-tundra").setup {
   transparent_background = false,
   dim_inactive_windows = { enabled = true, color = nil, },
@@ -53,6 +59,8 @@ require("nvim-tundra").setup {
       -- Inspired by Modus-Vivendi (emacs).
       -- Shows the matched pair more visibly
       MatchParen = { bg = s.cp.gray._500 },
+      -- Fix completion menu border color
+      FloatBorder = { fg = s.cp.gray._500 },
     },
   },
 }

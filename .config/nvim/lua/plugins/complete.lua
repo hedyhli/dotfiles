@@ -3,8 +3,7 @@ local cmp = require'cmp'
 
 cmp.setup({
   completion = {
-    autocomplete = false,
-    -- trigger with <C-space>
+    autocomplete = false, -- trigger with <C-space>
   },
   snippet = {
     expand = function(args)
@@ -12,17 +11,20 @@ cmp.setup({
     end,
   },
   view = {
-    entries = "custom"
+    entries = {
+      name = "custom",
+    },
   },
   window = {
     completion = {
-      border = "shadow",
-      -- winhighlight = "Normal:CmpNormal",
+      border = "single",
+      winhighlight = 'Normal:Pmenu,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None',
+      max_width = 40,
     },
     documentation = {
-      border = "shadow",
-      -- winhighlight = "Normal:CmpDocNormal",
-    }
+      border = "single",
+      winhighlight = 'Normal:Pmenu,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None',
+    },
   },
   formatting = {
     format = function(entry, vim_item)
@@ -34,7 +36,12 @@ cmp.setup({
           return vim_item
         end
       end
-      return require('lspkind').cmp_format({ with_text = false })(entry, vim_item)
+      return require('lspkind').cmp_format({
+        with_text = false,
+        mode = 'symbol',
+        maxwidth = 50,
+        ellipsis_char = "⋯",
+      })(entry, vim_item)
     end
   },
   mapping = cmp.mapping.preset.insert({
@@ -43,7 +50,7 @@ cmp.setup({
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<Tab>'] = cmp.mapping.select_next_item(),
     ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-    ['<C-e>'] = cmp.mapping.abort(),
+    ['<C-g>'] = cmp.mapping.abort(),
     -- Accept currently selected item. Set `select` to `false` to only
     -- confirm explicitly selected items.
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
@@ -67,7 +74,7 @@ cmp.setup.filetype('gitcommit', {
   }, {
     { name = 'emoji' },
     { name = "latex_symbols" },
-    { name = 'buffer' },
+    -- { name = 'buffer' },
     { name = 'path' },
   })
 })
@@ -88,7 +95,7 @@ cmp.setup.filetype('fish', {
 cmp.setup.cmdline({ '/', '?' }, {
   mapping = cmp.mapping.preset.cmdline(),
   sources = {
-    { name = 'buffer' }
+    { name = 'path' }
   }
 })
 

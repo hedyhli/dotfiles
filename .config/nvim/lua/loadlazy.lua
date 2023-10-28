@@ -29,7 +29,7 @@ require("lazy").setup("plugin_spec", {
     -- a number <1 is a percentage., >1 is a fixed size
     size = { width = 1, height = 1 },
     icons = {
-      cmd = "⌘",
+      cmd = " ",
       config = "",
       event = "",
       ft = " ",

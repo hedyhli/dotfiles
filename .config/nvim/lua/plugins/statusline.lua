@@ -1,6 +1,6 @@
 --- Helpers for status line components ---
 local function lineinfo()
-  -- return "    "
+  -- return "    "
   local total = tostring(vim.fn.line('$'))
   -- Left pad the current line count to max width of this value, to avoid jittering
   return string.format("%"..total:len().."d", vim.fn.line('.'))..'/'..total
