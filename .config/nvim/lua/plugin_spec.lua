@@ -386,9 +386,8 @@ return {
   },
   -- End of treesitter
   -- Begin completion framework
-  -- Please see ./lua/complete.lua
+  -- Please see ./lua/plugins/complete.lua
   { "hrsh7th/nvim-cmp",
-    -- version = false,
     event = { "InsertEnter", "CmdlineEnter" },
     config = function() require('plugins/complete') end,
     dependencies = {
