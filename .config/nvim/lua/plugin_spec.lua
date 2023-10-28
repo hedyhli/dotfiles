@@ -1,4 +1,13 @@
 -- Used by Lazy.nvim in loadlazy.lua
+--
+-- Note on styling:
+--    { "plugin src",   <-- ugly, but useful
+--      option = value,
+--      option = value,
+--    }
+-- The "plugin src" is joined on the same line as opening brace so
+-- treesitter-context can show the plugin name. Useful since some of the plugin
+-- specs could be long.
 return {
   { "dracula/vim",
     name = "dracula", lazy = false, priority = 10000,
@@ -310,11 +319,9 @@ return {
   --    windwp/nvim-autopairs - extremely customizable, written in lua -
   --    integrates wth hrsh7th/nvim-cmp
   -- For nvim < 0.5, use: townk/vim-autoclose
-  "nvim-lua/plenary.nvim",  -- Helper lua functions many plugins depend on
   { "mfussenegger/nvim-lint",
     enabled = vim.fn.has("nvim-0.6") == 1,
     config = function() require("plugins/linting") end,
-
   },
   { "windwp/nvim-autopairs",
     commit = vim.fn.has("nvim-0.7") == 1 and "b7672cd",
@@ -322,6 +329,8 @@ return {
   },
 
   -- Best IDE autocomplete setup ever
+  -- INSANE level of customizability within an environment as confortable as
+  -- lua and with stability as solid as an obsidian.
   { "neovim/nvim-lspconfig",
     config = function()
       require('plugins/lsp')
@@ -392,7 +401,6 @@ return {
     config = function() require('plugins/complete') end,
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
-      -- "hrsh7th/cmp-buffer",     -- Completions of words in current buffer
       "hrsh7th/cmp-path",       -- File paths
       "hrsh7th/cmp-cmdline",    -- Fire your way through the neovim cmd line
       "hrsh7th/cmp-calc",       -- Somehwat useful.. But emacs M-x calc FTW!
@@ -400,7 +408,7 @@ return {
       "mtoohey31/cmp-fish",
       "petertriho/cmp-git",
       "kdheepak/cmp-latex-symbols", -- τ long live \tau
-      -- "dcampos/nvim-snippy",
+      -- "dcampos/nvim-snippy", -- Adding it here does not apply opts
       "dcampos/cmp-snippy",
     },
   },
