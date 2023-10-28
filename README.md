@@ -350,9 +350,9 @@ software.
 - [x] Replace lightline with lualine
 - [x] Set up snippets
 - [x] Replace NERDTree with ~neo-tree~ nvim-tree
-- [ ] Make use of Lazy loading
-- [ ] Fix ftplugin + lazy ft handle
-- [ ] Use Tree sitter
+- [x] Make use of Lazy loading
+- [x] Fix ftplugin + lazy ft handle
+- [x] Use Tree sitter
 
 
 ### Vanilla Emacs
