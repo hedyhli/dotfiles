@@ -40,7 +40,7 @@ require("lazy").setup("plugin_spec", {
       loaded = "●",
       not_loaded = "○",
       plugin = " ",
-      runtime = " ",
+      runtime = "",
       require = "󰢱 ",
       source = " ",
       start = "",

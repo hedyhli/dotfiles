@@ -7,6 +7,10 @@ o.number = true
 o.relativenumber = true
 
 o.mouse = "a"
+o.selectmode = "mouse"   -- Use select mode when dragging with mouse
+-- Changes to default:
+-- - Use vertical in all of command mode
+o.guicursor = "n-v-sm:block,i-ci-ve-c:ver25,r-cr-o:hor20"
 
 -- o.cursorline      = true
 -- Cursor line is rather distracting when trying to focus on the code.
@@ -28,6 +32,7 @@ o.scrolloff       = 6    -- screen lines to keep above and below cursor
 o.sidescrolloff   = 8    -- screen columns to keep on left and right of cursor
 o.confirm         = true
 o.showmatch       = true
+o.showmode        = false -- Don't show messages when switching modes
 
 o.encoding = "utf-8"
 o.mat = 2
@@ -46,7 +51,8 @@ o.shiftwidth    = 4    -- Put or remove 4 spaces with using < and >
 o.smarttab      = true -- Delete spaces at tabstop width
 o.copyindent    = true -- Copy indentation from previous line
 o.hidden        = true -- Allows switching to another file while current is unsaved.
-o.cmdheight     = 1
+o.cmdheight     = 0
+o.laststatus    = 0
 
 -- Show LSP W/E hints on another column next to the line numbers
 o.signcolumn = "yes"  -- Set to "number" will merge the LSP W/E hints with the number col
@@ -74,4 +80,6 @@ o.wildignore = { "*.o", "*~", "*.pyc", "*/.git/*", "*/.hg/*", "*/.svn/*", "*/.DS
 
 -- Not too noisy visually, but visible enough as a reminder.
 -- Underlines trailing spaces.
-vim.cmd [[ match Underlined '\s\+$' ]]
+-- vim.cmd [[ match Underlined '\s\+$' ]]
+--
+-- mini.trailspace FTW

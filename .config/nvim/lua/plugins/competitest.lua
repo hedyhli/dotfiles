@@ -148,6 +148,7 @@ require('competitest').setup {
   compile_directory = ".",
   compile_command = {
     c = { exec = "gcc", args = { "-Wall", "$(FNAME)", "-o", "$(FNOEXT).out" } },
+    -- cpp = { exec = "clang++", args = { "-Wall", "$(FNAME)", "-o", "$(FNOEXT).out", "--include-directory=/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/aarch64-apple-darwin22" } },
     cpp = { exec = "g++", args = { "-Wall", "$(FNAME)", "-o", "$(FNOEXT).out" } },
     rust = { exec = "rustc", args = { "$(FNAME)" } },
     java = { exec = "javac", args = { "$(FNAME)" } },

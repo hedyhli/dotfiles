@@ -1,14 +1,38 @@
 --- Helpers for status line components ---
-local function lineinfo()
-  -- return "    "
-  local total = tostring(vim.fn.line('$'))
-  -- Left pad the current line count to max width of this value, to avoid jittering
-  return string.format("%"..total:len().."d", vim.fn.line('.'))..'/'..total
+-- local function lineinfo()
+--   local total = tostring(vim.fn.line('$'))
+--   -- Left pad the current line count to max width of this value, to avoid jittering
+--   return string.format("%"..total:len().."d", vim.fn.line('.'))..'/'..total
+-- end
+
+local function mode_fmt(str)
+  if str == "NORMAL" then
+    return "./"
+  elseif str == "INSERT" then
+    return "i "
+  elseif str == "COMMAND" then
+    return ":>"
+  elseif str == "VISUAL" then
+    return "v "
+  elseif str == "V-BLOCK" then
+    return "^v"
+  elseif str == "V-LINE" then
+    return "VL"
+  elseif str == "TERMINAL" then
+    return ":D"
+  elseif str == "REPLACE" then
+    return "R "
+  elseif str == "SUBSTITUTE" then
+    return "SB"
+  elseif str == "SELECT" then
+    return "SL"
+  end
+  return str
 end
 
 local diagnostics_config = {
   'diagnostics',
-  symbols = {error = 'E:', warn = 'W:', info = 'I:', hint = 'H:'},
+  symbols = {error = '', warn = '', info = 'I:', hint = 'H:'},
 }
 
 local competitest_line = {
@@ -50,9 +74,15 @@ local tundra_lualine = {
     a = { fg = cp.indigo._500, bg = cp.gray._600, gui = 'bold' },
     b = { fg = cp.gray._600, bg = cp.transparent, gui = 'bold' },
   },
+
+  -- visual_select = {
+  --   a = { fg = cp.gray._200, bg = cp.sand._500, gui = 'bold' },
+  --   b = { fg = cp.gray._600, bg = cp.transparent, gui = 'bold' },
+  -- },
 }
 
-require('lualine').setup {
+local lualine = require('lualine')
+lualine.setup {
   options = {
     icons_enabled = true,
     -- theme = 'auto',
@@ -73,28 +103,17 @@ require('lualine').setup {
     }
   },
   sections = {
-    lualine_a = {{ 'mode', fmt = function(str)
-      if str == "NORMAL" then
-        return "./"
-      elseif str == "INSERT" then
-        return "i "
-      elseif str == "COMMAND" then
-        return ":>"
-      elseif str == "VISUAL" then
-        return "v "
-      elseif str == "V-BLOCK" then
-        return "^v"
-      elseif str == "V-LINE" then
-        return "VL"
-      elseif str == "TERMINAL" then
-        return ":D"
-      elseif str == "REPLACE" then
-        return "R "
-      elseif str == "SUBSTITUTE" then
-        return "S?"
-      end
-      return str
-    end }},
+  },
+  inactive_sections = {
+    -- lualine_a = {},
+    -- lualine_b = {'branch', 'diff'},
+    -- lualine_c = {'filename'},
+    -- lualine_x = { diagnostics_config },
+    -- lualine_y = {'searchcount'},
+    -- lualine_z = {},
+  },
+  tabline = {
+    lualine_a = {{ 'mode', fmt = mode_fmt }},
     lualine_b = {},
     lualine_c = {
       { 'buffers',
@@ -116,36 +135,15 @@ require('lualine').setup {
         icons_enabled = true,
         -- symbols = { unix = 'LF', dos = 'CRLF', mac = 'CR', },
       }, 'filetype'},
-    lualine_y = {diagnostics_config},
-    lualine_z = {lineinfo},
-  },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {'branch', 'diff'},
-    lualine_c = {'filename'},
-    lualine_x = { diagnostics_config },
     lualine_y = {'searchcount'},
-    lualine_z = {lineinfo},
+    lualine_z = {diagnostics_config},
   },
-  tabline = {
-    -- lualine_a = {},
-    -- lualine_b = {},
-    -- lualine_c = {breadcrumb},
-    -- lualine_x = {},
-    -- lualine_y = {},
-    -- lualine_z = {{
-    --   'tabs',
-    --   mode = 2,
-    --   show_modified_status = false,
-    --   tabs_color = {
-    --     active = "lualine_a_active",
-    --     inactive = "lualine_a_inactive",
-    --   }
-    -- }},
-  },
-  winbar = {
-  },
+  winbar = {},
   inactive_winbar = {},
   extensions = {'nvim-tree', competitest_line, 'symbols-outline'},
 }
 
+local map = function(...) vim.keymap.set(...) end
+local d   = function(s) return { desc = s } end
+
+map("n", "<leader>mm", function() lualine.hide({ places = "statusline", unhide }) end)

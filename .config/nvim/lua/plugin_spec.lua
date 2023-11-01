@@ -102,45 +102,19 @@ return {
       fold_closed = "", -- icon used for closed folds
     },
   },
-  { "simrat39/symbols-outline.nvim",
+  { dir = "~/projects/symbols-outline.nvim",
     -- Switched to this from tagbar because it does not require exctags, and it
     -- lists the items in order as defined in source code.
     enabled = vim.fn.has("nvim-0.7") == 1,
-    cmd = "SymbolsOutline",
+    cmd = { "SymbolsOutline", "SymbolsOutlineOpen", "SymbolsOutlineClose" },
     keys = { "<leader>tt" },
     config = function()
       vim.keymap.set("n", "<leader>tt", "<cmd>SymbolsOutline<CR>",
         { desc = "SymbolsOutline" })
       require("symbols-outline").setup {
-        symbols = {
-          File = { icon = "", hl = "@text.uri" },
-          Module = { icon = "M", hl = "@namespace" },
-          Namespace = { icon = "N", hl = "@namespace" },
-          Package = { icon = "", hl = "@namespace" },
-          Class = { icon = "c", hl = "@type" },
-          Method = { icon = "m", hl = "@method" },
-          Property = { icon = "", hl = "@method" },
-          Field = { icon = "F", hl = "@field" },
-          Constructor = { icon = "", hl = "@constructor" },
-          Enum = { icon = "ℰ", hl = "@type" },
-          Interface = { icon = "I", hl = "@type" },
-          Function = { icon = "", hl = "@function" },
-          Variable = { icon = "α", hl = "@constant" },
-          Constant = { icon = "", hl = "@constant" },
-          String = { icon = "\"", hl = "@string" },
-          Number = { icon = "#", hl = "@number" },
-          Boolean = { icon = "", hl = "@boolean" },
-          Array = { icon = "A", hl = "@constant" },
-          Object = { icon = "⦿", hl = "@type" },
-          Key = { icon = "🔐", hl = "@type" },
-          Null = { icon = "NULL", hl = "@type" },
-          EnumMember = { icon = "", hl = "@field" },
-          Struct = { icon = "𝓢", hl = "@type" },
-          Event = { icon = "", hl = "@type" },
-          Operator = { icon = "+", hl = "@operator" },
-          TypeParameter = { icon = "𝙏", hl = "@parameter" },
-          Component = { icon = "C", hl = "@function" },
-          Fragment = { icon = "g", hl = "@constant" },
+        -- auto_close = true,
+        keymaps = {
+          close = "q",
         },
       }
     end,
@@ -178,7 +152,10 @@ return {
     config = true
   },
   { 'nvim-telescope/telescope.nvim', tag = '0.1.4',
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    },
     enabled = vim.fn.has("nvim-0.9") == 1,
     config = function() require('plugins/telescope') end,
   },
@@ -245,6 +222,39 @@ return {
         -- Whether to disable showing non-error feedback
         silent = false,
       },
+  },
+  { "echasnovski/mini.splitjoin",
+    opts = {
+      mappings = { -- both n/v modes
+        toggle = 'gS',
+        split = '',
+        join = '',
+      },
+      detect = {
+        -- Array of Lua patterns to detect region with arguments.
+        -- Default: { '%b()', '%b[]', '%b{}' }
+        brackets = nil,
+        -- String Lua pattern defining argument separator
+        separator = ',',
+        -- Array of Lua patterns for sub-regions to exclude separators from.
+        -- Enables correct detection in presence of nested brackets and quotes.
+        -- Default: { '%b()', '%b[]', '%b{}', '%b""', "%b''" }
+        exclude_regions = nil,
+      },
+      -- Split options
+      split = {
+        hooks_pre = {},
+        hooks_post = {},
+      },
+      -- Join options
+      join = {
+        hooks_pre = {},
+        hooks_post = {},
+      },
+    }
+  },
+  { "echasnovski/mini.trailspace",
+    config = true,
   },
   { "lukas-reineke/indent-blankline.nvim",
     -- https://github.com/lukas-reineke/indent-blankline.nvim/wiki/Migrate-to-version-3
@@ -356,7 +366,7 @@ return {
       close_timeout = 4000,
       fix_pos = false,  -- don't auto-close the floating window all parameters finished
       hint_enable = true, -- virtual hint
-      hint_prefix = ": ",
+      hint_prefix = " ",
       hint_scheme = "String",
       hint_inline = function() return vim.fn.has('nvim-0.10') == 1 end,
       hi_parameter = "LspSignatureActiveParameter",
@@ -465,11 +475,37 @@ return {
       require("neorg").setup {
         load = {
           ["core.defaults"] = {}, -- Loads default behaviour
-          ["core.concealer"] = {}, -- Adds pretty icons to your documents
+          ["core.concealer"] = {
+            config = {
+              folds = true,
+            }
+          },
           ["core.dirman"] = { -- Manages Neorg workspaces
             config = {
               workspaces = { neorg = "~/neorg" },
               default_workspace = "neorg"
+            },
+          },
+          ["core.completion"] = {
+            config = {
+              engine = "nvim-cmp",
+              name = " "
+            },
+          },
+          ["core.highlights"] = {
+            config = {
+              highlights = {
+                tags = {
+                  ranged_verbatim = {
+                    parameters = "guifg=#9ca3af",
+                    begin = "guifg=#9ca3af",
+                    ["end"] = "guifg=#9ca3af",
+                    name =  {
+                      word = "guifg=#9ca3af",
+                    },
+                  },
+                },
+              },
             },
           },
         },
@@ -572,4 +608,14 @@ return {
     }
   },
   "folke/neodev.nvim",
+  -- TODO: check nvim version
+  { "mfussenegger/nvim-dap",
+    config = function() require("plugins/dap") end,
+  },
+  { "theHamsta/nvim-dap-virtual-text",
+    dependencies = {"mfussenegger/nvim-dap"},
+  },
+  { "rcarriga/nvim-dap-ui",
+    dependencies = {"mfussenegger/nvim-dap"},
+  },
 }

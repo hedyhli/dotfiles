@@ -114,6 +114,7 @@ cmp.setup({
     { name = "latex_symbols" },
     { name = 'path' },
     -- { name = 'calc' },
+    { name = 'neorg' },
   }),
 })
 
@@ -139,6 +140,18 @@ cmp.setup.filetype('fish', {
     { name = 'path' },
   })
 })
+cmp.setup.filetype('norg', {
+  sources = cmp.config.sources({
+    { name = 'neorg' },
+  }, {
+    -- { name = 'buffer' },
+    -- { name = 'calc' },
+    { name = 'emoji' },
+    { name = "latex_symbols" },
+    -- { name = 'path' },
+  })
+})
+
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't
 -- work anymore).
