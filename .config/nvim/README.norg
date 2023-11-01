@@ -1,0 +1,117 @@
+* Welcome to my nvim config!
+
+  - Plugin manager: Lazy
+  -- Plugin spec: `./lua/plugin_spec.lua`
+  -- Modular plugin configuration: `./lua/plugins/*.lua`
+  - LSP & Completion
+  -- `lsp-config` with nvim-0.5
+  -- `nvim-cmp`
+  -- Treesitter: context + textobjects
+  - Status line
+  -- Lualine
+  - Theme: Tundra
+  - File explorer: NvimTree
+
+** Files
+
+   - `init.lua`: Entry point, sets some primitive settings and calls modular
+     configuration in `./lua/`
+   - `./lua`
+   -- general: Your usual vimrc content (`set blah`)
+   -- mappings: Keymaps that unrelated to plugins
+   -- autocmds: Also unrelated to plugins
+   -- loadlazy: Bootstrap and set up Lazy.nvim (Lazy)
+   -- plugin_spec: List of plugins used by Lazy
+   -- `./lua/plugins`- Some plugins that require slightly more configuration
+      than a ~5 liner `.setup()` call.
+
+** A note regarding Emacs
+
+   Let's talk about neovim as an emacs user.
+
+*** The good
+
+    I miss Vertico and Consult from emacs!
+
+    Telescope.nvim is far from a consult-equivalent for the time being.
+
+    Neogit, however, is good enough a replacement for magit for my needs.
+
+    Neorg is not as mature as Org-mode, but I like the ideas there and is
+    currently enough for my needs.
+
+    SVG-based icons and SVG latex previews are both wonderful things that just
+    cannot be replicated in neovim as a terminal program. It feels rather bloat
+    to have to install the entire symbol set as Nerd Fonts and having to
+    configure your terminal correctly so they can be displayed. SVG icons, on
+    the other hand, offer much more flexibility and predictability.
+
+    I also miss Emacs's calc.
+
+*** The not so good
+
+    As someone who prefers C-like syntax over the Lisp/Scheme-family's, lua is
+    a breeze to write and configure. Lazy.nvim and neovim-lua plugins are
+    easier and more predictable to configure than emacs use-package, for me.
+
+    With people's mixed feeling on Custom.el and the ins and outs of face
+    attributes, it's much easier to work with Vim/Neovim's `highlight` command
+    instead. However one could argue that this may in part be due to emacs being
+    a GUI program, hence more complex to configure the UI side of things.
+
+    Vim/Neovim buffers are easier to work with.
+
+    Terminal emulation in Neovim just, well, works. In emacs we have various
+    different options each with their advantages and disadvantages, then
+    there's eshell, which IMO is pretty cool but I'm still failing to have
+    eshell work with EAT as of writing. Is this also due to Emacs being GUI and
+    Vim/Neovim being TUI?
+
+**** Emacs for everything?
+
+     I'm personally more used to the workflow where one operates primarily on
+     the command line, and when file editing is needed, launch an editor, then
+     close it when editing is complete.
+
+     I see how the possibily of being able to replace many of our common apps
+     with emacs could be attractive, however I didn't really see any immediate
+     benefits of using emacs-equivelents over more "mainstream" apps that "just
+     do their thing", other than being available on emacs. In other words, IRC
+     on erc, emails on mu4e, gemini/gopher on elpher don't really have much of a
+     problem in terms of usability, but they aren't as good as say weechat,
+     aerc, lagrange respectively since they require extra configuration to work
+     properly and I don't really see a need to have the ability to check my
+     mails along side a coding buffer.
+
+     Maybe I'll understand the benefits or have the needs someday, but for now
+     they are extra cherries on top and not must-haves.
+
+
+** Philosophy / Choices / UI
+
+   Anyway, let's get back to discussing neovim.
+
+   neovim version: 0.9
+
+   - UI
+   -- No fancy UI like message popups
+   -- Area of main source (code) should be as tall as possible on a laptop,
+      this means little possiblity for permanent winbar, tabline, or high
+      cmdheight.
+   -- Completion is turned off by default. This allows distraction free
+      typing. The menu can be triggered with TAB. Unfortunately, nvim-cmp does
+      not yet support ghost text + manual completion, unlike my emacs config
+      (with corfu-candidate-overlay).
+
+   - Icons
+   -- Icons make things concise, but they shouldn't be overused!
+   -- Strive for a balance between conciseness and compatibility
+
+   - Colors
+   -- No fancy colors nor eye candy, only colors for semantics (see
+      `lua/plugins/tundra.lua`)
+   -- Not too many variations of colors, we can use different shades instead.
+   -- Enough contrast where applicable to discern UI elements
+
+   - Plugins
+   -- Preferably plugins with enough customizability and without feature-creep
