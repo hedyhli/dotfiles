@@ -13,8 +13,8 @@ on many [tildes](https://tildeverse.org), I make this set of configuration as
 cross-platform as possible.
 
 I also try to use `$HOME` or `~` in place of `/home/name` because on Mac it's
-`/Users/name` and my username is not always the same. This also aids
-portability for others looking to reference my config.
+`/Users/name` and my username is not always the same. This also aids portability
+for others looking to reference my config.
 
 Used on (aka loosely tested on):
 - MacOS
@@ -31,6 +31,8 @@ that handles clipboard operations with windows.
 
 ## CHANGELOG
 
+- 2023-10: Heavily refactored my neovim config (I've also changed my neovim
+theme from dracula to tundra)
 - 2023-09: I've switched from neovim to Doom, and to my own Emacs!
 - 2023-06: (nvim) Switched from vim to full-lua set up
 
@@ -54,7 +56,7 @@ Mirrors: [tildegit (gitea)](https://tildegit.org/hedy/dotfiles) |
     * [Local](#local)
 * [Editor](#editor)
     * [Vim and nvim](#vim-and-nvim)
-            * [New NVIM setup (lua)](#new-nvim-setup-lua)
+        * [New neovim setup (lua)](#new-neovim-setup-lua)
         * [TODO for neovim](#todo-for-neovim)
     * [Vanilla Emacs](#vanilla-emacs)
     * [Doom emacs](#doom-emacs)
@@ -220,20 +222,18 @@ Other local files recognized:
 
 ### Vim and nvim
 
+Minimum supported version: NVIM 0.5.0
+
+Recommended version: NVIM 0.9.0+
+
 The [bin/nv](./bin/nv) script is an alias to neovim, and runs vim if neovim is
 not installed.
 
-For vim I use Vundle as my plugin manager just because I discovered vim before
-nvim and Vundle before vim-plug.  My [`vimrc`](.vimrc) is largely unmaintained
-pieces of configuration copied from other people's configs. The set of plugins
-are mostly maintained (as in me modifying what plugins to use), except for
-auto-pairs if I remember correctly.
-
-Sometimes when I change a plugin for nvim and change it for vim too, if I have
-extra time.
+The vim config is usable, but largely unmaintained. It can be used on systems
+without neovim or with an unsupported version of neovim.
 
 <details>
-<summary> Legacy NVIM setup </summary>
+<summary> Legacy neovim setup </summary>
 
 I use vim-plug as my plugin manager for nvim because it is shorter to type. And
 it installs plugins asynchronously.
@@ -255,11 +255,11 @@ remove it in the future.
 LSP servers - See comments in `.config/nvim/lua/lsp.lua`.
 
 I'll probably also optimize my vim config so that it can be fast and clean -
-available for quick editting. No auto-complete, no fancy themes, just some
+available for quick editing. No auto-complete, no fancy themes, just some
 must-have utilities.
 </details>
 
-##### New NVIM setup (lua)
+#### New neovim setup (lua)
 
 Since 2023-06-30, I've switched to `init.lua` 🎉
 
@@ -269,47 +269,16 @@ Since 2023-06-30, I've switched to `init.lua` 🎉
 - Icons: nvim-web-devicons
 - Status line: lualine
 
-A decision like this was as a difficult one to make as projects like fish
-switching from C++ to Rust (like WTF?)
-
-But my reasoning is like theirs, my startup time has improved significantly and
-this switch came with many other advantages including opening up a world of many
-modern, speedy plugins with very useful (not exactly due to being trendy)
-functionalities.
-
-Yes, I still use dracula theme.
-
-Yes, I still don't use fancy separators for my status line.
-
-Yes, I still don't use a dashboard, nor open up a sidebar of file explorer
-automatically.
+Ever since then, my startup time has improved significantly and this switch came
+with many other advantages including opening up a world of many modern, speedy
+plugins with very useful (not exactly due to being trendy) functionalities.
 
 I like to choose plugins that are fast, customizable, and generally does not
 have feature creep.
 
-**Regarding bufferline**
-
-lualine provides tabline support, which displays the list of buffers at the top
-of the window where vim tabs are supposed to be.
-
-If there is another plugin that provides similar customization capabilities as
-lualine but does not have tabline, I would happily switch to that.
-
-Even though I don't use tabs much, I prefer to have the list of buffers at the
-bottom on the command line rather than taking up space at the top.
-
-No, I don't wish to have hover events, "x"-close buttons, filetype icons on the
-buffer line. My nvim should be a lightweight editor that has particular useful
-capabilities from IDEs.
-
 **LSP and completion**
 
 I use the official lsp-config plus nvim-cmp.
-
-For cmp, I have sources for latex (useful symbol input), emojis (useful for
-docs), buffer (sometimes useful, mostly noisy), git (oh well), calc (also useful
-for docs), path (useful for shell scripts and docs), cmdline (avoid opening the
-browser search too much), and snippy.
 
 **Linting**
 
@@ -317,24 +286,14 @@ Linting is triggered on save. I use nvim-lint.
 
 **Treesitter**
 
-I plan to use treesitter soon. Features I'm particularly looking for is speed,
-indent context highlight (indicates current indent level), and perhaps block
-navigation.
+Treesitter plugin is enabled conditionally if neovim version >= 0.9.
 
-Unfortunately it requires newer nvim releases, so I wait for a bit first, like I
-did for nvim-0.5 to become more ubiquitous for switching to lua config.
+Note that a proper C/C++ compiler toolchain is required for building the
+parsers.
 
 **Telescope**
 
-No, I don't use telescope yet due to the version requirement.
-
-For fuzzy opening of files I have mini.files and `:e fuzzy/path/autocompletion`
-provided by nvim-cmp.
-
-Or I would use a file browser outside of neovim like ranger and open from there.
-
-No, I don't use neovim like an IDE, and no I am not one of those emacs-as-an-OS
-people. It's only an editor :)
+Telescope plugin is enabled conditionally if neovim version >= 0.9.
 
 **Setup**:
 - `dotscripts/setup/nvim` (no longer needed as I no longer use vim-plug)
@@ -353,12 +312,13 @@ software.
 - [x] Make use of Lazy loading
 - [x] Fix ftplugin + lazy ft handle
 - [x] Use Tree sitter
+- [ ] Ensure conditionally loaded plugins (from nvim version) work as expected
 
 
 ### Vanilla Emacs
 
-I use chemacs2 for switching emacs profiles (emacs < v29) and it allows me to
-use both vanilla emacs and doom emacs at the same time. See
+I use chemacs2 for switching emacs profiles (for emacs < v29) and it allows me
+to use both vanilla emacs and doom emacs at the same time. See
 [`.emacs-profiles.el`](.emacs-profiles.el).
 
 **Setup**: `dotscripts/setup/emacs`. This script is pretty heavily tested and
@@ -382,7 +342,8 @@ emacs in 2023-09. The configuration there is somewhat up to date, but not
 guaranteed as I don't really use doom anymore.
 
 The emacs directory would be at `.doomemacs` (because `.emacs.d` is for
-chemacs).
+chemacs). Relevant environment variables are set in `.exportenvs`, also see
+`.emacs-profiles.el`.
 
 ## Terminal
 
@@ -394,11 +355,7 @@ they are platform-dependent.
 
 ## Gemini and Spartan client
 
-My amfora config at `.config/amfora` uses the default theme with mostly default
-settings. I don't use amfora all that often because I also use elpher,
-lagrange, and gelim. I plan to have a custom newtab page as well as a custom
-theme in the future. Because gelim doesn't support client certificates yet, I
-only mostly use amfora for capsules that want a client certificate.
+My primary client is Gelim on the terminal and Lagrange otherwise.
 
 Gelim config is at `.config/gelim`. gelim is my own gemini and spartan client
 for the terminal that isn't a full-blown TUI and tries to stay simple whilst
