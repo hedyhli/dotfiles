@@ -3,9 +3,34 @@
 set -e
 
 if [[ -z "$3" ]]; then
-    echo "Usage: git pullpr orguser/repo user:branch[/repo] prnumber"
+    echo "Usage: git pullpr <orguser/repo> <user:branch>[/repo] <prnumber>"
     echo
-    echo "Make sure you're already in the correct git repo"
+    echo "  Merge an arbitrary GitHub PR from some arbitrary repo with an"
+    echo "  automated merge message mentioning that PR."
+    echo
+    echo "  Make sure you're already in the correct git repo."
+    echo
+    echo "Options:"
+    echo "  None."
+    echo
+    echo "Example:"
+    echo "  > git pullpr main-repo-user/main-repo pr-user:pr-branch/pr-user-repo 123"
+    echo
+    echo "  Merges PR #123 from main-repo-user/main-repo, which is written"
+    echo "  by pr-user on their pr-user-repo, on pr-branch."
+    echo
+    echo "  The merge message will be:"
+    echo
+    echo "  >  Merge upstream PR #123"
+    echo "  >"
+    echo "  >  main-repo-user/main-repo#123"
+    echo
+    echo "  pr-user-repo can be omitted, in which case it will be assumed"
+    echo "  to be the same as main-repo name."
+    echo
+    echo "So to merge multiple PRs from the same repo you only need to change"
+    echo "the last two arguments."
+    exit
 fi
 
 
