@@ -1101,6 +1101,7 @@ Configuration below enables tree-sitter mode for each major language mode I want
 #+BEGIN_SRC elisp
 ;; Open python files in tree-sitter mode.
 (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
+(add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
 (add-to-list 'auto-mode-alist
              '("\\.go\\'" . (lambda ()
                                (go-ts-mode)
