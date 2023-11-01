@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [[ -z "$3" ]]; then
+    echo "Usage: git pullpr orguser/repo user:branch[/repo] prnumber"
+    echo
+    echo "Make sure you're already in the correct git repo"
+fi
+
+
+userbranch="$2"
+
+if [[ "$2" =~ "/" ]]; then
+    prrepo=$(echo "$2" | sed "s_.*/__")
+    userbranch=$(echo "$2" | sed "s_/.*__")
+fi
+
+user=$(echo "$userbranch" | sed "s/:.*//")
+branch=$(echo "$userbranch" | sed "s/.*://")
+orguser=$(echo "$1" | sed "s_/.*__")
+repo=$(echo "$1" | sed "s_.*/__")
+prnumber="$3"
+
+if [[ -z "$prrepo" ]]; then
+    prrepo="$repo"
+fi
+
+echo "PR:        $user/$prrepo on $branch, PR #$prnumber"
+echo "Upstream:  $orguser/$repo"
+echo -n "Press enter to continue..."
+read
+
+git remote add "$user" git@github.com:"$user"/"$prrepo"
+echo "Added remote $user"\n
+echo "Fetching"
+git fetch "$user" "$branch"
+
+echo
+echo "Merge:"
+echo "  git merge $user/$branch -m \"Merge upstream PR $prnumber\" -m \"\" -m \"$orguser/$repo#$prnumber\""
+echo
+echo -n "Press enter to continue..."
+read
+
+git merge $user/$branch -m "Merge upstream PR #$prnumber" -m "" -m "$orguser/$repo#$prnumber"
+
+echo
+echo "Merge complete."
+git log -n1
+echo
+echo "Remove remote:"
+echo "  git remote remove $user"
+echo
+echo -n "Press enter to continue..."
+read
+git remote remove $user
+echo "Remote removed."
+git remote -v
