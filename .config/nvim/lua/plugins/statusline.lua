@@ -143,7 +143,10 @@ lualine.setup {
   extensions = {'nvim-tree', competitest_line, 'symbols-outline'},
 }
 
-local map = function(...) vim.keymap.set(...) end
-local d   = function(s) return { desc = s } end
+-- local map = function(...) vim.keymap.set(...) end
+-- local d   = function(s) return { desc = s } end
 
-map("n", "<leader>mm", function() lualine.hide({ places = "statusline", unhide }) end)
+-- map(
+--   "n", "<leader>mm",
+--   function() lualine.hide({ places = "statusline", unhide }) end
+-- )

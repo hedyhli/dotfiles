@@ -106,18 +106,17 @@ return {
     -- Switched to this from tagbar because it does not require exctags, and it
     -- lists the items in order as defined in source code.
     enabled = vim.fn.has("nvim-0.7") == 1,
-    cmd = { "SymbolsOutline", "SymbolsOutlineOpen", "SymbolsOutlineClose" },
-    keys = { "<leader>tt" },
-    config = function()
-      vim.keymap.set("n", "<leader>tt", "<cmd>SymbolsOutline<CR>",
-        { desc = "SymbolsOutline" })
-      require("symbols-outline").setup {
-        -- auto_close = true,
-        keymaps = {
-          close = "q",
-        },
-      }
-    end,
+    cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
+    keys = {
+      { "<leader>tt", "<cmd>SymbolsOutline<CR>", desc = "Toggle outline window" }
+    },
+    opts = {
+      -- focus_on_open = false,
+      open_hover_on_preview = false,
+      keymaps = {
+        close = "q",
+      },
+    },
   },
   -- "bling/vim-bufferline", -- I prefer this over taking over the tabline space thanks
   -- Fair well vim-bufferline! You have served my vim and nvim experience well.
@@ -262,7 +261,6 @@ return {
     -- Upgraded to nvim 0.9.4 and the new version worked with showing context
     -- without needing treesitter! 🎉
     main = vim.fn.has("nvim-0.9") == 1 and "ibl",
-    -- Use the 2 lines below if the nvim version is not supported
     version = vim.fn.has("nvim-0.9") == 0 and "2.20.8",
     pin = vim.fn.has("nvim-0.9") == 0,
     opts = {
