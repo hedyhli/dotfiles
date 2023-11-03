@@ -1,4 +1,3 @@
-
 local configs = require("nvim-treesitter.configs")
 configs.setup({
   ensure_installed = {
@@ -8,33 +7,33 @@ configs.setup({
   highlight = { enable = true },
   indent = { enable = true },
   -- Textobjects, see below as well
-  textobjects = {
-    select = {
-      enable = true,
-      -- Automatically jump forward to textobj, similar to targets.vim
-      lookahead = true,
-      keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
-        ["af"] = { query = "@function.outer", desc = "Around function" },
-        ["if"] = { query = "@function.inner", desc = "Inside function" },
-        ["ac"] = { query = "@class.outer", desc = "Around class" },
-        ["ic"] = { query = "@class.inner", desc = "Inside class" },
-        -- You can also use captures from other query groups like `locals.scm`
-        ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
-      },
-      include_surrounding_whitespace = false,
-    },
-    move = {
-      enable = true,
-      set_jumps = true,
-      goto_next = {
-        ["]p"] = "@parameter.outer",
-      },
-      goto_previous = {
-        ["[p"] = "@parameter.outer",
-      },
-    }
-  },
+  -- textobjects = {
+  --   select = {
+  --     enable = true,
+  --     -- Automatically jump forward to textobj, similar to targets.vim
+  --     lookahead = true,
+  --     keymaps = {
+  --       -- You can use the capture groups defined in textobjects.scm
+  --       ["af"] = { query = "@function.outer", desc = "Around function" },
+  --       ["if"] = { query = "@function.inner", desc = "Inside function" },
+  --       ["ac"] = { query = "@class.outer", desc = "Around class" },
+  --       ["ic"] = { query = "@class.inner", desc = "Inside class" },
+  --       -- You can also use captures from other query groups like `locals.scm`
+  --       ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
+  --     },
+  --     include_surrounding_whitespace = false,
+  --   },
+  --   move = {
+  --     enable = true,
+  --     set_jumps = true,
+  --     goto_next = {
+  --       ["]p"] = "@parameter.outer",
+  --     },
+  --     goto_previous = {
+  --       ["[p"] = "@parameter.outer",
+  --     },
+  --   }
+  -- },
 })
 
 -- TS context

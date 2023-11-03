@@ -29,7 +29,7 @@ return {
   -- After hours of blood, pain, and tears of trying to tweak dracula colors to
   -- be easier on the eyes and have greater contrast, I took one look at the
   -- carousel of themes from NvChad and fell in love with tundra...
-  { "sam4llis/nvim-tundra",
+  { "sam4llis/nvim-tundra", lazy = false, priority = 10000,
     config = function () require("plugins/tundra") end,
   },
   -- Use 'gf' with dot.separated.modules in lua.
@@ -102,17 +102,42 @@ return {
       fold_closed = "", -- icon used for closed folds
     },
   },
+  { 'stevearc/aerial.nvim',
+    enabled = false,
+    opts = {
+      filter_kind = false,
+    },
+    -- Optional dependencies
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons"
+    },
+  },
   { dir = "~/projects/symbols-outline.nvim",
     -- Switched to this from tagbar because it does not require exctags, and it
     -- lists the items in order as defined in source code.
     enabled = vim.fn.has("nvim-0.7") == 1,
-    cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
+    cmd = { "SymbolsOutline", "SymbolsOutlineOpen", "SymbolsOutlineFollow" },
     keys = {
-      { "<leader>tt", "<cmd>SymbolsOutline<CR>", desc = "Toggle outline window" }
+      { "<leader>tt", "<cmd>SymbolsOutline<CR>", desc = "Toggle outline window" },
+      { "<leader>tT", "<cmd>SymbolsOutlineFollow<CR>", desc = "Focus & follow outline window" },
     },
     opts = {
       -- focus_on_open = false,
+      -- auto_preview = true,
+      border = "rounded",
       open_hover_on_preview = false,
+      autofold_depth = 1,
+      auto_unfold_hover = true,
+      -- guides = {
+      --   enabled = true,
+      --   markers = {
+      --     bottom = '-',
+      --     middle = '+',
+      --     vertical = '|',
+      --     horizontal = '-',
+      --   },
+      -- },
       keymaps = {
         close = "q",
       },
@@ -163,11 +188,11 @@ return {
     opts = {
       highlight = {
         multiline = false,
-        -- The 3 lines below tunes down the coloring of the highlights.
-        -- The color schemes and treesitter of nowdays are already way too
-        -- vibrant for my liking, and for someone who litters todo/fixme way
-        -- too much everywhere, adding *wide* *bg* highlighting to them is just
-        -- WAY TOO MUCH EYE CANDY AAAA
+        -- The 3 lines below tunes down the coloring of the highlights. The
+        -- color schemes and treesitter nowdays are already way too vibrant for
+        -- my liking, and for someone who litters todo/fixme way too much
+        -- everywhere, adding *wide* *bg* highlighting to them is just WAY TOO
+        -- MUCH EYE CANDY AAAA
         before = "",
         keyword = "fg", -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty.
         after = "", -- "fg" or "bg" or empty
@@ -255,13 +280,14 @@ return {
   { "echasnovski/mini.trailspace",
     config = true,
   },
-  { "lukas-reineke/indent-blankline.nvim",
+  { "lukas-reineke/indent-blankline.nvim", name = "ibl",
     -- https://github.com/lukas-reineke/indent-blankline.nvim/wiki/Migrate-to-version-3
     -- Not documented but it appears new version requires nvim nightly.
     -- Upgraded to nvim 0.9.4 and the new version worked with showing context
     -- without needing treesitter! 🎉
+    after = "sam4llis/nvim-tundra",
     main = vim.fn.has("nvim-0.9") == 1 and "ibl",
-    version = vim.fn.has("nvim-0.9") == 0 and "2.20.8",
+    version = vim.fn.has("nvim-0.9") == 1 and "*" or "2.20.8",
     pin = vim.fn.has("nvim-0.9") == 0,
     opts = {
       exclude = {
@@ -275,6 +301,7 @@ return {
           "notify",
           "toggleterm",
           "lazyterm",
+          "Outline"
         },
       },
     },
@@ -389,10 +416,16 @@ return {
     event = "VeryLazy",
     cmd = { "TSUpdateSync", "TSUpdate", "TSInstall", "Inspect", "InspectTree" },
     config = function() require("plugins/treesitter") end,
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter-context",
-      "nvim-treesitter/nvim-treesitter-textobjects",
-    },
+  },
+  -- Setting these as dependencies of nvim-treesitter causes error of invalid
+  -- query.
+  { "nvim-treesitter/nvim-treesitter-context",
+    enabled = vim.fn.has('nvim-0.9') == 1,
+    after = "nvim-treesitter/nvim-treesitter",
+  },
+  { "nvim-treesitter/nvim-treesitter-textobjects",
+    enabled = vim.fn.has('nvim-0.9') == 1,
+    after = "nvim-treesitter/nvim-treesitter",
   },
   { "windwp/nvim-ts-autotag",
     -- Automatically add closing tags for HTML and JSX
