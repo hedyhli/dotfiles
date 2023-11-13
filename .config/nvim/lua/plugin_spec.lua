@@ -121,16 +121,20 @@ return {
       }
     },
   },
-  { dir = "~/projects/outline.nvim",
+  { dir = "~/projects/outline.nvim",  -- See github.com/hedyhli/outline.nvim
     -- Switched to this from tagbar because it does not require exctags, and it
     -- lists the items in order as defined in source code.
-    -- See github.com/hedyhli/outline.nvim
     enabled = vim.fn.has("nvim-0.7") == 1,
     cmd = { "Outline", "OutlineOpen" },
     keys = {
       { "<leader>tt", "<cmd>Outline<CR>", desc = "Toggle outline window" },
       { "<leader>tT", "<cmd>OutlineFollow<CR>", desc = "Focus & follow outline window" },
     },
+    -- Unfortunately my plugins/outline.lua is not tracked in dotfiles, because
+    -- it is under active development and I tend to change the config quite
+    -- often. If you're looking for config options, you should definitely check
+    -- the readme and also see the sections for recipes, tips. My custom config
+    -- for this is not far off from the defaults.
     config = function() require "plugins/outline" end,
   },
   -- "bling/vim-bufferline", -- I prefer this over taking over the tabline space thanks
