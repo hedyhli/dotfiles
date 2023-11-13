@@ -5,6 +5,7 @@ map("n", "<leader>ff", "<cmd>Telescope find_files<cr>", d"Telescope find_files")
 map("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>", d"Telescope oldfiles")
 map("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", d"Telescope live_grep")
 map("n", "<leader>fb", "<cmd>Telescope buffers<cr>", d"Telescope buffers")
+map("n", "<leader>bb", "<cmd>Telescope buffers<cr>", d"Telescope buffers")
 map("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", d"Telescope help_tags")
 map("n", "<leader>fR", "<cmd>Telescope registers<cr>", d"Telescope registers (also see <leader>rg)")
 

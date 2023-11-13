@@ -7,7 +7,7 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 vim.opt.rtp:prepend(lazypath)
-vim.opt.completeopt = { "menuone", "noinsert", "noselect", "preview" }
+vim.opt.completeopt = { "menu", "noinsert", "noselect", "preview" }
 
 -- Fix when ft = blah included in plugin spec, syntax not loaded.
 vim.cmd [[

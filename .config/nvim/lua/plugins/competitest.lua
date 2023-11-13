@@ -166,7 +166,7 @@ require('competitest').setup {
   output_compare_method = "squish",
   view_output_diff = false,
 
-  testcases_directory = ".",
+  testcases_directory = "./testcases",
   testcases_use_single_file = false,
   testcases_auto_detect_storage = true,
   testcases_single_file_format = "$(FNOEXT)_testcases.txt",

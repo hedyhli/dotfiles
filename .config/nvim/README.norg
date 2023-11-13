@@ -7,7 +7,7 @@
   -- `lsp-config` with nvim-0.5
   -- `nvim-cmp`
   -- Treesitter: context + textobjects
-  - Status line
+  - Status line (SUBJECT TO CHANGE)
   -- Lualine
   - Theme: Tundra
   - File explorer: NvimTree

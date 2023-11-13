@@ -53,8 +53,8 @@ require("nvim-tundra").setup {
         fg = s.cp.gray._400,
         bg = s.cp.gray._700
       },
-      IblIndent = { fg = s.cp.gray._800 },
-      IblScope = { fg = s.cp.gray._800 },
+      IblIndent = { fg = s.cp.gray._1000 },
+      IblScope = { fg = s.cp.opal._500 },
       Comment = { fg = s.cp.gray._400 },    -- Add more contrast
       -- Inspired by Modus-Vivendi (emacs).
       -- Shows the matched pair more visibly

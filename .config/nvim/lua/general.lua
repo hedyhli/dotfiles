@@ -51,8 +51,21 @@ o.shiftwidth    = 4    -- Put or remove 4 spaces with using < and >
 o.smarttab      = true -- Delete spaces at tabstop width
 o.copyindent    = true -- Copy indentation from previous line
 o.hidden        = true -- Allows switching to another file while current is unsaved.
-o.cmdheight     = 0
+
+o.showcmdloc = "last"
+
+-- lualine, feline, galaxyline? RULER + inc-line!
+-- Used when there is only one horizontal split
+o.rulerformat   = "%#LineNr#%20(%f %p%%%)"
+-- Needed to show "recording @" and other messages until this issue is resolved
+-- in neovim core
+o.cmdheight     = 1
 o.laststatus    = 0
+vim.api.nvim_set_hl(0, 'Statusline', {link = 'Normal'})
+vim.api.nvim_set_hl(0, 'StatuslineNC', {link = 'Normal'})
+o.statusline = '%#WinSeparator#'.. ("─"):rep(vim.api.nvim_win_get_width(0)) .. '%*'
+-- Clear cmdline
+vim.keymap.set("n", "<leader><leader>", "<cmd>echo<cr>")
 
 -- Show LSP W/E hints on another column next to the line numbers
 o.signcolumn = "yes"  -- Set to "number" will merge the LSP W/E hints with the number col
@@ -71,6 +84,9 @@ o.foldmethod = "expr"
 o.foldexpr = "nvim_treesitter#foldexpr()"
 
 o.swapfile = false
+-- This is used to control how often to update swap file. Since I don't
+-- use swap, I can control CursorHold time with this.
+o.updatetime = 3000
 o.backup = false
 o.undodir = vim.fn.expand("~") .. "/.local/share/nvim/undodir/"
 o.undofile = true

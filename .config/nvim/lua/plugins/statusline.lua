@@ -1,3 +1,4 @@
+-- NOTE that I no longer use lualine (or any statusline at all)
 --- Helpers for status line components ---
 -- local function lineinfo()
 --   local total = tostring(vim.fn.line('$'))

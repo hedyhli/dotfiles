@@ -113,35 +113,25 @@ return {
       "nvim-tree/nvim-web-devicons"
     },
   },
-  { dir = "~/projects/symbols-outline.nvim",
+  { dir = "~/projects/markdown-toc.nvim", ft = "markdown",
+    opts = {
+      -- fences = false,
+      toc_list = {
+        -- indent_size = function() return vim.bo.shiftwidth end,
+      }
+    },
+  },
+  { dir = "~/projects/outline.nvim",
     -- Switched to this from tagbar because it does not require exctags, and it
     -- lists the items in order as defined in source code.
+    -- See github.com/hedyhli/outline.nvim
     enabled = vim.fn.has("nvim-0.7") == 1,
-    cmd = { "SymbolsOutline", "SymbolsOutlineOpen", "SymbolsOutlineFollow" },
+    cmd = { "Outline", "OutlineOpen" },
     keys = {
-      { "<leader>tt", "<cmd>SymbolsOutline<CR>", desc = "Toggle outline window" },
-      { "<leader>tT", "<cmd>SymbolsOutlineFollow<CR>", desc = "Focus & follow outline window" },
+      { "<leader>tt", "<cmd>Outline<CR>", desc = "Toggle outline window" },
+      { "<leader>tT", "<cmd>OutlineFollow<CR>", desc = "Focus & follow outline window" },
     },
-    opts = {
-      -- focus_on_open = false,
-      -- auto_preview = true,
-      border = "rounded",
-      open_hover_on_preview = false,
-      autofold_depth = 1,
-      auto_unfold_hover = true,
-      -- guides = {
-      --   enabled = true,
-      --   markers = {
-      --     bottom = '-',
-      --     middle = '+',
-      --     vertical = '|',
-      --     horizontal = '-',
-      --   },
-      -- },
-      keymaps = {
-        close = "q",
-      },
-    },
+    config = function() require "plugins/outline" end,
   },
   -- "bling/vim-bufferline", -- I prefer this over taking over the tabline space thanks
   -- Fair well vim-bufferline! You have served my vim and nvim experience well.
@@ -165,10 +155,13 @@ return {
     commit = 'cde67b5d5427daeecfd7c77cf02ded23a26980bb',
   },
   { -- STATUS LINE
-    -- TODO: Switch to heir for more customizability
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function() require("plugins/statusline") end,
+    enabled = false,
+  },
+  { "b0o/incline.nvim",
+    config = function() require("plugins/incline") end,
   },
   { "tiagovla/scope.nvim",
     -- Tab-local buffer list.
@@ -290,6 +283,9 @@ return {
     version = vim.fn.has("nvim-0.9") == 1 and "*" or "2.20.8",
     pin = vim.fn.has("nvim-0.9") == 0,
     opts = {
+      -- scope = {
+      --   highlight = "ErrorMsg",
+      -- },
       exclude = {
         filetypes = {
           "help",
@@ -331,9 +327,6 @@ return {
     enabled = false;
   },
   { "mzlogin/vim-markdown-toc", ft = "markdown",
-    config = function ()
-      vim.opt_local.textwidth = 80
-    end
   },
   { "leafo/moonscript-vim", ft = "moon",
     config = function ()

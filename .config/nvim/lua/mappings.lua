@@ -21,6 +21,8 @@ map("n", "<Leader>p", "\"+p", d "System clipboard paste")
 map("n", "<Leader>rg", "<cmd>registers<CR>", d "Show registers, also <leader>fR")
 map("n", "<leader>u", "gul")
 map("n", "<leader>U", "gUl")
+map("n", "<leader><down>", "<cmd><down>")
+map("n", "<leader><up>", "<cmd><up>")
 
 -----------------------------------
 -- Normal and Universal Mappings --
