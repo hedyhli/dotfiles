@@ -1,3 +1,4 @@
+local function config()
 local configs = require("nvim-treesitter.configs")
 configs.setup({
   ensure_installed = {
@@ -7,33 +8,33 @@ configs.setup({
   highlight = { enable = true },
   indent = { enable = true },
   -- Textobjects, see below as well
-  -- textobjects = {
-  --   select = {
-  --     enable = true,
-  --     -- Automatically jump forward to textobj, similar to targets.vim
-  --     lookahead = true,
-  --     keymaps = {
-  --       -- You can use the capture groups defined in textobjects.scm
-  --       ["af"] = { query = "@function.outer", desc = "Around function" },
-  --       ["if"] = { query = "@function.inner", desc = "Inside function" },
-  --       ["ac"] = { query = "@class.outer", desc = "Around class" },
-  --       ["ic"] = { query = "@class.inner", desc = "Inside class" },
-  --       -- You can also use captures from other query groups like `locals.scm`
-  --       ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
-  --     },
-  --     include_surrounding_whitespace = false,
-  --   },
-  --   move = {
-  --     enable = true,
-  --     set_jumps = true,
-  --     goto_next = {
-  --       ["]p"] = "@parameter.outer",
-  --     },
-  --     goto_previous = {
-  --       ["[p"] = "@parameter.outer",
-  --     },
-  --   }
-  -- },
+  textobjects = {
+    select = {
+      enable = true,
+      -- Automatically jump forward to textobj, similar to targets.vim
+      lookahead = true,
+      keymaps = {
+        -- You can use the capture groups defined in textobjects.scm
+        ["af"] = { query = "@function.outer", desc = "Around function" },
+        ["if"] = { query = "@function.inner", desc = "Inside function" },
+        ["ac"] = { query = "@class.outer", desc = "Around class" },
+        ["ic"] = { query = "@class.inner", desc = "Inside class" },
+        -- You can also use captures from other query groups like `locals.scm`
+        ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
+      },
+      include_surrounding_whitespace = false,
+    },
+    move = {
+      enable = true,
+      set_jumps = true,
+      goto_next = {
+        ["]p"] = "@parameter.outer",
+      },
+      goto_previous = {
+        ["[p"] = "@parameter.outer",
+      },
+    }
+  },
 })
 
 -- TS context
@@ -89,3 +90,23 @@ vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f)
 vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F)
 vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t)
 vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T)
+end
+
+return {
+  { "nvim-treesitter/nvim-treesitter",
+    enabled = vim.fn.has('nvim-0.9') == 1,
+    build = ":TSUpdate",
+    version = false,
+    event = "VeryLazy",
+    cmd = { "TSUpdateSync", "TSUpdate", "TSInstall", "Inspect", "InspectTree" },
+    config = config,
+  },
+  -- Setting these as dependencies of nvim-treesitter causes error of invalid
+  -- query.
+  { "nvim-treesitter/nvim-treesitter-context",
+    enabled = vim.fn.has('nvim-0.9') == 1,
+  },
+  { "nvim-treesitter/nvim-treesitter-textobjects",
+    enabled = vim.fn.has('nvim-0.9') == 1,
+  },
+}

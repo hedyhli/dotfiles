@@ -6,8 +6,11 @@ vim.g.mapleader = [[ ]]
 -- Set envvar VIMHOME to, eg, ~/.config/nvim (has no trailing slash)
 vim.env.VIMHOME = vim.fn.expand('<sfile>:p:h')
 
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 require('loadlazy')
 
-require('general')
-require('mappings')
-require('autocmds')
+require('config/general')
+require('config/mappings')
+require('config/autocmds')

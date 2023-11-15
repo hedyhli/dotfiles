@@ -7,20 +7,29 @@ o.number = true
 o.relativenumber = true
 
 o.mouse = "a"
-o.selectmode = "mouse"   -- Use select mode when dragging with mouse
+-- Use select mode when dragging with mouse.
+-- This allows IDE-like quick substitution. If I need to use the mouse for
+-- visual selection, I can select with mouse, then <C-v>v
+-- See mappings.lua for IDE-like pair wrapping in select mode. (Select text,
+-- press an open bracket to have selection be wrapped immediately.)
+o.selectmode = "mouse"
+
 -- Changes to default:
--- - Use vertical in all of command mode
+-- - Use vertical in command mode
 o.guicursor = "n-v-sm:block,i-ci-ve-c:ver25,r-cr-o:hor20"
 
 -- o.cursorline      = true
 -- Cursor line is rather distracting when trying to focus on the code.
 -- Especially so when typing in comments -- the background of the cursor line
 -- behind the already low-constrast comment fg color makes it hard to read (and
--- write with)
+-- write with) <-- this was back when using dracula.
 --
 -- If I'm working on something with long lines and I need a visual indicator of
 -- alignment I can do visual line then <Esc> to "blink" the cursor line, or
 -- enable this locally.
+--
+-- Maybe I'll figure out a way in the future to dynamically enable cursorline
+-- when screenline is wrapped.
 o.showcmd         = true -- show incomplete commands
 o.hlsearch        = true -- highlight search
 o.wildmenu        = true -- command line's tab complete in a menu
@@ -28,20 +37,28 @@ o.errorbells      = false-- no beeps please
 o.visualbell      = true -- flash screen instead
 o.title           = true -- set window title to file name
 o.incsearch       = true -- incrementally find next match while typing search
-o.scrolloff       = 6    -- screen lines to keep above and below cursor
-o.sidescrolloff   = 8    -- screen columns to keep on left and right of cursor
+-- Having scrolloff positive means I can't have cursor at the very top/bottom
+-- whilst referring to some content on the other side of the same buffer
+o.scrolloff       = 0
+o.sidescrolloff   = 0
 o.confirm         = true
 o.showmatch       = true
 o.showmode        = false -- Don't show messages when switching modes
+                          -- It's such an integral part of (n)vim, I know what I'm doing :)
 
 o.encoding = "utf-8"
-o.mat = 2
+o.matchtime = 1           -- deci second to show matching pair while typing
 o.inccommand = "nosplit"  -- neovim only
 o.autoindent = true
 o.fileformat = "unix"
 
 o.splitbelow = true
--- o.exrc = true  -- Could be potentially dangerous
+o.splitright = true
+if vim.fn.has("nvim-0.9") == 1 then
+  -- Could be potentially dangerous before the exrc PR is merged.
+  -- In 0.9 they can open files securely using trust DB
+  o.exrc = true
+end
 vim.o.autochdir = true
 
 o.expandtab     = true -- AIUI, tab -> spaces

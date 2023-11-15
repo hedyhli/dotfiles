@@ -1,3 +1,4 @@
+local function config()
 vim.api.nvim_create_autocmd(
    { "FileType" },
    { pattern = "CompetiTest",
@@ -207,4 +208,12 @@ require('competitest').setup {
   open_received_problems = true,
   open_received_contests = true,
   replace_received_testcases = false,
+}
+end
+
+return {
+  "xeluxee/competitest.nvim",
+  dependencies = "MunifTanjim/nui.nvim",
+  config = config,
+  ft = "cpp",
 }

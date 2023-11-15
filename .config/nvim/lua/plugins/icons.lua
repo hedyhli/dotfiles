@@ -3,6 +3,7 @@
 -- Used by lazy, nvim-tree, and others
 
 -- https://github.com/nvim-tree/nvim-web-devicons
+local function config()
 require'nvim-web-devicons'.setup {
   -- your personnal icons can go here (to override)
   -- you can specify color or cterm_color instead of specifying both of them
@@ -37,4 +38,13 @@ require'nvim-web-devicons'.setup {
       name = "norg",
     }
   },
+}
+end
+
+return {
+  "nvim-tree/nvim-web-devicons", lazy = true,
+  enabled = vim.fn.has("nvim-0.7") == 1,
+  config = function() require('plugins/icons') end,
+  pin = true,
+  commit = 'cde67b5d5427daeecfd7c77cf02ded23a26980bb',
 }

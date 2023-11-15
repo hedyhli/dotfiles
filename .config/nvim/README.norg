@@ -4,11 +4,12 @@
   -- Plugin spec: `./lua/plugin_spec.lua`
   -- Modular plugin configuration: `./lua/plugins/*.lua`
   - LSP & Completion
-  -- `lsp-config` with nvim-0.5
+  -- `lsp-config`, `lspkind`, `lsp_signature`
   -- `nvim-cmp`
   -- Treesitter: context + textobjects
-  - Status line (SUBJECT TO CHANGE)
-  -- Lualine
+  - Status line: NONE
+  -- Ruler area when there's only one window
+  -- Together with incline.nvim when there are splits
   - Theme: Tundra
   - File explorer: NvimTree
 
@@ -94,10 +95,9 @@
    neovim version: 0.9
 
    - UI
-   -- No fancy UI like message popups
+   -- No fancy UI like message popups. What are we in? GUI?
    -- Area of main source (code) should be as tall as possible on a laptop,
-      this means little possiblity for permanent winbar, tabline, or high
-      cmdheight.
+      this means sparingly little tabline/winbar or high cmdheight.
    -- Completion is turned off by default. This allows distraction free
       typing. The menu can be triggered with TAB. Unfortunately, nvim-cmp does
       not yet support ghost text + manual completion, unlike my emacs config
@@ -114,4 +114,16 @@
    -- Enough contrast where applicable to discern UI elements
 
    - Plugins
-   -- Preferably plugins with enough customizability and without feature-creep
+   -- Preferably plugins with enough customizability but without feature-creep
+
+** Meta todo
+
+   - Emacs
+   -- ( ) Talk about lazy.nvim/packer vs elpaca/straight + use-package
+
+** Neovim todo
+
+   - 'Statusline' set up
+   -- ( ) Add diagnostics to incline and ruler
+   -- ( ) Find a way to make ruler behave properly
+   -- ( ) Look into nougat

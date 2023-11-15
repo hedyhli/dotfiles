@@ -1,3 +1,25 @@
+-- { "dracula/vim",
+--   name = "dracula", lazy = false, priority = 10000,
+--   config = function() vim.cmd("colorscheme dracula") end,
+--   enabled = false, -- LOL I've switched to tundra semi-temporarily
+-- },
+-- The thing about using dracula theme in nvim here is the annoyance of having
+-- to use lua APIs to interact with something that was designed for vimscript.
+-- With "modern" nvim plugins where the themes are written in 100% lua,
+-- configuring everything else (such as statusline colors) reusing values
+-- defined in these themes provide a much smoother, cleaner configuration.
+--
+-- This is by no means a /political/ (ahem) statement suggesting my abandoning
+-- of the holy dracula theme. I just, well, decided to try something new since
+-- I sort of realized there is no "perfect" or "best" theme.
+--
+-- After hours of blood, pain, and tears of trying to tweak dracula colors to
+-- be easier on the eyes and have greater contrast, I took one look at the
+-- carousel of themes from NvChad and fell in love with tundra...
+--
+-- So I did find dracula.nvim, but I've already integrated tundra well.
+
+local function config()
 local s = require('nvim-tundra.stylesheet.arctic')
 
 -- See also: statusline.lua for statusline colors (which I also use tundra's
@@ -46,9 +68,7 @@ require("nvim-tundra").setup {
   overwrite = {
     colors = {},
     highlights = {
-      TreesitterContext = { bg = s.cp.gray._700 },
-      -- FIXME: Line number hl doesn't work
-      TreesitterContextLineNumber = { fg = s.cp.gray._500, bg = s.cp.gray._700 },
+      TreesitterContext = { bg = "#283343" },
       Folded = {
         fg = s.cp.gray._400,
         bg = s.cp.gray._700
@@ -67,3 +87,10 @@ require("nvim-tundra").setup {
 
 vim.o.background = "dark"
 vim.cmd("colorscheme tundra")
+end
+
+return {
+  -- Must be loaded before ibl!
+  "sam4llis/nvim-tundra", lazy = false, priority = 10000,
+  config = config,
+}

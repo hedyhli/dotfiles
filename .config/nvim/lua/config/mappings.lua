@@ -1,9 +1,9 @@
 -- Note that plugins config may set more mappings.
 
 local silent = { silent = true }
+local map = vim.keymap.set
+local au = vim.api.nvim_create_autocmd
 local function d(s) return { desc = s } end
-local function map(...) vim.keymap.set(...) end
-local function au(...) vim.api.nvim_create_autocmd(...) end
 local function mapbuf(a, b, c) vim.api.nvim_buf_set_keymap(0, a, b, c, { noremap=true }) end
 
 ---------------------
@@ -12,28 +12,29 @@ local function mapbuf(a, b, c) vim.api.nvim_buf_set_keymap(0, a, b, c, { noremap
 map("n", "<Leader>rn", "<cmd>set relativenumber!<cr>", d "toggle rel num")
 map("n", "<Leader>z", "zR", d "zA (toggle all folds)")
 -- The 3 mappings that I use most often out of all vim mappings :D
-map("n", "<Leader>w", "<cmd>w<CR>", d "write")
-map("n", "<Leader>x", "<cmd>xa<CR>", d "x all")
-map("n", "<Leader>q", "<cmd>qa<CR>", d "quit all")
+map("n", "<Leader>w", "<cmd>w<CR>", d ":w")
+map("n", "<Leader>x", "<cmd>xa<CR>", d ":xa")
+map("n", "<Leader>q", "<cmd>qa<CR>", d ":qa")
 map("n", "<Leader>nh", "<cmd>noh<CR>", d ":noh")
 map("n", "<Leader>p", "\"+p", d "System clipboard paste")
--- XXX: Decide whether to deprecate this in favor of :Telescope registers
-map("n", "<Leader>rg", "<cmd>registers<CR>", d "Show registers, also <leader>fR")
-map("n", "<leader>u", "gul")
-map("n", "<leader>U", "gUl")
-map("n", "<leader><down>", "<cmd><down>")
-map("n", "<leader><up>", "<cmd><up>")
+-- Deprecated in favor of telescope registers because you can use <C-e> to edit
+-- select register, how cool is that!
+-- map("n", "<Leader>rg", "<cmd>registers<CR>", d "Show registers, also <leader>fR")
+map("n", "<leader>u", "gul", d "Lower current char")
+map("n", "<leader>U", "gUl", d "Upper current char")
+map("n", "<leader><up>", ":<up>", d "Like @: but does not <cr>")
 
 -----------------------------------
 -- Normal and Universal Mappings --
 -----------------------------------
 -- Close a buffer, useful when doing PlugInstall and then closing that
--- Or is it close a window? frame? DAMN all this emacs terminology got me so
--- confused
-map("n", "Q", "<cmd>q<CR>")
+-- Or is it close a window? frame? I'll admit all this emacs terminology got me
+-- so confused.
+map("n", "Q", "<cmd>q<CR>", d":q")
 
--- NOTE: These mappings Just Work in wsl so no need the extra binding like
--- in vimrc, this is why you use neovim instead of vim ;)
+-- Legacy comment incomming
+-- > These mappings Just Work in wsl so no need the extra binding like in vimrc,
+-- > this is why you use neovim instead of vim ;)
 map("n", "<M-j>", "<cmd>m+1<CR>==", d "Move line down")
 map("n", "<M-k>", "<cmd>m-2<CR>==", d "Move line up")
 map("n", "<M-J>", "<cmd>t.<CR>==", d "Copy line down")
@@ -99,7 +100,7 @@ else
   map("", "<C-`>", "<cmd>split term://fish<cr><cmd>resize -7<cr>i",
     d "Open terminal below" )
 end
-map("t", "<Esc>", "<C-\\><C-n>", d "Esc in terminal mode")
+map("t", "<Esc>", "<C-\\><C-n>")
 
 --------------------------------------
 -- Insert/Command Editting Mappings --
@@ -121,8 +122,34 @@ map("i", "<M-Tab>", "<C-x><C-o>")
 --------------------------------
 -- Filetype specific mappings --
 --------------------------------
-
 au("FileType", {
-  pattern = {"help"},
-  callback = function () mapbuf("n", "q", "<cmd>q<cr>") end
+  pattern = {"help", "qf"},
+  callback = function() mapbuf("n", "q", "<cmd>q<cr>") end
 })
+
+
+--------------------------
+-- Select mode mappings --
+--------------------------
+-- Requires 'mini.surround' for 'sa' and Comment.nvim for 'gb'
+map("s", '(',  "<C-o>sa(gvll<C-g>", {remap = true})
+map("s", ')',  "<C-o>sa)gvll<C-g>", {remap = true})
+map("s", '\'', "<C-o>sa'gvll<C-g>", {remap = true})
+map("s", '"',  '<C-o>sa"gvll<C-g>', {remap = true})
+map("s", '`',  "<C-o>sa`gvll<C-g>", {remap = true})
+map("s", '<C-/>',  "<C-v>vgb", {remap = true})
+
+-- Select mode tips (:h Select)
+-- * Ctrl-G toggles Visual and Select mode
+-- * Ctrl-R <register> let's you put what ever you replaced into register
+-- Visual mode mappings apply to select mode unless it is a printable character
+-- or <cr>, or above key sequences and <C-o>
+--
+-- Visual mode tips
+-- * You can use 'p' on selection and it will be replaced by paste
+-- * 'P' is same except it does not overwrite registers
+-- * gn/gN select match
+-- * ~ Switch case (or u/U)
+-- Visual block
+-- * I/A can be used in place of i/a
+-- * >/< shift can be used!

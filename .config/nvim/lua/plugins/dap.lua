@@ -1,3 +1,4 @@
+local function config()
 local dap = require('dap')
 dap.adapters.python = function(cb, config)
   if config.request == 'attach' then
@@ -79,3 +80,23 @@ vim.api.nvim_create_user_command(
     nargs = '?',
     complete = function() return {'sidebar', 'tray'} end,
   })
+end
+
+return {
+  -- TODO: check nvim version
+  { "mfussenegger/nvim-dap",
+    config = config,
+    lazy = true,
+    cmd = {"DapToggleBreakpoint", "DapContinue"},
+  },
+  { "theHamsta/nvim-dap-virtual-text",
+    lazy = true,
+    cmd = {"DapToggleBreakpoint", "DapContinue"},
+    dependencies = {"mfussenegger/nvim-dap"},
+  },
+  { "rcarriga/nvim-dap-ui",
+    lazy = true,
+    cmd = {"DapToggleBreakpoint", "DapContinue"},
+    dependencies = {"mfussenegger/nvim-dap"},
+  },
+}

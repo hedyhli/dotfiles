@@ -1,3 +1,4 @@
+local function config()
 -- IMPORTANT: make sure to setup neodev BEFORE lspconfig
 require("neodev").setup({
   setup_jsonls = false,
@@ -135,5 +136,76 @@ lspconfig.lua_ls.setup {
         callSnippets = "Replace"
       },
     },
+  },
+}
+end
+
+return {
+  { "neovim/nvim-lspconfig",
+    config = config,
+    ft = {"python", "go", "markdown", "lua", "vim", "bash"},
+  },
+  { "ray-x/lsp_signature.nvim",
+    event = "VeryLazy",
+    opts = {
+      doc_lines = 10,
+      -- set to 0 if you DO NOT want any API comments be shown
+      -- This setting only take effect in insert mode, it does not affect signature help in normal
+      -- mode, 10 by default
+      max_height = 12,
+      max_width = 80,
+      noice = false,
+      wrap = true,
+      floating_window = false,
+      floating_window_above_cur_line = true,
+      floating_window_off_x = 1,
+      floating_window_off_y = 0, -- -2 move window up 2 lines; 2 move down 2 lines
+      -- can be either number or function, see examples
+      close_timeout = 4000,
+      fix_pos = false,  -- don't auto-close the floating window all parameters finished
+      hint_enable = true, -- virtual hint
+      hint_prefix = " ",
+      hint_scheme = "String",
+      hint_inline = function() return vim.fn.has('nvim-0.10') == 1 end,
+      hi_parameter = "LspSignatureActiveParameter",
+      handler_opts = { border = "rounded" },
+      always_trigger = false,
+      auto_close_after = nil,
+      extra_trigger_chars = {","},
+      zindex = 200,
+      padding = '',
+      transparency = nil, -- 1~100
+      timer_interval = 200, -- lower to reduce latency
+      toggle_key = '<M-s>', -- toggle floating window key (must set below to true)
+      toggle_key_flip_floatwin_setting = true,
+      select_signature_key = '<M-n>', -- next signature for (eg) overloads
+    },
+  },
+  { "onsails/lspkind.nvim" },
+  { "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    config = function()
+      require("lsp_lines").setup()
+
+      vim.diagnostic.config({ virtual_lines = false })
+      vim.api.nvim_create_autocmd("BufReadPost", {
+        pattern = "*",
+        callback = function()
+          vim.b.lsp_lines_enabled = false
+        end
+      })
+
+      vim.keymap.set("n", "<Leader>ll", function()
+        require("lsp_lines").toggle()
+        -- Disable virtual_text since it's redundant due to lsp_lines.
+        if vim.b.lsp_lines_enabled then
+          -- IT was enabled, now it's disabled.
+          vim.diagnostic.config({ virtual_text = true })
+          vim.b.lsp_lines_enabled = false
+        else
+          vim.diagnostic.config({ virtual_text = false })
+          vim.b.lsp_lines_enabled = true
+        end
+      end , {desc = "Toggle Lsp Lines"})
+    end,
   },
 }

@@ -1,3 +1,5 @@
+local function config()
+
 local cp = require('nvim-tundra.palette.arctic')
 local a = vim.api
 local f = vim.fn
@@ -143,4 +145,10 @@ require('incline').setup {
     },
     zindex = 50
   }
+}
+end
+
+return {
+  "b0o/incline.nvim",
+  config = config,
 }

@@ -1,4 +1,5 @@
 -- https://github.com/hrsh7th/nvim-cmp
+local function config()
 local has_words_before = function()
   unpack = unpack or table.unpack
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -207,3 +208,35 @@ cmp.event:on(
 function _G.CmpDisable()
   cmp.setup.buffer { enabled = false }
 end
+end
+
+return {
+  { "hrsh7th/nvim-cmp",
+    event = { "InsertEnter", "CmdlineEnter" },
+    config = config,
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-path",       -- File paths
+      "hrsh7th/cmp-cmdline",    -- Fire your way through the neovim cmd line
+      "hrsh7th/cmp-calc",       -- Somehwat useful.. But emacs M-x calc FTW!
+      "hrsh7th/cmp-emoji",      -- 😏 :smirk:
+      "mtoohey31/cmp-fish",
+      "petertriho/cmp-git",
+      "kdheepak/cmp-latex-symbols", -- τ long live \tau
+      -- "dcampos/nvim-snippy", -- Adding it here does not apply opts
+      "dcampos/cmp-snippy",
+    },
+  },
+  { "dcampos/nvim-snippy",
+    event = "InsertEnter",
+    opts = {
+      -- mappings to navigate expansion fields are merged in plugins/complete.lua
+      mappings = {
+        is = {},
+        nx = {
+          ['<leader>sx'] = 'cut_text',
+        },
+      },
+    }
+  },
+}

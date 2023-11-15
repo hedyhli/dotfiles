@@ -1,13 +1,7 @@
+local function config()
+
 local function d(s) return { desc = s } end
 local function map(...) vim.keymap.set(...) end
-
-map("n", "<leader>ff", "<cmd>Telescope find_files<cr>", d"Telescope find_files")
-map("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>", d"Telescope oldfiles")
-map("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", d"Telescope live_grep")
-map("n", "<leader>fb", "<cmd>Telescope buffers<cr>", d"Telescope buffers")
-map("n", "<leader>bb", "<cmd>Telescope buffers<cr>", d"Telescope buffers")
-map("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", d"Telescope help_tags")
-map("n", "<leader>fR", "<cmd>Telescope registers<cr>", d"Telescope registers (also see <leader>rg)")
 
 -- Go to dir of selected entry
 local goto_dir = function(prompt_bufnr)
@@ -65,6 +59,14 @@ local reprompt_from_git_root = function(picker, prompt_bufnr)
   end
 end
 
+map("n", "<leader>ff", "<cmd>Telescope find_files<cr>", d"Telescope find_files")
+map("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>", d"Telescope oldfiles")
+map("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", d"Telescope live_grep")
+map("n", "<leader>fb", "<cmd>Telescope buffers<cr>", d"Telescope buffers")
+map("n", "<leader>bb", "<cmd>Telescope buffers<cr>", d"Telescope buffers")
+map("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", d"Telescope help_tags")
+map("n", "<leader>fR", "<cmd>Telescope registers<cr>", d"Telescope registers (also see <leader>rg)")
+
 require('telescope').setup({
   defaults = {
     -- layout_config = {
@@ -104,3 +106,14 @@ require('telescope').setup({
   },
 })
 require('telescope').load_extension('fzf')
+end
+
+return {
+  'nvim-telescope/telescope.nvim', tag = '0.1.4',
+  enabled = vim.fn.has("nvim-0.9") == 1,
+  dependencies = {
+    'nvim-lua/plenary.nvim',
+    { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+  },
+  config = config,
+}
