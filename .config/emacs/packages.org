@@ -1,4 +1,4 @@
-#+TITLE: Packages.El Literate
+#+TITLE: Packages.El Literate:
 #+PROPERTY: header-args:elisp  :tangle ~/.config/emacs/dotslash-modules/packages.el
 #+auto_tangle: t
 
@@ -768,11 +768,11 @@ With references from System Crafter's crafted-emacs configuration
   (define-key evil-insert-state-map (kbd "C-x C-f") 'cape-file)
   (define-key evil-insert-state-map (kbd "C-x C-d") 'cape-dict)
   (define-key evil-insert-state-map (kbd "C-x C-w") 'cape-dabbrev)
-  ;; (define-key evil-insert-state-map (kbd "C-x C-$") (cape-company-to-capf #'company-math-symbols-unicode))
-  ;; (define-key evil-insert-state-map (kbd "C-x C-:") (cape-company-to-capf #'company-emoji))
+  (define-key evil-insert-state-map (kbd "C-x C-:") 'cape-emoji)
 
   (cape-char--define math "math" ?\\)
   (add-to-list 'completion-at-point-functions #'cape-math)
+  (define-key evil-insert-state-map (kbd "C-x C-$") 'cape-math)
 
   :hook (eshell-mode-hook . (lambda () (setq-local corfu-quit-at-boundary t
                                                    corfu-quit-no-match t
