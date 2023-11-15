@@ -5,15 +5,22 @@ if ! command -v nvim &> /dev/null; then
     exit
 fi
 
-echo "I no longer use vim-plug. Lazy.nvim is bootstrapped at startup!"
 cat <<END
+I no longer use vim-plug. Lazy.nvim is bootstrapped at startup!
+
 Reminders:
+
+Treesitter:
+- If there are errors for build, might wanna check C/C++ toolchain version
 
 LSP
 - Might need nvm
 - Install clients listed in plugins/lsp.lua
 
-DAP
+Lint (optional)
+- See plugins/lint.lua
+
+DAP (optional)
 - Set up virtualenv named debugpy that installs debugpy, see plugins/dap.lua
 END
 

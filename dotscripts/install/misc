@@ -71,4 +71,12 @@ if ! command -v tig &> /dev/null; then
     cd $prevpwd
 fi
 # TODO: Also upgrade tig
+
+cat <<END
+
+Kitty (optional)
+- Set up fonts.conf, see mac-fonts.conf for an example
+
+END
+
 echo "done!"
