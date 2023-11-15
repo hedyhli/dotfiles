@@ -91,10 +91,11 @@ Configs that involve open source tools/packages I maintain:
 - Email: [aerc](https://aerc-mail.org) ([`.config/aerc`](.config/aerc))
 - Terminal: [Kitty](https://sw.kovidgoyal.net/kitty/) ([`.config/kitty`](.config/kitty))
 - Editor:
-  - Vim ([`.vimrc`](.vimrc))
+  - Vim ([`.vimrc`](.vimrc)) (not used)
   - Neovim ([`.config/nvim`](.config/nvim))
   - Emacs ([`.config/emacs`](.config/emacs)) (with chemacs: [.emacs-profiles.el](.emacs-profiles.el))
-  - Doom ([`.config/doom`](.config/doom))
+  - Doom ([`.config/doom`](.config/doom)) (not used)
+  - [Acme](http://acme.cat-v.org/): Does not have config files, but I do have some scripts (`bin/gotagacme`, `bin/gotagclean.py`)
 - Web client (browser):
   - [Elinks fork](https://github.com/rkd77/elinks) ([`.elinks/elinks.conf`](.elinks/elinks.conf))
   - [Qutebrowser](https://qutebrowser.org) ([`.qutebrowser/config.py`](.qutebrowser/config.py))
