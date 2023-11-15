@@ -2,6 +2,13 @@
 #+PROPERTY: header-args:elisp  :tangle ~/.config/emacs/dotslash-modules/packages.el
 #+auto_tangle: t
 
+
+#+BEGIN_SRC elisp
+;; NOTE:
+;; This file is generated from packages.org
+#+END_SRC
+
+
 * Helpers
 
 Helper variables adopted from Doom Emacs I'm not sure if I'll ever use.

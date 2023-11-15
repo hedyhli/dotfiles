@@ -1,15 +1,6 @@
-#+TITLE: Init.El Literate
-#+PROPERTY: header-args:elisp  :tangle ~/.config/emacs/init.el
-#+auto_tangle: t
-
-#+BEGIN_SRC elisp
 ;; NOTE:
 ;; This file is generated from init.org
-#+END_SRC
 
-* Variables
-
-#+BEGIN_SRC elisp
 (defvar ./variable-pitch-display-font
   "Fira Sans"
   "Font used for titles")
@@ -20,23 +11,9 @@
 (defvar ./face-variable-pitch
   '(:foundry "apple" :family "Inter" :height 170)
   "Contents to be passed to (`set-face-attribute' 'variable-pitch nil [...]) ")
-#+END_SRC
 
-* Local custom init (pre)
-
-This file is not tracked in dotfiles and is to be unique, custom configurations for each machine.
-
-It is loaded after [[Variables]] so that I can customize those variables within the file.
-
-#+BEGIN_SRC elisp
 (load (locate-user-emacs-file "dotslash-local-pre.el") :no-error :no-message)
-#+END_SRC
 
-* Basics
-
-Make sure custom settings are in a separate file so I can find (and extract) then easily. If they were to be appended to =init.el= it won't work anyway, since my =init.el= is controlled by this Literate config.
-
-#+BEGIN_SRC elisp
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (defun display-startup-echo-area-message ()
   (message (format "Emacs %s loaded from %s in %s"
@@ -46,11 +23,7 @@ Make sure custom settings are in a separate file so I can find (and extract) the
       (concat ";; *SCRATCH*\n"
               ";; C-c C-b (eval-buffer)  C-c C-r (eval-region)\n"
               ";; C-x C-s will let you choose where to save\n\n; "))
-#+END_SRC
 
-** Display
-
-#+BEGIN_SRC elisp
 ;; Setting this in early-init doesn't seem to work
 (set-frame-position (selected-frame) 100 10)
 (set-face-attribute 'default nil :height 160)
@@ -65,11 +38,7 @@ Make sure custom settings are in a separate file so I can find (and extract) the
 (apply #'set-face-attribute 'variable-pitch nil ./face-variable-pitch)
 (apply #'set-face-attribute 'fixed-pitch nil ./face-fixed-pitch)
 (apply #'set-face-attribute 'default nil ./face-fixed-pitch)
-#+END_SRC
 
-** Better defaults (misc)
-
-#+BEGIN_SRC elisp
 ;;(global-display-line-numbers-mode 1)
 (add-hook 'prog-mode-hook (lambda () (display-line-numbers-mode 1)))
 (add-hook 'text-mode-hook (lambda () (display-line-numbers-mode 1)))
@@ -101,11 +70,7 @@ Make sure custom settings are in a separate file so I can find (and extract) the
 ;; IDK
 (add-hook 'prog-mode-hook #'subword-mode)
 (add-hook 'minibuffer-setup-hook #'subword-mode)
-#+END_SRC
 
-** Elisp
-
-#+BEGIN_SRC elisp
 (add-hook 'elisp-mode-hook
           (lambda ()
             ;; These are never used...
@@ -113,39 +78,11 @@ Make sure custom settings are in a separate file so I can find (and extract) the
             ;; (local-set-key (kbd "C-c C-c") #'eval-defun)
             (local-set-key (kbd "C-c C-r") 'eval-region)
             (local-set-key (kbd "C-c C-b") #'eval-buffer)))
-#+END_SRC
 
-** WIndow divider
-
-This makes resizing by mouse dragging easier, as it increases the divider width between window borders to make it easy to drag by the pointer targetting that divider area.
-
-#+BEGIN_SRC elisp
 (setq window-divider-default-right-width 8)
 (setq window-divider-default-places 'right-only)
 (window-divider-mode 1)
-#+END_SRC
 
-* Helper functions
-
-Hopefully I'll be consistent with the convention of using =./= for all self-defined functions.
-
-To search for these in completion systems, use =\./= (\o/ :D). =./= stands for DOTSLASH
-
-** Org insert src
-
-The function below is adapted from a blog post (link lost, sorry) which describes how you can define a function to quickly insert a src code block.
-
-I've adapted it to automatically use =elisp :tangle yes= if the file currently being edited is in the =user-emacs-directory=, since I use a literate emacs configuration and the only time I'll use this function when I'm in the user emacs directory is when I'm editing my literate org configuration.
-
-Otherwise (editing any other files) it will read input from the minibuffer for text to insert after the =#+BEGIN_SRC=. The original function used ido completing read with a list of known code types and I've nuked it and just let the user append what ever they want after =#+BEGIN_SRC=: this could be useful for adding =:stuff like this= after the code-type.
-
-Recently I've also added ability to wrap a selected region with src instead, if a region is active, without editting it afterwards.
-
-This is useful when I transfer org documents written with fixed-pitch font environment where I relied on plain text formatting, so when editting in variable-pitch font I can wrap it within src blocks to have it be formatted properly.
-
-Most recently I've also added deleting an empty src block (created by =./org-insert-src= itself) if point is within a src block with no content other than a single empty line.
-
-#+BEGIN_SRC elisp
 (defun ./org-insert-src (beg end)
   "Insert (or wrap region with, or cancel) src block.
 
@@ -204,13 +141,7 @@ Uses 'elisp' if currently in user-emacs-directory."
       ;; FIXME: putting cursor at the begin src part afterwards doesn't work
       (re-search-backward "^\\s-*#\\+BEGIN_SRC")
       (end-of-line))))
-#+END_SRC
 
-** Utility functions for 'org-insert-src'
-
-Used by the above function.
-
-#+BEGIN_SRC elisp
 (defun ./match-line-p (regexp &optional move keep-pos start)
   "Wrapper around string-match-p to use contents of current line.
 
@@ -245,17 +176,7 @@ contents of the required line."
           (if (./match-line-p "" +1)
               (if (./match-line-p "^\\s-*#\\+end_src" +1)
                   t nil) nil) nil))))
-#+END_SRC
 
-** Org split src
-
-Below is also another helper function for editing my literate configuration. It uses the =#+BEGIN_SRC= content from the current code block (that the cursor is in) and splits the block into two by inserting =#+END_SRC= and copying whatever =#+BEGIN_SRC <...>= that was used in the current code block.
-
-This is extremely useful when I want to paste some chunk of code into a big code block, then I decide to split them up in order to add documentation for them.
-
-Note that ~re-search-backward~ seems to be case-insensitive, surprisingly, so both =BEGIN_SRC= and =begin_src= could be matched.
-
-#+BEGIN_SRC elisp
 (defun ./org-split-src ()
   "Split current src block into two blocks at point.
 
@@ -267,42 +188,18 @@ Retains src properties."
     (defvar beginsrc (buffer-substring-no-properties (line-beginning-position) (line-end-position))))
   (insert beginsrc)
   (previous-line))
-#+END_SRC
 
-FIXME: Sometimes retaining the src properties of the backward closest to point =BEGIN_SRC= line doesn't work. When I'm editting packages.org and at some position outside of the Evil heading, using the split src function copies a =BEGIN_SRC= containing =:noweb-ref evil-config= somehow.
-
-** Load file and directory
-
-https://www.emacswiki.org/emacs/LoadingLispFiles#h5o-2 -- Thanks!
-
-This is used for loading my =modules/= dir in =packages.el=.
-
-2023-09-15 ish: Not anymore. After taking inspiration from Prot's emacs config I've decided to put modules and lisp directories into load path and =require= them rather than =load=.
-
-I've also decided not to tangle this to not clog up my namespace (not that it matters that much lol).
-
-#+BEGIN_SRC elisp no
 (defun ./load-directory (dir)
   "Load *.el files in a given directory"
   (let ((load-it (lambda (f)
                    (load-file (concat (file-name-as-directory dir) f)))))
     (mapc load-it (directory-files dir nil "\\.el$"))))
-#+END_SRC
 
-TBH this is such a small function but like, does save some parens y'know.
-
-#+BEGIN_SRC elisp no
 (defun ./load-file-if-exists (file)
   "Same as load-file but NOP if file does not exist"
   (if (file-exists-p file)
       (load-file file)))
-#+END_SRC
 
-** Toggle window split
-
-https://www.emacswiki.org/emacs/ToggleWindowSplit
-
-#+BEGIN_SRC elisp
 (defun toggle-window-split ()
   (interactive)
   (if (= (count-windows) 2)
@@ -327,13 +224,7 @@ https://www.emacswiki.org/emacs/ToggleWindowSplit
           (set-window-buffer (next-window) next-win-buffer)
           (select-window first-win)
           (if this-win-2nd (other-window 1))))))
-#+END_SRC
 
-
-* Packages - Elpaca
-
-Bootstrap installation of Elpaca
-#+BEGIN_SRC elisp
 (defvar elpaca-installer-version 0.5)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
@@ -370,101 +261,27 @@ Bootstrap installation of Elpaca
     (load "./elpaca-autoloads")))
 (add-hook 'after-init-hook #'elpaca-process-queues)
 (elpaca `(,@elpaca-order))
-#+END_SRC
 
-Note that disabling the built-in =package.el= is in =early-init.el=, which also includes setting of frame size and others.
+;; Install use-package support
+(elpaca elpaca-use-package
+  ;; Enable :elpaca use-package keyword.
+  (elpaca-use-package-mode)
+  ;; Assume :elpaca t unless otherwise specified.
+  (setq elpaca-use-package-by-default t))
 
-Enable =use-package= for elpaca and load my package definitions in packages.org
-#+BEGIN_SRC elisp
-  ;; Install use-package support
-  (elpaca elpaca-use-package
-    ;; Enable :elpaca use-package keyword.
-    (elpaca-use-package-mode)
-    ;; Assume :elpaca t unless otherwise specified.
-    (setq elpaca-use-package-by-default t))
+;; Block until current queue processed.
+(elpaca-wait)
 
-  ;; Block until current queue processed.
-  (elpaca-wait)
+;;When installing a package which modifies a form used at the top-level
+;;(e.g. a package which adds a use-package key word),
+;;use `elpaca-wait' to block until that package has been installed/configured.
+;;For example:
+;;(use-package general :demand t)
+;;(elpaca-wait)
 
-  ;;When installing a package which modifies a form used at the top-level
-  ;;(e.g. a package which adds a use-package key word),
-  ;;use `elpaca-wait' to block until that package has been installed/configured.
-  ;;For example:
-  ;;(use-package general :demand t)
-  ;;(elpaca-wait)
-#+END_SRC
-
-* TODO Fontaine
-
-This package is the only =use-package= package that is defined outside of =packages.el=.
-
-FIXME: This doesn't work. Does this have to do with foundries?
-
-Currently not tangled as I still have to test this.
-
-#+BEGIN_SRC elisp :noweb yes :noweb-prefix no :tangle no
-(use-package fontaine
-  :config
-  (setq fontaine-presets <<fontaine-presets>>)
-  <<fontaine-theme-hook>>
-)
-#+END_SRC
-
-#+BEGIN_SRC elisp :noweb-ref fontaine-presets :tangle no
-'((regular
-   :default-family "Fira Code"
-   :default-weight normal
-   :default-height 160
-   :fixed-pitch-family "Fira Code"
-   :fixed-pitch-height 1.0
-   :variable-pitch-family "Inter"
-   :variable-pitch-weight normal
-   :variable-pitch-height 170
-   :bold-weight bold
-   :italic-family "Source Code Pro"
-   :italic-slant italic
-   :line-spacing 1)
-  (large
-   :default-family "Fira Code"
-   :default-weight normal
-   :default-height 190
-   :variable-pitch-family "Fira Sans"
-   :variable-pitch-weight normal
-   :variable-pitch-height 1.5
-   :bold-weight bold
-   :italic-slant italic
-   :line-spacing 1.5))
-#+END_SRC
-
-https://github.com/protesilaos/fontaine?tab=readme-ov-file#41-persist-font-configurations-on-theme-switch
-
-This allows the font settings to be re-applied after a theme switch.
-
-#+BEGIN_SRC elisp :noweb-ref fontaine-theme-hook :tangle no
-(defvar ./post-enable-theme-hook nil
-  "Normal hook run after enabling a theme.")
-
-(defun ./run-post-enable-theme-hook (&rest _args)
-  "Run `./post-enable-theme-hook'."
-  (run-hooks './post-enable-theme-hook))
-
-(advice-add 'enable-theme :after #'./run-post-enable-theme-hook)
-(add-hook './post-enable-theme-hook #'fontaine-apply-current-preset)
-#+END_SRC
-
-* Packages & Modules
-
-#+BEGIN_SRC elisp
 (dolist (path '("dotslash-lisp" "dotslash-modules"))
   (add-to-list 'load-path (locate-user-emacs-file path)))
 (require 'packages)
 (require 'init-highlight)
-#+END_SRC
 
-* Local custom init (post)
-
-This file is not tracked in dotfiles and is to be unique, custom configurations for each machine, run at the very end of =init.el=. (Also see [[Local custom init (pre)]].)
-
-#+BEGIN_SRC elisp
 (load (locate-user-emacs-file "dotslash-local-post.el") :no-error :no-message)
-#+END_SRC
