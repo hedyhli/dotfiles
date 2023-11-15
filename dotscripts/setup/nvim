@@ -6,6 +6,16 @@ if ! command -v nvim &> /dev/null; then
 fi
 
 echo "I no longer use vim-plug. Lazy.nvim is bootstrapped at startup!"
+cat <<END
+Reminders:
+
+LSP
+- Might need nvm
+- Install clients listed in plugins/lsp.lua
+
+DAP
+- Set up virtualenv named debugpy that installs debugpy, see plugins/dap.lua
+END
 
 # DEST=${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim"
 

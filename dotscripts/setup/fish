@@ -30,7 +30,6 @@ fi
 if [ ! -d ~/.local/share/omf ]; then
 	echo "Installing oh my fish"
 	curl -L https://get.oh-my.fish | fish
-	# TODO: check for omf packages too
 	echo "Installing oh my fish packages"
 	omf install
 	echo done

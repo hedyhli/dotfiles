@@ -1,12 +1,12 @@
 # dotfiles
 
-[Source (SourceHut)](https://git.sr.ht/~hedy/dotfiles) |
-[Patches](https://lists.sr.ht/~hedy/inbox) |
-[Questions/Feedback](https://lists.sr.ht/~hedy/inbox) |
-Chat ([Libera](https://web.libera.chat/#hedy)/[Tilde](https://tilde.chat/kiwi/##hedy))
-
 Welcome to my personal collection of weirdish—sometimes
 unmaintained—configuration and lose organization of cool scripts!
+
+- [Source (SourceHut)](https://git.sr.ht/~hedy/dotfiles)
+- [Patches](https://lists.sr.ht/~hedy/inbox)
+- [Questions/Feedback](https://lists.sr.ht/~hedy/inbox)
+- Chat ([Libera](https://web.libera.chat/#hedy) / [Tilde](https://tilde.chat/kiwi/##hedy))
 
 These are the setup I have on almost all machines I work in, and because I work
 on many [tildes](https://tildeverse.org), I make this set of configuration as
@@ -32,7 +32,7 @@ that handles clipboard operations with windows.
 ## CHANGELOG
 
 - 2023-10: Heavily refactored my neovim config (I've also changed my neovim
-theme from dracula to tundra)
+  theme from dracula to tundra)
 - 2023-09: I've switched from neovim to Doom, and to my own Emacs!
 - 2023-06: (nvim) Switched from vim to full-lua set up
 
@@ -45,54 +45,70 @@ Mirrors: [tildegit (gitea)](https://tildegit.org/hedy/dotfiles) |
 
 **Table of Contents**
 
-<!-- vim-markdown-toc GFM -->
+<!-- mtoc-start -->
 
 * [Overview](#overview)
 * [Features](#features)
 * [Installation](#installation)
 * [Shell](#shell)
-    * [Oh My Fish](#oh-my-fish)
-    * [Fish functions](#fish-functions)
-    * [Local](#local)
+  * [Oh My Fish](#oh-my-fish)
+  * [Fish functions](#fish-functions)
+  * [Local](#local)
 * [Editor](#editor)
-    * [Vim and nvim](#vim-and-nvim)
-        * [New neovim setup (lua)](#new-neovim-setup-lua)
-        * [TODO for neovim](#todo-for-neovim)
-    * [Vanilla Emacs](#vanilla-emacs)
-    * [Doom emacs](#doom-emacs)
+  * [Vim and nvim](#vim-and-nvim)
+    * [New neovim setup (lua)](#new-neovim-setup-lua)
+    * [TODO for neovim](#todo-for-neovim)
+  * [Vanilla Emacs](#vanilla-emacs)
+  * [Doom emacs](#doom-emacs)
 * [Terminal](#terminal)
 * [Gemini and Spartan client](#gemini-and-spartan-client)
 * [TODO](#todo)
 
-<!-- vim-markdown-toc -->
+<!-- mtoc-end -->
 
+Configs in order of frequency of update / stability:
+1. Neovim
+1. Emacs
+1. Kitty
+1. Shell (fish)
+
+Configs that are not well maintained
+1. irbrc
+1. vimrc
+
+Configs that involve open source tools/packages I maintain:
+1. gelim (itself)
+1. Neovim (plugins)
 
 ## Overview
 
 - Manager: [yadm](https://yadm.io) ([`.config/yadm`](.config/yadm))
-- Shell: [fish](https://fishshell.com) ([`.config/fish`](.config/fish))
-- Theme: Dracula ((neo)vim and terminal)
+- Shell & tools:
+  - [fish](https://fishshell.com) ([`.config/fish`](.config/fish))
+  - Git ([`.gitconfig`](.gitconfig), [`.gitignore_global`](.gitignore_global))
+  - Tmux ([`.tmux.conf`](.tmux.conf))
+- Theme: Dracula (terminal), Tundra (neovim), spacegrey/ef-themes (emacs)
 - Email: [aerc](https://aerc-mail.org) ([`.config/aerc`](.config/aerc))
-- Browser:
-   - Qutebrowser
-   - Firefox (has nothing to do with this repo though)
-- Terminal: [Kitty]() ([`.config/kitty`](.config/kitty))
+- Terminal: [Kitty](https://sw.kovidgoyal.net/kitty/) ([`.config/kitty`](.config/kitty))
 - Editor:
-   - Vim ([`.vimrc`](.vimrc))
-   - Neovim ([`.config/nvim`](.config/nvim))
-   - Emacs ([`.config/emacs`](.config/emacs)) (with chemacs: [.emacs-profiles.el](.emacs-profiles.el))
-   - Doom ([`.config/doom`](.config/doom))
+  - Vim ([`.vimrc`](.vimrc))
+  - Neovim ([`.config/nvim`](.config/nvim))
+  - Emacs ([`.config/emacs`](.config/emacs)) (with chemacs: [.emacs-profiles.el](.emacs-profiles.el))
+  - Doom ([`.config/doom`](.config/doom))
+- Web client (browser):
+  - [Elinks fork](https://github.com/rkd77/elinks) ([`.elinks/elinks.conf`](.elinks/elinks.conf))
+  - [Qutebrowser](https://qutebrowser.org) ([`.qutebrowser/config.py`](.qutebrowser/config.py))
+  - And others irrelevant to dotfiles
 - Gemini client:
-   - [amfora](https://github.com/makeworld-the-better-one/amfora) ([`.config/amfora`](.config/amfora))
-   - [gelim (also spartan)](https://sr.ht/~hedy/gelim) ([`.config/gelim`](.config/gelim))
+  - [gelim (also spartan)](https://sr.ht/~hedy/gelim) ([`.config/gelim`](.config/gelim))
+  - [amfora](https://github.com/makeworld-the-better-one/amfora) ([`.config/amfora`](.config/amfora))
 
 ## Features
-
-These are more like "what I tend to do":
 
 - Mostly bash shebangs
 - Shared aliases and environment variables between shells (fish, bash, sh)
 - Setup and install scripts
+- Modular and documented
 
 ## Installation
 
@@ -222,6 +238,8 @@ Other local files recognized:
 
 ### Vim and nvim
 
+**README**: `.config/nvim/README.norg`
+
 Minimum supported version: NVIM 0.5.0
 
 Recommended version: NVIM 0.9.0+
@@ -267,7 +285,7 @@ Since 2023-06-30, I've switched to `init.lua` 🎉
 - Completion: nvim-cmp
 - File explorer: nvim-tree and mini.files
 - Icons: nvim-web-devicons
-- Status line: lualine
+- Status line: Disabled (using rulerfmt + incline.nvim)
 
 Ever since then, my startup time has improved significantly and this switch came
 with many other advantages including opening up a world of many modern, speedy
@@ -295,10 +313,16 @@ parsers.
 
 Telescope plugin is enabled conditionally if neovim version >= 0.9.
 
+While I love what telescope is doing for the neovim community, I personally
+think it is no where near as good as consult.el from emacs, however there are
+no better alternatives to telescope at the moment.
+
 **Setup**:
 - `dotscripts/setup/nvim` (no longer needed as I no longer use vim-plug)
 - `dotscripts/install/misc` - Includes Vundle setup together with other
 software.
+
+**Additional information**: `.config/nvim/README.norg` including brief notes about neovim vs emacs.
 
 #### TODO for neovim
 
@@ -312,7 +336,7 @@ software.
 - [x] Make use of Lazy loading
 - [x] Fix ftplugin + lazy ft handle
 - [x] Use Tree sitter
-- [ ] Ensure conditionally loaded plugins (from nvim version) work as expected
+- [x] Ensure conditionally loaded plugins (from nvim version) work as expected
 
 
 ### Vanilla Emacs
@@ -365,9 +389,8 @@ configuration in there yet.
 ## TODO
 
 - [x] add LSP and completion to emacs
-- [x] (n)vim mapping for gg=<backtick><backtick> (not needed anymore since we had `g@` mapping for LSP format)
 - [x] `.addpath` file
 - [x] Wait for nvim 0.5 to because more widely adopted in system packages, then
-  do the things in [nvim TODO](#todo-for-neovim)
+  use full lua config + lsp
 - [ ] Flesh out emacs config to support *most* of my needs for programming and writing
 - [ ] (planning) Drop Doom support
