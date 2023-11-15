@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+read -p "name (without .go)>> " name
+gotags "$name".go > tags && ~/bin/gotagclean.py tags > "$name".tags && rm tags

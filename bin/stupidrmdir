@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+dir="$1"
+
+if [[ -z "$dir" ]]; then
+    echo "Usage: stupidrmdir [ dir ]"
+    echo "Ensure CWD is what you want!"
+fi
+
+echo mv "$dir"/** ./ '&&' rm -r "$dir"
+mv "$dir"/** ./ && rm -r "$dir"
