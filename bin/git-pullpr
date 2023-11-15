@@ -3,33 +3,39 @@
 set -e
 
 if [[ -z "$3" ]]; then
-    echo "Usage: git pullpr <orguser/repo> <user:branch>[/repo] <prnumber>"
-    echo
-    echo "  Merge an arbitrary GitHub PR from some arbitrary repo with an"
-    echo "  automated merge message mentioning that PR."
-    echo
-    echo "  Make sure you're already in the correct git repo."
-    echo
-    echo "Options:"
-    echo "  None."
-    echo
-    echo "Example:"
-    echo "  > git pullpr main-repo-user/main-repo pr-user:pr-branch/pr-user-repo 123"
-    echo
-    echo "  Merges PR #123 from main-repo-user/main-repo, which is written"
-    echo "  by pr-user on their pr-user-repo, on pr-branch."
-    echo
-    echo "  The merge message will be:"
-    echo
-    echo "  >  Merge upstream PR #123"
-    echo "  >"
-    echo "  >  main-repo-user/main-repo#123"
-    echo
-    echo "  pr-user-repo can be omitted, in which case it will be assumed"
-    echo "  to be the same as main-repo name."
-    echo
-    echo "So to merge multiple PRs from the same repo you only need to change"
-    echo "the last two arguments."
+    cat <<END | less -X
+Usage: git pullpr <orguser/repo> <user:branch>[/repo] <prnumber>
+
+  Merge an arbitrary GitHub PR from some arbitrary repo with
+  an automated merge message mentioning that PR.
+
+  Make sure you're already in the correct git repo.
+
+Example:
+  > git pullpr                       \\
+      main-repo-user/main-repo       \\
+      pr-user:pr-branch/pr-user-repo \\
+      123
+
+  Merges PR #123 from main-repo-user/main-repo, which is
+  written by pr-user on their pr-user-repo, on pr-branch.
+
+  The merge message will be:
+
+  >  Merge upstream PR #123
+  >
+  >  main-repo-user/main-repo#123
+
+  pr-user-repo can be omitted, in which case it will be
+  assumed to be the same as main-repo name.
+
+So to merge multiple PRs from the same repo you only need to
+change the last two arguments.
+
+This script was born from the need of merging upstream PRs
+while working on my fork of github.com/simrat39/symbols-outline.nvim
+which turned out to be worth it.
+END
     exit
 fi
 
@@ -61,10 +67,12 @@ echo "Added remote $user"\n
 echo "Fetching"
 git fetch "$user" "$branch"
 
-echo
-echo "Merge:"
-echo "  git merge $user/$branch -m \"Merge upstream PR $prnumber\" -m \"\" -m \"$orguser/$repo#$prnumber\""
-echo
+cat <<END
+
+Merge:
+  git merge $user/$branch -m "Merge upstream PR $prnumber" -m "" -m "$orguser/$repo#$prnumber"
+
+END
 echo -n "Press enter to continue..."
 read
 
@@ -72,13 +80,21 @@ git merge $user/$branch -m "Merge upstream PR #$prnumber" -m "" -m "$orguser/$re
 
 echo
 echo "Merge complete."
+
 git log -n1
-echo
-echo "Remove remote:"
-echo "  git remote remove $user"
-echo
+
+cat <<END
+
+Remove remote:
+  git remote remove $user
+
+END
 echo -n "Press enter to continue..."
 read
+
 git remote remove $user
 echo "Remote removed."
 git remote -v
+
+# For gw/gq'ing on usage paragraphs:
+# vim: textwidth=60
