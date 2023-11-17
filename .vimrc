@@ -94,6 +94,7 @@ endif
 " So I gave up exercising muscle memory for different leaders across neovim,
 " vim, emacs evil mode...
 let mapleader=" "
+set number
 set relativenumber
 syntax on
 set mouse=a " allow mouse for all
