@@ -72,13 +72,13 @@ Configs in order of frequency of update / stability:
 1. Kitty
 1. Shell (fish)
 
-Configs that are not well maintained
+Configs that are not well maintained:
 1. irbrc
 1. vimrc
 
 Configs that involve open source tools/packages I maintain:
 1. gelim (itself)
-1. Neovim (plugins)
+1. Neovim (a few plugins)
 
 ## Overview
 
