@@ -20,5 +20,5 @@ paths="$(getpaths $file)"
 if [ -f "${file}_local" ]; then
     paths="$(getpaths ${file}_local) $paths"
 fi
-paths="$HOME/bin $paths"
+paths="$HOME/bin $HOME/local/bin $paths"
 echo "$paths"
