@@ -23,7 +23,7 @@ return {
     symbol_folding = {
       -- Auto fold all but current hover
       autofold_depth = 1,
-      auto_unfold_nodes = {
+      auto_unfold = {
         hovered = true,
         only = 2,
       },
@@ -53,20 +53,22 @@ return {
     outline_items = {
       auto_set_cursor = false,
     },
+    providers = {
+      lsp = { blacklist_clients = {'marksman'} },
+    },
     symbols = {
       filter = {
         lua = { 'String', 'Package', 'Constant', exclude = true },
       },
-      icon_fetcher = function(k)
-        local buf = vim.api.nvim_win_get_buf(require('outline').state.code_win)
-        local ft = vim.api.nvim_buf_get_option(buf, "ft")
-        -- There can only be kind String in markdown so... let's not have the
-        -- eye candy here
-        if ft == 'markdown' and k == 'String' then
-          return ""
-        end
-        return false
-      end,
+      -- icon_fetcher = function(k)
+      --   local ft = vim.api.nvim_buf_get_option(require('outline').current.code.buf, "ft")
+      --   -- There can only be kind String in markdown so... let's not have the
+      --   -- eye candy here
+      --   if ft == 'markdown' and k == 'String' then
+      --     return ""
+      --   end
+      --   return false
+      -- end,
       icon_source = "lspkind",
     },
   },
