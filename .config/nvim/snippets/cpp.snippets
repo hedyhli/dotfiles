@@ -1,0 +1,48 @@
+snippet for
+    for(int ${1:i}=0; ${1:i}<${2:n}; ++${1:i}) {
+        ${0:$VISUAL}
+    }
+
+snippet read2
+    int ${1:n}, ${2:m}; cin >> ${1:n} >> ${1:m};
+
+snippet readvec
+    Vi ${1:A};
+    for(int i=0; i<${2:n}; ++i) {
+        int x; cin >> x;
+        A.push_back(x);
+    }
+
+snippet FR
+    ${1:A}.begin(), ${1:A}.end()
+
+snippet pb
+    push_back
+
+snippet cout
+    cout << ${0:$VISUAL};
+
+snippet print
+    cout << ${0:$VISUAL};
+
+snippet coute
+    cout << ${0:$VISUAL} << endl;
+
+snippet println
+    cout << ${0:$VISUAL} << endl;
+
+snippet println2
+    cout << ${1} << ${2} << endl;
+
+snippet func
+    ${1:int} ${2:solve}(${3:Vi &A}) {
+        ${0:$VISUAL}
+    }
+
+snippet init
+    #include <bits/stdc++.h>
+    using namespace std;
+    
+    int main() {
+        ${0:$VISUAL}
+    }

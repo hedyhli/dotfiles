@@ -1,0 +1,7 @@
+
+inherits = "github_dark_high_contrast"
+
+[palette]
+"fg.muted" = "#9ea1a3"
+
+# hi

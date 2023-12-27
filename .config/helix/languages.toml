@@ -1,0 +1,8 @@
+[[language]]
+name = "cpp"
+language-servers = []
+formatter = { command = "clang-format", args = ["--fallback-style=Google"] }
+
+# doesn't work!
+[language-servers.clangd]
+args = ["-std=c++17"]

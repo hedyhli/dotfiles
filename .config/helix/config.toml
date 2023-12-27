@@ -1,0 +1,73 @@
+theme = "custom_gh_contrast"
+
+[editor]
+line-number = "relative"
+bufferline = "multiple"
+color-modes = true
+auto-completion = false
+completion-trigger-len = 1
+insert-final-newline = false
+scroll-lines = 1
+scrolloff = 0
+idle-timeout = 1000
+
+# Features
+[editor.file-picker]
+hidden = false
+
+# UI
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+
+[editor.whitespace.render]
+tab = "all"
+nbsp = "all"
+
+[editor.whitespace.characters]
+space = "·"
+nbsp = "⍽"
+tab = "→"
+tabpad = " "
+
+[editor.indent-guides]
+render = true
+
+[editor.statusline]
+left = ["mode", "spinner", "file-name", "read-only-indicator", "file-modification-indicator"]
+center = ["register"]
+right = ["diagnostics", "selections", "position-percentage", "file-encoding", "file-line-ending"]
+mode.normal = "N"
+mode.insert = "I"
+mode.select = "S"
+
+# KEYBINDINGS
+[keys.normal]
+G = [ "goto_last_line", "goto_line_end" ]
+
+"\\" = "shell_keep_pipe"
+"$" = [ "select_mode", "goto_line_end", "normal_mode" ]
+"0" = [ "select_mode", "goto_line_start", "normal_mode" ]
+
+"C" = [ "select_mode", "goto_line_end", "normal_mode", "change_selection" ]
+"C-/" = "toggle_comments"
+"C-c" = "copy_selection_on_next_line"
+
+"D" = [ "select_mode", "goto_line_end", "normal_mode", "delete_selection" ]
+
+"A-`" = "switch_case"
+"~" = "switch_to_uppercase" # shift-`
+
+[keys.normal.space]
+w = ":write"
+q = ":quit-all"
+x = ":write-quit-all"
+
+# Emacs
+[keys.insert]
+"C-a" = [ "goto_line_start" ]
+"C-e" = [ "goto_line_end", "move_char_right" ]
+"C-p" = "move_visual_line_up"
+"C-n" = "move_visual_line_down"
+"C-b" = "move_char_left"
+"C-f" = "move_char_right"

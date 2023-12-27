@@ -5,7 +5,7 @@ vim.api.nvim_create_autocmd(
      command = "setl signcolumn=no" }
 )
 
-function CPConfig()
+function _G.CPConfig()
   -- Allows opening of terminal in directory of current file (to avoid
   -- submitting code to the wrong problem!)
   -- This has since been moved to global config
@@ -20,7 +20,7 @@ end
 vim.api.nvim_create_autocmd(
    { "BufRead" },
    { pattern = "*/projects/cp/*",
-     callback = CPConfig }
+     callback = _G.CPConfig }
 )
 
 local function get_pieces(task)
@@ -44,6 +44,9 @@ local function get_pieces(task)
     local edu = contest:match("Educational")
     if edu ~= nil then
       round = "edu"..round  -- edu000
+    end
+    if not div then
+        div = ""
     end
     div = "div"..div  -- div3
   end
