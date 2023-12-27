@@ -4,7 +4,7 @@ snippet for
     }
 
 snippet read2
-    int ${1:n}, ${2:m}; cin >> ${1:n} >> ${1:m};
+    int ${1:n}, ${2:m}; cin >> ${1:n} >> ${2:m};
 
 snippet readvec
     Vi ${1:A};
@@ -35,7 +35,7 @@ snippet println2
     cout << ${1} << ${2} << endl;
 
 snippet func
-    ${1:int} ${2:solve}(${3:Vi &A}) {
+    ${1:int} ${2:solve}(Vi &${3:A}) {
         ${0:$VISUAL}
     }
 
@@ -46,3 +46,4 @@ snippet init
     int main() {
         ${0:$VISUAL}
     }
+
