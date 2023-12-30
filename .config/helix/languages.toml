@@ -1,8 +1,13 @@
+[language-server.ccls]
+command = "ccls"
+args = []
+config = {}
+environment = {}
+
+[language-server.clangd]
+command = "/opt/homebrew/opt/llvm@16/bin/clangd"
+
 [[language]]
 name = "cpp"
-language-servers = []
+#language-servers = [ "ccls" ]
 formatter = { command = "clang-format", args = ["--fallback-style=Google"] }
-
-# doesn't work!
-[language-servers.clangd]
-args = ["-std=c++17"]

@@ -1,15 +1,16 @@
-theme = "custom_gh_contrast"
+theme = "catppuccin_macchiato"
 
 [editor]
 line-number = "relative"
 bufferline = "multiple"
 color-modes = true
-auto-completion = false
+#auto-completion = false
 completion-trigger-len = 1
 insert-final-newline = false
 scroll-lines = 1
 scrolloff = 0
 idle-timeout = 1000
+soft-wrap.enable = true
 
 # Features
 [editor.file-picker]
@@ -62,6 +63,9 @@ G = [ "goto_last_line", "goto_line_end" ]
 w = ":write"
 q = ":quit-all"
 x = ":write-quit-all"
+
+[keys.select]
+o = "flip_selections"
 
 # Emacs
 [keys.insert]

@@ -12,14 +12,16 @@ EOF
     exit
 fi
 
+prog="$1"
+shift
 rootdir="$(pwd)"
-while [[ "$rootdir" != "" && ! -x "$rootdir/bin/$1" ]]; do
+while [[ "$rootdir" != "" && ! -x "$rootdir/bin/$prog" ]]; do
     rootdir=${rootdir%/*}
 done
 
-if [[ ! -x "$rootdir/bin/$1" ]]; then
+if [[ ! -x "$rootdir/bin/$prog" ]]; then
     echo "No executable found in bin of parent directories."
     exit 1
 fi
 
-"$rootdir/bin/$1"
+"$rootdir/bin/$prog" "$@"
