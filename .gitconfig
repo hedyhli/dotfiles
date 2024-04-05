@@ -52,7 +52,7 @@
     rebase = false
 
 [commit]
-    gpgsign = true
+	gpgsign = true
 
 # sendmail config in [include]
 

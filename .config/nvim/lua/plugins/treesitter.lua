@@ -2,7 +2,7 @@ local function config()
 local configs = require("nvim-treesitter.configs")
 configs.setup({
   ensure_installed = {
-    "cpp", "lua", "vim", "vimdoc", "html", "go", "bash", "regex", "markdown", "markdown_inline", "query", "toml", "vimdoc", "python", "diff",
+    "cpp", "lua", "vim", "vimdoc", "html", "go", "bash", "regex", "markdown", "markdown_inline", "query", "toml", "vimdoc", "python", "diff", "javascript"
   },
   sync_install = false,
   highlight = { enable = true },

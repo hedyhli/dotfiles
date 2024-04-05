@@ -151,4 +151,5 @@ end
 return {
   "b0o/incline.nvim",
   config = config,
+  -- enabled = false,
 }

@@ -8,6 +8,7 @@ return {
   {
   dir = "~/projects/outline.nvim",
   enabled = vim.fn.has("nvim-0.7") == 1,
+  dependencies = { 'msr1k/outline-asciidoc-provider.nvim' },
   lazy = false,
   cmd = { "Outline", "OutlineOpen" },
   keys = {
@@ -15,16 +16,26 @@ return {
     { "<leader>t<leader>", "<cmd>Outline!<CR>", desc = "Toggle outline window without focus" },
     { "<leader>tf", "<cmd>OutlineFollow<CR>", desc = "Focus & follow outline window" },
   },
+  config = function(_, opts)
+      require('outline').setup(opts)
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "Outline",
+        callback = function()
+          vim.api.nvim_create_autocmd("WinLeave", {
+            buffer = 0,
+            command = "noh",
+          })
+        end
+      })
+  end,
   opts = {
     preview_window = {
+      live = false,
       border = 'rounded',
       open_hover_on_preview = false,
     },
     symbol_folding = {
-      -- Auto fold all but current hover
-      autofold_depth = 1,
       auto_unfold = {
-        hovered = true,
         only = 2,
       },
     },
@@ -37,9 +48,9 @@ return {
     },
     keymaps = {
       close = 'q',
-      unfold_all = {},
-      fold_all = {},
-      fold_toggle = {'<tab>', '<space>'},
+      -- unfold_all = {},
+      -- fold_all = {},
+      -- fold_toggle = {'<tab>', '<space>'},
     },
     outline_window = {
       position = 'left',
@@ -55,20 +66,23 @@ return {
     },
     providers = {
       lsp = { blacklist_clients = {'marksman'} },
+      markdown = {filetypes = {'markdown', 'text'}},
+      priority = {'lsp', 'markdown', 'asciidoc', 'norg'},
     },
     symbols = {
       filter = {
         lua = { 'String', 'Package', 'Constant', exclude = true },
+        python = { 'Function', 'Method', 'Class' },
       },
-      -- icon_fetcher = function(k)
-      --   local ft = vim.api.nvim_buf_get_option(require('outline').current.code.buf, "ft")
-      --   -- There can only be kind String in markdown so... let's not have the
-      --   -- eye candy here
-      --   if ft == 'markdown' and k == 'String' then
-      --     return ""
-      --   end
-      --   return false
-      -- end,
+      icon_fetcher = function(k)
+        local ft = vim.api.nvim_buf_get_option(require('outline').current.code.buf, "ft")
+        -- There can only be kind String in markdown so... let's not have the
+        -- eye candy here
+        if ft == 'markdown' and k == 'String' then
+          return ""
+        end
+        return false
+      end,
       icon_source = "lspkind",
     },
   },

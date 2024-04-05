@@ -78,6 +78,7 @@ return {
     opts = {
       -- Doesn't seem to work
       filter_kind = false,
+      backends = {"lsp"},
     },
     -- Optional dependencies
     dependencies = {

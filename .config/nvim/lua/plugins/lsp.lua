@@ -79,7 +79,7 @@ lspconfig.pylsp.setup{
   settings = {
     pylsp = {
       plugins = {
-        pylint = { enabled = true },
+        pylint = { enabled = false },
         black = { enabled = true },
         pylsp_mypy = {
           enabled = true,
@@ -138,12 +138,13 @@ lspconfig.lua_ls.setup {
     },
   },
 }
+lspconfig.tsserver.setup{}
 end
 
 return {
   { "neovim/nvim-lspconfig",
     config = config,
-    ft = {"python", "go", "markdown", "lua", "vim", "bash"},
+    ft = {"python", "go", "markdown", "lua", "vim", "bash", "javascript", 'javascriptreact', 'sh'},
   },
   { "ray-x/lsp_signature.nvim",
     event = "VeryLazy",
