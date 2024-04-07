@@ -1,4 +1,5 @@
 .config/aerc/accounts.conf
+.config/senpai/senpai.scfg
 .gnupg/*.gpg
 .gnupg/*.conf
 .gnupg/*.d
