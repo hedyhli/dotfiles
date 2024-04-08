@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+mkdir -p ~/.local/senpai/
+echo "$BUFFER" '<'"$SENDER"'>' "$MESSAGE" >> ~/.local/senpai/hi
