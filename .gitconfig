@@ -5,12 +5,12 @@
     pager = diff-so-fancy | less --tabs=4 -RFX
 
 [user]
-    name = hedy
-    email = hedy@tilde.cafe  # email overidden in [include]
-    signingkey = B51B5A8D1B176372  # and this
+    name = ~hedy
+    email = hedy.dev@protonmail.com
+    signingkey = B51B5A8D1B176372
 
 [init]
-    # I don't want people to complain and main is shorter to type so yeah
+    # Well, it's shorter.
     defaultBranch = main
 
 [alias]
