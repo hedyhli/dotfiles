@@ -4,5 +4,6 @@ local/src/pyenv/bin
 go/bin
 .cargo/bin
 node_modules/.bin
+.local/share/pnpm
 /usr/local/go/bin
 /usr/local/sbin/
