@@ -79,4 +79,16 @@ Kitty (optional)
 
 END
 
+cat <<END
+
+todo.txt (optional)
+
+cd ~/Downloads
+curl -fsSL https://github.com/todotxt/todo.txt-cli/releases/latest > todotxt.tgz
+tar xzvf todotxt.tgz
+diff todo.txt-cli*/todo.cfg ~/.config/todo/config
+rsync todo.txt-cli*/todo.sh bin/
+
+END
+
 echo "done!"

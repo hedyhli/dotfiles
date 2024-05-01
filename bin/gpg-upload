@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+echo \
+keyserver.ubuntu.com \
+keys.openpgp.org \
+pgp.mit.edu \
+keys.gnupg.net '' \
+| xargs -n 1 -J '%' gpg --keyserver '%' --send-keys $@
