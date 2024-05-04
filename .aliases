@@ -11,8 +11,10 @@ alias syscu='systemctl --user'
 alias edoom='emacs --with-profile=doom'
 alias g=git
 alias acme='acme -f /mnt/font/FiraCode-Regular/15/font'
+alias la='ls -Ah'
 
 # Shortcuts
+alias apt-up='sudo apt update && sudo apt upgrade -y && sudo apt-get dist-upgrade -y && sudo apt autoremove'
 alias newvenv='python3 -m virtualenv venv && source ./venv/bin/activate.fish'
 alias localusrlocal='rsync ~/local/usr/local/ ~/local/ -avr && rm -rf ~/local/usr/local'
 alias localusr='rsync ~/local/usr/ ~/local/ -avr && rm -rf ~/local/usr'
