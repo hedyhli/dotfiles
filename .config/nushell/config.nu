@@ -11,6 +11,29 @@ $env.config = {
     # color_config: {
     #     shape_filepath: cyan_underline
     # }
+    keybindings: [
+        {
+            name: alt_backspace
+            modifier: alt
+            keycode: backspace
+            mode: [emacs, vi_insert, vi_normal]
+            event: { edit: backspaceword }
+        }
+        {
+            name: alt_left
+            modifier: alt
+            keycode: left
+            mode: [emacs, vi_insert, vi_normal]
+            event: { edit: movewordleft }
+        }
+        {
+            name: alt_right
+            modifier: alt
+            keycode: right
+            mode: [emacs, vi_insert, vi_normal]
+            event: { edit: movewordright }
+        }
+    ]
 }
 
 # Basics #########################################
