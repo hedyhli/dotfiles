@@ -6,18 +6,24 @@ snippet for
 snippet read2
     int ${1:n}, ${2:m}; cin >> ${1:n} >> ${2:m};
 
-snippet readvec
+snippet readv
     Vi ${1:A};
     for(int i=0; i<${2:n}; ++i) {
         int x; cin >> x;
         A.push_back(x);
     }
 
-snippet FR
+snippet fr
     ${1:A}.begin(), ${1:A}.end()
 
 snippet pb
     push_back
+
+snippet sort
+    sort(${1:A}.begin(), ${1:A}.end());
+
+snippet sortrev
+    sort(${1:A}.begin(), ${1:A}.end(), greater<N>());
 
 snippet cout
     cout << ${0:$VISUAL};
@@ -25,8 +31,14 @@ snippet cout
 snippet print
     cout << ${0:$VISUAL};
 
-snippet coute
-    cout << ${0:$VISUAL} << endl;
+snippet cout
+    cout << ${0:$VISUAL};
+
+snippet cendl
+    cout << endl;
+
+snippet cerr
+    cerr << ${0:$VISUAL};
 
 snippet println
     cout << ${0:$VISUAL} << endl;
