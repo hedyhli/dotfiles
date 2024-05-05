@@ -1,21 +1,20 @@
 #!/usr/bin/env bash
 
+# In addition to this file being valid POSIX, all RHS of `=` must use single
+# quotes, and must be convertible to nu and fish (also see ~/dotscripts/gen/nu
+# and check ~/.aliases.nu)
+
 # Program aliases
 alias x=exit
 alias clr=clear
 alias y=yadm
 alias td=termdown
-alias hdi=howdoi
 alias bom=bombadillo
 alias syscu='systemctl --user'
 alias edoom='emacs --with-profile=doom'
 alias g=git
 alias acme='acme -f /mnt/font/FiraCode-Regular/15/font'
-alias la='ls -Ah'
+alias la='ls -a'
 
 # Shortcuts
 alias apt-up='sudo apt update && sudo apt upgrade -y && sudo apt-get dist-upgrade -y && sudo apt autoremove'
-alias newvenv='python3 -m virtualenv venv && source ./venv/bin/activate.fish'
-alias localusrlocal='rsync ~/local/usr/local/ ~/local/ -avr && rm -rf ~/local/usr/local'
-alias localusr='rsync ~/local/usr/ ~/local/ -avr && rm -rf ~/local/usr'
-

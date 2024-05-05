@@ -16,14 +16,19 @@ elif test -n "$KSH_VERSION"; then
   CURSHELL=ksh
 elif test -n "$FCEDIT"; then
   CURSHELL=ksh
+elif test -n "$NU_VERISON"; then
+  CURSHELL=nu
 elif test -n "$PS3"; then
   CURSHELL=unknown
 else
   CURSHELL=sh
 fi
 
+# Aliases
+source ~/.aliases
+
 # Add the paths
-export PATH="$(~/bin/parse_addpath | sed 's/ /:/g'):$PATH"
+export PATH="$(~/dotscripts/convert/addpath):$PATH"
 
 # Hook (the) direnv
 if ! command -v direnv &> /dev/null; then
@@ -36,3 +41,8 @@ fi
 # Load (the) nvm
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$HOME/.exportenvs" ] && \. "$HOME/.exportenvs"
+
+# Pyenv
+if ! command -v pyenv &> /dev/null; then
+    eval "$(pyenv init -)"
+fi

@@ -2,10 +2,6 @@
 
 PATH=~/bin:$PATH
 
-setpaths() {
-	fish -c 'set -Ux fish_user_paths $fish_user_paths '"$(parse_addpath)"
-}
-
 if ! command -v fish &> /dev/null; then
 	echo "I'm sorry but I can't help you install fish"
 	echo "Please install fish before running this script lol"
@@ -13,15 +9,16 @@ if ! command -v fish &> /dev/null; then
 fi
 
 echo "Setting up fish_user_paths..."
-fish -c 'set -Ux fish_user_paths' # clear the variable first
-setpaths
+fish -c "set -Ux fish_user_paths $(~/dotscripts/convert/addpath ' ')"
 echo "done"
 
 echo Maybe add ~/local/share/man to manpath but I forgot how as of writing
 
 # env
-echo "Generating ~/.exportenvs.fish"
-~/dotscripts/gen/fish-exportenvs > /dev/null
+echo "Refreshing generated fish configs"
+~/dotscripts/gen/fish > /dev/null
+echo -n source ~/.exportenvs.fish | pbcopy
+echo PLEASE DO: source ~/.exportenvs.fish '(copied to clipboard)'
 
 # TODO have a better check for omf existence (command -v doesnt work)
 # Although omf does this same check lol

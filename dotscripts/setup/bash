@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+echo Ensure .startup.sh is sourced, and make sure it is only sourced ONCE
+echo '(Otherwise $PATH precedence will be messed up)'
+echo
+echo Run these yourself:
+echo
+echo sudo echo "'"'[ -r "$HOME/.startup.sh" ] && . "$HOME/.startup.sh"'"'" '| tee -a /etc/profile >> /etc/bashrc'
+echo 'cat <<END
+if ! grep "startup.sh" /etc/bashrc > /dev/null; then
+    source ~/.startup.sh
+fi
+END | tee -a ~/.profile >> ~/.bashrc'

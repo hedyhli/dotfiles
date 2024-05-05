@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Stubbornly translates ~/.exportenvs to ~/.exportenvs.fish
+
+input=~/.exportenvs
+output="$input.fish"
+
+# clear the file
+rm $output
+touch $output
+
+while read fileline; do
+    line=$(echo "$fileline" | sed 's/#.*//' | sed 's/export //')
+    if [ -z "$line" ]; then
+        continue
+    fi
+	tline=$(echo "$line" | sed 's/=/ /')
+	echo "set -x $tline" >> $output
+done < $input

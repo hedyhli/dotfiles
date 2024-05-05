@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+# read addpath file and return each path
+
+import sys
+from pathlib import Path
+
+home = str(Path.home())
+added = {}
+
+def getpaths(file: str):
+    global added
+    addpaths = Path(file)
+    if not addpaths.exists():
+        return
+
+    lines = addpaths.read_text(encoding="utf-8").splitlines()
+    for line in lines:
+        path = line.strip()
+        if not path:
+            continue
+        if path.startswith("#"):
+            continue
+        if not path.startswith("/"):
+            path = f"{home}/{path}"
+        if not added.get(path, False):
+            added[path] = True
+            yield path
+
+
+sep = ":"
+if len(sys.argv) > 1:
+    sep = sys.argv[1]
+
+######
+file = f"{home}/.addpath"
+print(
+    f"{home}/bin",
+    f"{home}/local/bin",
+    *getpaths(file),
+    *getpaths(file+"_local"),
+    sep=sep
+)

@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+echo https://www.nushell.sh/book/installation.html
+echo
+echo '
+sudo cat <<END
+#!/bin/sh
+
+XDG_CONFIG_HOME=~/.config /opt/homebrew/bin/nu "$@"
+END > /usr/local/bin/nu
+sudo chmod +x /usr/local/bin/nu
+'
+
+echo add it to /etc/shells

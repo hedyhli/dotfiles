@@ -1,0 +1,6 @@
+#!/usr/bin/env nu
+
+print "Re-generating config files"
+~/dotscripts/gen/nu
+
+print "Please reload the shell"

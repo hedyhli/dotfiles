@@ -1,0 +1,30 @@
+#!/usr/bin/env nu
+
+# Aliases
+let file = $"($env.HOME)/.aliases.nu"
+if ($"($env.HOME)/.aliases" | path exists) {
+    '' | save -f $file
+    for $line in (cat ~/.aliases | lines) {
+        if ($line | str starts-with "alias") {
+            let parts = ($line | str substring 6.. | split row '=' )
+            let name = $parts.0
+            mut cmd = ($parts.1 | str replace -a "'" '' | str replace -a " && " "; ")
+            mut stmt = ""
+            if ($cmd | str contains "; ") {
+                # RHS of alias command must be a valid command. If there are
+                # more commands, use a def instead.
+                if ($cmd | split words | $in.0) == $name {
+                    $cmd = $"^($cmd)"
+                }
+                $stmt = $"
+# Alias of '($cmd)'
+def --env ($name) [] {
+  ($cmd)
+}"
+            } else {
+                $stmt = $"alias ($name) = ($cmd)"
+            }
+            $"($stmt)\n" | save -a $file
+        }
+    }
+}
