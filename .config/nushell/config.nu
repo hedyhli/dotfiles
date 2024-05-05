@@ -12,10 +12,10 @@ $env.config = {
         shape_filepath: cyan_underline
         shape_directory: green_underline
         shape_string: yellow
-        shape_globpattern: cyan
-        shape_flag: cyan
+        shape_globpattern: blue
+        shape_flag: green
 
-        shape_externalarg: white
+        shape_externalarg: cyan
         shape_external: blue
 
         shape_internalcall: light_cyan_bold
