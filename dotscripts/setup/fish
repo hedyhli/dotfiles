@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+#
+# This script is meant to support both first time setup as well as refreshing
+# the ENV later on
 
 PATH=~/bin:$PATH
 
