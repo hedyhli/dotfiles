@@ -54,6 +54,7 @@ Mirrors: [tildegit (gitea)](https://tildegit.org/hedy/dotfiles) |
   * [Oh My Fish](#oh-my-fish)
   * [Fish functions](#fish-functions)
   * [Local](#local)
+  * [Nushell](#nushell)
 * [Editor](#editor)
   * [Vim and nvim](#vim-and-nvim)
     * [New neovim setup (lua)](#new-neovim-setup-lua)
@@ -140,12 +141,7 @@ has any progress I may even consider switching.
 Despite fish being my primary shell, I still like to keep all my aliases,
 scripts, and environment variables synced with the other shells. This is done
 in the [`.startup.sh`](.startup.sh) script. It should be sourced for
-POSIX-compatible shells, eg:
-
-```sh
-echo 'source ~/.startup.sh' >> ~/.bashrc
-echo 'source ~/.startup.sh' >> ~/.profile
-```
+POSIX-compatible shells. see `dotscripts/setup/bash`.
 
 I don't track `bashrc` or `bash_profile` because I like to keep it to the
 system's defaults. Maintaining cross-platform versions of them when I use them
@@ -194,7 +190,10 @@ these utilities:
 - `bass`: source bash scripts and expressions in fish (I use this for giving
   fish support to `nvm`, see [the `nvm`
   function](.config/fish/functions/nvm.fish))
-- `pj`: quickly access projects
+- `pj`: quickly access projects (NOTE: as of 2024, I've switched to my own
+  implementation for `pj` because this does not support `pj
+  project-name/sub/dir/here`, and I do not use multiple project paths, which it
+  supports.)
 
 The fish theme is entirely dependent on the terminal color settings and the
 [prompt](.config/fish/functions/fish_prompt.fish) is copied from a particular
@@ -225,17 +224,42 @@ Other local files recognized:
 
 **Setup**: `dotscripts/gen/localfiles`
 
+### Nushell
+
+I don't (yet?) use Nushell as my primary shell because:
+- it hasn't received enough support and adoption from external CLI programs
+  (completions, plugins etc.)
+- There are often breaking changes
+- It does not yet support a lot of configuration I need for it to become my
+  default shell, such as more nuanced and intelligent syntax highlighting at the
+  prompt
+- Its completion and history is not as good as Fish's
+
+However, the language is absolutely amazing, and sometimes I might drop into
+this shell to do some complex pipelining or advanced scripting (without
+wanting to install external packages). Hence, my Nushell environment is setup up
+to be satisfactorily usable, ie, same aliases, similar readline keybindings,
+environment variables and PATH. The latter too is inherited from the parent
+process, ie, fish.
+
+**Config**: `.config/nushell`
+
+**Scripts**: `dotscripts/*/nu`
+
 ## Editor
 
-- Vim: only for systems that don't have neovim installed
-- Neovim: used to be my primary editor, but now **I've switched to emacs** 😈
-- Emacs: just to play around and learn elisp
-- Doom: looking for IDE features and inspiration for my nvim setup. I might
-  drop this soon - takes so much time and resources to set it up and maintain
-  the millions of packages only to leave it lying there and never get used.
+- Vim: for systems that don't have neovim installed
+- Neovim (>= 0.8): primary editor, for now
+- Emacs (29 - I need emoji): continuously improving my setup, until one day,
+  *one day*, I'll have it replace neovim.
+- Doom: looking for IDE features and inspiration for my nvim and vanilla emacs
+  setup. I might drop this soon - takes so much time and resources to set it up
+  and maintain the millions of packages only to leave it lying there and never get
+  used.
 - ~~VScode: I only use this when I'm too stressed to remember vim/emacs's key
-  binds, or sometimes when I'm remote-editting.~~ Too heavy, not even as good
-  as doom so there's no way I'd use this.
+  binds, or sometimes when I'm remote-editting.~~ I no longer have any need for
+  waiting for an editor an eternity to start up and maintaining... JSON configs??
+  that runs on Electron?? yeah... no thanks, sorry.
 
 ### Vim and nvim
 
