@@ -7,7 +7,7 @@ lint.linters_by_ft = {
   python = {'codespell'},
   mail = {'proselint'},
   template = {'proselint'},
-  c = {'cpplint'},
+  -- c = {'cpplint'},
   -- cpp = {'cpplint'},
 }
 
