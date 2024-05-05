@@ -8,9 +8,19 @@ $env.config = {
         vi_insert: line
         vi_normal: block
     }
-    # color_config: {
-    #     shape_filepath: cyan_underline
-    # }
+    color_config: {
+        shape_filepath: cyan_underline
+        shape_directory: green_underline
+        shape_string: yellow
+        shape_globpattern: cyan
+        shape_flag: cyan
+
+        shape_externalarg: white
+        shape_external: blue
+
+        shape_internalcall: light_cyan_bold
+        shape_keyword: cyan_bold
+    }
     keybindings: [
         {
             name: alt_backspace
