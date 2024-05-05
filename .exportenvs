@@ -3,7 +3,7 @@
 export EDITOR=nv
 export DOOMDIR=~/.config/doom/
 export EMACSDIR=~/.doomemacs/
-export PROJECTS_ROOT=~/projecs/
+export PROJECTS_ROOT=~/projects/
 export BROWSER=w3m
 export FILEMAN=ranger
 export TERM=xterm-256color
