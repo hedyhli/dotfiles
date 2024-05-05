@@ -16,3 +16,9 @@ au("BufEnter", {
   pattern = "*",
   command = "set cursorline! | set cursorline!"
 })
+
+vim.filetype.add {
+  extension = {
+    hy = "hy",
+  },
+}
