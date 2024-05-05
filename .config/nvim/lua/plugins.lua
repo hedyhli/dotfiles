@@ -86,6 +86,8 @@ return {
       "nvim-tree/nvim-web-devicons"
     },
   },
+  -- Still need the decent (ex)C(tags) support from this one...
+  { 'preservim/tagbar' },
   -- "bling/vim-bufferline", -- I prefer this over taking over the tabline space thanks
   -- Fair well vim-bufferline! You have served my vim and nvim experience well.
   -- I've since decided to set cmdheight to 1 and put the buffers in my status
@@ -163,4 +165,14 @@ return {
     opts = {},
   },
   "folke/neodev.nvim",
+  { "LhKipp/nvim-nu",
+    opts = {
+      use_lsp_features = false,
+    },
+  },
+  { "stevearc/oil.nvim",
+    opts = {},
+    -- Optional dependencies
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+  },
 }

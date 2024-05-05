@@ -8,6 +8,9 @@ return {
     -- Neat popout window to browse dirs and manipulate within the editor!
     cmd = "MiniFiles",
     keys = { { "<leader>E", "<cmd>MiniFiles<cr>",  desc = ":MiniFiles" } },
+    -- Mini.files stopped working a while ago, for some reason. I've switched
+    -- to oil.nvim.
+    enabled = false,
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
       require('mini.files').setup{}
@@ -80,6 +83,7 @@ return {
   },
   { "echasnovski/mini.trailspace",
     config = true,
+    enabled = false,  -- it doesn't seem to work, I've switched to normal `match` highlights instead
   },
   { "echasnovski/mini.clue",
     enabled = false,

@@ -113,6 +113,4 @@ o.wildignore = { "*.o", "*~", "*.pyc", "*/.git/*", "*/.hg/*", "*/.svn/*", "*/.DS
 
 -- Not too noisy visually, but visible enough as a reminder.
 -- Underlines trailing spaces.
--- vim.cmd [[ match Underlined '\s\+$' ]]
---
--- mini.trailspace FTW
+vim.cmd [[ match Underlined '\s\+$' ]]
