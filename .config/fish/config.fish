@@ -10,6 +10,7 @@ if test -f ~/.config/fish/config_local.fish
 	source ~/.config/fish/config_local.fish
 end
 
+abbr -a --set-cursor pj cd $PROJECTS_ROOT/%
 
 # TODO: migrate .addpath and .exportenvs to direnv :D
 if command -sq direnv > /dev/null
