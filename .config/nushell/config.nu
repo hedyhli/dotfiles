@@ -1,9 +1,15 @@
 # Nu #############################################
 $env.config = {
     show_banner: false
+    history: {
+        max_size: 100_000
+        sync_on_enter: true
+        file_format: "sqlite"
+        # Use current shell session when up/down'ing history
+        isolation: true
+    }
     edit_mode: vi
     cursor_shape: {
-        # block, underscore, line, blink_block, blink_underscore, blink_line, inherit
         emacs: blink_line
         vi_insert: line
         vi_normal: block
@@ -18,10 +24,45 @@ $env.config = {
         shape_externalarg: cyan
         shape_external: blue
 
-        shape_internalcall: light_cyan_bold
-        shape_keyword: cyan_bold
+        shape_internalcall: light_purple
+        shape_keyword: purple_bold
     }
+    menus: [
+        # Adjust prompt marker and colors for some menus
+        {
+            name: completion_menu
+            only_buffer_difference: false
+            marker: "> "
+            type: {
+                layout: columnar
+                columns: 4
+                col_padding: 2
+            }
+            style: {
+                text: white
+                selected_text: { attr: r }
+                description_text: cyan
+                match_text: { attr: b }
+                selected_match_text: { attr: br }
+            }
+        }
+        {
+            name: history_menu
+            only_buffer_difference: true
+            marker: "> "
+            type: {
+                layout: list
+                page_size: 10
+            }
+            style: {
+                text: cyan
+                selected_text: cyan_reverse
+                description_text: white
+            }
+        }
+    ]
     keybindings: [
+        # Add alt-* bindings, it's easier to reach on some keyboards than ctrl
         {
             name: alt_backspace
             modifier: alt
@@ -50,14 +91,45 @@ $env.config = {
 # Nu does not support sourcing inside blocks without creating closures.
 # https://github.com/nushell/nushell/issues/8668
 #
-# ~/.aliases.nu does not exist, I'll just have to remember to `dot gen nu`
+# If ~/.aliases.nu does not exist, I'll just have to remember to `dot gen nu`
 source ~/.aliases.nu
 
 # Functions ######################################
-# Change to a project directory
-def --env pj [
-    path: string  # /project-dir/<project/path/here>
-]: nothing -> nothing {
-    if $env.PROJECTS_ROOT == null { ~/projects/ } else { $env.PROJECTS_ROOT } | cd $"($in)/($path)"
+module functions {
+    # Change to a project directory
+    export def --env pj [
+        path?: string@pj_complete  # /$PROJECTS_ROOT/[project/path/here]
+    ]: nothing -> nothing {
+        cd $"(pj_root)/($path)"
+    }
+
+    def pj_root [] {
+        if $env.PROJECTS_ROOT == null {
+            ~/projects
+        } else {
+            $env.PROJECTS_ROOT | str trim --right --char '/'
+        }
+    }
+
+    def pj_complete [ctx: string] {
+        # Nushell doesn't seem to support passing in a parsed arg list instead,
+        # but I'll hope args are checked against command signature before
+        # calling the completion function.
+        mut prefix = ($ctx | str trim | str substring 2.. | split row -r '\s+' | last)
+        if ($prefix | str starts-with '/') {
+            return []
+        }
+
+        if ($prefix != '') and not ($prefix | str ends-with '/') {
+            if ($"(pj_root)/($prefix)" | path exists) {
+                return [$"($prefix)/"]
+            } else {
+                $prefix = ($prefix | path dirname)
+            }
+        }
+        let search = $"(pj_root)/($prefix)"
+        ls $search | where type == dir | get name | str replace $search $prefix
+    }
 }
 
+use functions *
