@@ -1,8 +1,20 @@
 local function config()
+local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+parser_config.hy = {
+  install_info = {
+    url = "https://github.com/kwshi/tree-sitter-hy",
+    files = {"src/parser.c"},
+    branch = "main",
+    generate_requires_npm = false,
+    requires_generate_from_grammar = false,
+  },
+  filetype = "hy",
+}
+
 local configs = require("nvim-treesitter.configs")
 configs.setup({
   ensure_installed = {
-    "cpp", "lua", "vim", "vimdoc", "html", "go", "bash", "regex", "markdown", "markdown_inline", "query", "toml", "vimdoc", "python", "diff", "javascript"
+    "cpp", "lua", "vim", "vimdoc", "html", "go", "bash", "regex", "markdown", "markdown_inline", "query", "toml", "vimdoc", "python", "diff", "javascript", "hy", "vento", "nim", "racket"
   },
   sync_install = false,
   highlight = { enable = true },

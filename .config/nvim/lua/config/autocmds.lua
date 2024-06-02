@@ -17,8 +17,13 @@ au("BufEnter", {
   command = "set cursorline! | set cursorline!"
 })
 
-vim.filetype.add {
-  extension = {
-    hy = "hy",
-  },
-}
+vim.filetype.add({
+    extension = {
+        vto = "vento",
+    }
+})
+vim.filetype.add({
+    extension = {
+        v = "v",
+    }
+})

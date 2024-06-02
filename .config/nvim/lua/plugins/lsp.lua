@@ -51,39 +51,72 @@ local on_attach = function(client, bufnr)
   --buf_set_keymap('n', '<localleader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 end
 
+local handlers =  {
+  ["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = 'rounded'}),
+  ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = 'rounded' }),
+}
+
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 -- Call setup on list of wanted servers and map local keybinds
 local servers = {
-  "bashls",  -- sudo npm i -g bash-language-server
-  "vimls",   -- sudo npm i -g vim-language-server
+  "bashls",  -- node bash-language-server
+  "vimls",   -- node vim-language-server
   "marksman", -- https://github.com/artempyanykh/marksman/releases
   -- "ccls", -- https://github.com/MaskRay/ccls/wiki
+  "nim_langserver", -- nimble install
+  "rust_analyzer",
+  "zls", -- https://github.com/zigtools/zls/wiki/Installation
+  "hls", -- brew
+  "v_analyzer", -- https://github.com/vlang/v-analyzer
 }
 for _, lsp in pairs(servers) do
   lspconfig[lsp].setup {
     on_attach = on_attach,
     capabilities = capabilities,
+    handlers = handlers,
     flags = {
       debounce_text_changes = 150,
     }
   }
 end
+-- comes with deno
+lspconfig.denols.setup {
+  on_attach = on_attach,
+  root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+  capabilities = capabilities,
+  handlers = handlers,
+  flags = {
+    debounce_text_changes = 150,
+  }
+}
+-- node typescript-language-server
+lspconfig.tsserver.setup {
+  on_attach = on_attach,
+  root_dir = lspconfig.util.root_pattern("package.json"),
+  single_file_support = false,
+  capabilities = capabilities,
+  handlers = handlers,
+  flags = {
+    debounce_text_changes = 150,
+  }
+}
 -- pipx install python-lsp-server
 -- ~/.local/pipx/venvs/python-lsp-server/bin/python3 -m pip install python-lsp-black pylsp-mypy python-lsp-ruff
 -- Add additional symlinks!
 lspconfig.pylsp.setup{
   on_attach = on_attach,
   capabilities = capabilities,
+  handlers = handlers,
   settings = {
     pylsp = {
       plugins = {
         pylint = { enabled = false },
         black = { enabled = true },
         pylsp_mypy = {
-          enabled = true,
-          live_mode = true,
+          enabled = false,
+          live_mode = false,
         },
         ruff = {
           enabled = true,
@@ -98,6 +131,7 @@ lspconfig.pylsp.setup{
 lspconfig.gopls.setup{
   on_attach = on_attach,
   capabilities = capabilities,
+  handlers = handlers,
   settings = {
     gopls = {
       experimentalPostfixCompletions = true,
@@ -117,6 +151,7 @@ lspconfig.gopls.setup{
 lspconfig.lua_ls.setup {
   on_attach = on_attach,
   capabilities = capabilities,
+  handlers = handlers,
   settings = {
     Lua = {
       -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
@@ -138,13 +173,12 @@ lspconfig.lua_ls.setup {
     },
   },
 }
-lspconfig.tsserver.setup{}
 end
 
 return {
   { "neovim/nvim-lspconfig",
     config = config,
-    ft = {"python", "go", "markdown", "lua", "vim", "bash", "javascript", 'javascriptreact', 'sh'},
+    ft = {"python", "go", "markdown", "lua", "vim", "bash", "javascript", 'javascriptreact', 'sh', "typescript", "typescriptreact", "nim", "rust", "zig", "haskell", "v"},
   },
   { "ray-x/lsp_signature.nvim",
     event = "VeryLazy",

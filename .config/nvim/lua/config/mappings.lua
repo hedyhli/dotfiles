@@ -12,7 +12,7 @@ local function mapbuf(a, b, c) vim.api.nvim_buf_set_keymap(0, a, b, c, { noremap
 map("n", "<Leader>rn", "<cmd>set relativenumber!<cr>", d "toggle rel num")
 map("n", "<Leader>z", "zR", d "zA (toggle all folds)")
 -- The 3 mappings that I use most often out of all vim mappings :D
-map("n", "<Leader>w", "<cmd>w<CR>", d ":w")
+map("n", "<Leader>w", "<cmd>w<CR><cmd>echo<CR>", d ":w")
 map("n", "<Leader>x", "<cmd>xa<CR>", d ":xa")
 map("n", "<Leader>q", "<cmd>qa<CR>", d ":qa")
 map("n", "<Leader>nh", "<cmd>noh<CR>", d ":noh")

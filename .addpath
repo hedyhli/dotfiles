@@ -1,8 +1,11 @@
 .local/bin
 .doomemacs/bin
 local/src/pyenv/bin
+.luarocks/bin
 go/bin
+.nimble/bin
 .cargo/bin
+/$DENO_INSTALL/bin
 node_modules/.bin
 .local/share/pnpm
 /usr/local/go/bin
