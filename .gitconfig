@@ -75,4 +75,4 @@
     new = green bold
     whitespace = red reverse
 [push]
-    followTags = true
+    followTags = false
