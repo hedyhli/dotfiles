@@ -70,6 +70,8 @@ local servers = {
   "zls", -- https://github.com/zigtools/zls/wiki/Installation
   "hls", -- brew
   "v_analyzer", -- https://github.com/vlang/v-analyzer
+  "ocamllsp", -- opam install ocaml-lsp-server
+  "nushell", -- built-in to nu
 }
 for _, lsp in pairs(servers) do
   lspconfig[lsp].setup {
@@ -178,7 +180,7 @@ end
 return {
   { "neovim/nvim-lspconfig",
     config = config,
-    ft = {"python", "go", "markdown", "lua", "vim", "bash", "javascript", 'javascriptreact', 'sh', "typescript", "typescriptreact", "nim", "rust", "zig", "haskell", "v"},
+    ft = {"python", "go", "markdown", "lua", "vim", "bash", "javascript", 'javascriptreact', 'sh', "typescript", "typescriptreact", "nim", "rust", "zig", "haskell", "v", "ocaml", "nu"},
   },
   { "ray-x/lsp_signature.nvim",
     event = "VeryLazy",

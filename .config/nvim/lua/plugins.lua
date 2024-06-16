@@ -158,18 +158,12 @@ return {
       },
     },
   },
-
   { "windwp/nvim-ts-autotag",
     -- Automatically add closing tags for HTML and JSX
     ft = { "html", "tsx", "jsx" },
     opts = {},
   },
   "folke/neodev.nvim",
-  { "LhKipp/nvim-nu",
-    opts = {
-      use_lsp_features = false,
-    },
-  },
   { "stevearc/oil.nvim",
     opts = {},
     -- Optional dependencies

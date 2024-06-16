@@ -14,7 +14,7 @@ parser_config.hy = {
 local configs = require("nvim-treesitter.configs")
 configs.setup({
   ensure_installed = {
-    "cpp", "lua", "vim", "vimdoc", "html", "go", "bash", "regex", "markdown", "markdown_inline", "query", "toml", "vimdoc", "python", "diff", "javascript", "hy", "vento", "nim", "racket", "v", "haskell", "zig", "rust"
+    "cpp", "lua", "vim", "vimdoc", "html", "go", "bash", "regex", "markdown", "markdown_inline", "query", "toml", "vimdoc", "python", "diff", "javascript", "hy", "vento", "nim", "racket", "v", "haskell", "zig", "rust", "nu", "just"
   },
   sync_install = false,
   highlight = { enable = true },
@@ -111,6 +111,9 @@ return {
     version = false,
     event = "VeryLazy",
     cmd = { "TSUpdateSync", "TSUpdate", "TSInstall", "Inspect", "InspectTree" },
+    dependencies = {
+      { "nushell/tree-sitter-nu" },
+    },
     config = config,
   },
   -- Setting these as dependencies of nvim-treesitter causes error of invalid

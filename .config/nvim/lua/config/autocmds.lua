@@ -18,12 +18,31 @@ au("BufEnter", {
 })
 
 vim.filetype.add({
-    extension = {
-        vto = "vento",
-    }
+  extension = {
+    vto = "vento",
+  }
 })
 vim.filetype.add({
-    extension = {
-        v = "v",
-    }
+  extension = {
+    v = "v",
+  },
+  filename = {
+    ['v.mod'] = "v",
+  }
+})
+vim.filetype.add({
+  filename = {
+    ['build.zig.zon'] = "zig",
+  }
+})
+vim.filetype.add({
+  filename = {
+    ['dune'] = "lisp",
+    ['dune-project'] = "lisp",
+  }
+})
+vim.filetype.add({
+  filename = {
+    ['justfile'] = "just",
+  }
 })
