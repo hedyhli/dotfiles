@@ -1,3 +1,5 @@
+set -gx fish_cursor_default line
+
 source ~/.aliases
 
 # Environment variables
