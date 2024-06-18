@@ -42,56 +42,13 @@ I sometimes switch between these (sub-headings). To switch, set =:tangle yes/no=
   "Dark or light")
 #+END_SRC
 
-TODO:
-- Put all variable declarations in =init.org=
-- These theme configurations, define them as modules so I can easily switch between them at run time (and load my customizations for each theme together)
-- Also maybe (if possible) if I were to switch at run time ensure previous theme setting aren't retained.
-
-** Nord
-
-Used by Rougier's NANO-emacs. The dark theme is kinda nice, like dracula but less purple, no pink, more cyan. But the muted colors are too unreadable (such as docstrings or comments). TODO: Customize the lower-contrast nord colors to be more readable.
-
-#+BEGIN_SRC elisp :tangle no
-(use-package nord-theme
-  :config
-  (load-theme 'nord t)
-  )
-#+END_SRC
-
-** EF-themes (ef-light)
-
-Dazzling, tacky, elegant light theme.
-
-#+BEGIN_SRC elisp :tangle no
-(use-package ef-themes
-  ;; :init
-  ;; (set-face-attribute 'ef-themes-ui-variable-pitch nil :inherit 'variable-pitch)
-  :config
-  (load-theme 'ef-light t)
-  (set-face-attribute 'font-lock-builtin-face nil :weight 'normal)
-  (set-face-attribute 'font-lock-keyword-face nil :weight 'normal)
-  (set-face-attribute 'font-lock-variable-name-face nil :foreground "black")
-  (set-face-attribute 'font-lock-property-name-face nil :foreground "black")
-  (set-face-attribute 'font-lock-constant-face nil :foreground "black")
-  (set-face-attribute 'font-lock-string-face nil :foreground "dark green")
-
-  (set-face-attribute 'window-divider nil :foreground "gray90")
-  (set-face-attribute 'window-divider-first-pixel nil :foreground "white")
-  (set-face-attribute 'window-divider-last-pixel nil :foreground "white")
-
-  (setq ./corfu-bar-color "gray80")
-
-  (set-face-attribute 'org-link nil :foreground "DodgerBlue3" :underline t)
-  )
-#+END_SRC
-
 ** EF-themes (ef-elea-dark)
 
 Current preferred dark theme.
 
 The pink accent and the brownish background reminds me of gruvbox, but the purple and the green makes it look different. Overall it's quite ugly; and that is the beauty of it!
 
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :tangle no
 (use-package ef-themes
   :config
   (load-theme 'ef-elea-dark t)
@@ -165,6 +122,15 @@ XXX: Somehow putting the org scale settings in =:init= works? And putting it in 
 ;; TODO: Do this for window divider and corfu UI items, and magit diff backgrounds.
 ;; and org-link
 #+END_SRC
+
+** Modus themes
+
+I eventually decided that I'll just use Modus Vivendi/Operandi.
+
+#+BEGIN_SRC elisp
+(load-theme 'modus-vivendi t)
+#+END_SRC
+
 
 * Tab bar
 

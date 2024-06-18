@@ -19,26 +19,13 @@
 (defvar ./theme-type "dark"
   "Dark or light")
 
-(use-package ef-themes
-  :config
-  (load-theme 'ef-elea-dark t)
-  (set-face-attribute 'cursor nil :background "white")
-  (set-face-attribute 'font-lock-builtin-face nil :weight 'normal)
-  (set-face-attribute 'font-lock-keyword-face nil :weight 'normal)
-  (set-face-attribute 'font-lock-variable-name-face nil :foreground "white")
-  (set-face-attribute 'font-lock-property-name-face nil :foreground "white")
-  (set-face-attribute 'font-lock-constant-face nil :foreground "white")
-
-  (set-face-attribute 'window-divider nil :foreground "gray20")
-  (set-face-attribute 'window-divider-first-pixel nil :foreground "black")
-  (set-face-attribute 'window-divider-last-pixel nil :foreground "black")
-)
-
 (setq ./theme-type (symbol-name (frame-parameter nil 'background-mode)))
 (setq ./cursor-color (if (string= ./theme-type "dark") "white" "black"))
 (set-face-attribute 'cursor nil :background ./cursor-color)
 ;; TODO: Do this for window divider and corfu UI items, and magit diff backgrounds.
 ;; and org-link
+
+(load-theme 'modus-vivendi t)
 
 (setq tab-bar-auto-width-max nil)
 
