@@ -196,240 +196,12 @@ Tab bar keys have prefix =C-x t=, use which-key to explore the options from ther
 
 Switching tabs can be done with =C-TAB= and =S-C-TAB=
 
-* Evil
-
-My setup allows using Vim bindings in normal "mode" and emacs bindings in insert "mode".
-
-https://stackoverflow.com/questions/25542097/
-
-I previously used this setting for achieve it:
-
-#+BEGIN_SRC elisp :tangle no
-;;  Use emacs keybindings in insert state 😱
-(setq evil-disable-insert-state-bindings t)
-#+END_SRC
-
-It worked, but the bindings I've set for =evil-insert-state-map= elsewhere didn't take effect, so I opted for an alternative solutions from the stackoverflow question.
-
-Below is the =use-package= block for evil. Noweb references are used, which are defined later on in this section.
-
-#+BEGIN_SRC elisp :noweb yes
-(use-package evil
-  :demand t
-  :init
-  <<evil-init>>
-
-  :config
-  <<evil-config>>
-
-  <<evil-maps>>
-
-  (defun ./evil-off ()
-    "Call `turn-off-evil-mode' and show a message"
-    (interactive)
-    (turn-off-evil-mode)
-    (message "Evil mode is turned off"))
-
-  ;; Disable evil in some modes
-  (dolist (mode '(elpaca-ui-mode
-                  dired-mode
-                  magit-mode))
-    (evil-set-initial-state mode 'emacs))
-
-  (evil-mode 1)
-  )
-#+END_SRC
-
-Turning off evil mode doesn't seem to work so for elpaca hook I decided to just enter insert instead.
-
-This allows Elpaca's shortcut keys to work, eg, =q=, =I=, =s=.
-
-** Init
-These values must be set before evil load for them to take into effect.
-
-- Using =evil-search= allows search results to be kept highlighted when using =/=. I-search is still available in =C-s= in emacs state (see [[Consult]]).
-- Still unsure whether to stick to emacs regexp or use vim for evil-related searches, but this is adopted from doom.
-
-#+BEGIN_SRC elisp :noweb-ref evil-init :tangle no
-(setq evil-search-module 'evil-search
-      evil-ex-search-vim-style-regexp t)
-#+END_SRC
-
-These are subject to change (REVIEW), adopted from doom.
-
-#+BEGIN_SRC elisp :noweb-ref evil-init :tangle no
-(setq evil-ex-visual-char-range t  ; column range for ex commands
-      evil-mode-line-format 'nil
-      ;; more vim-like behavior
-      evil-symbol-word-search t)
-#+END_SRC
-
-Set cursor to indicate the evil state. Generally =bar= means it's writable, =box= means movable, =hollow= means special.
-
-#+BEGIN_SRC elisp :noweb-ref evil-init :tangle no
-(setq evil-default-cursor 'box
-      evil-normal-state-cursor 'box
-      evil-emacs-state-cursor  'bar
-      evil-insert-state-cursor 'bar
-      evil-visual-state-cursor 'hollow)
-#+END_SRC
-
-These are copied from doom.
-
-#+BEGIN_SRC elisp :noweb-ref evil-init :tangle no
-      ;; Only do highlighting in selected window so that Emacs has less work
-      ;; to do highlighting them all.
-(setq evil-ex-interactive-search-highlight 'selected-window
-      ;; It's infuriating that innocuous "beginning of line" or "end of line"
-      ;; errors will abort macros, so suppress them:
-      evil-kbd-macro-suppress-motion-error t)
-#+END_SRC
-
-Adopt vim's C-u and C-d scrolling
-#+BEGIN_SRC elisp :noweb-ref evil-init :tangle no
-(setq evil-want-C-u-scroll t) ; must be set in :init
-#+END_SRC
-
-I read somewhere that you can access X-Selection in linux from a vim register, forgot which one of =+= or === it was. Well that's kinda neat, but how would it be useful? If you want to paste, you can copy. Unless you want to paste two things, so you copy one, and leave the selection on another, so you can do ="+p= for one and ="=p= for the other?
-
-Oh well, I won't need that here (and possibly don't want that either, I'd like my clipboard to only contain things I explicitly copied).
-
-#+BEGIN_SRC elisp :noweb-ref evil-config :tangle no
-(setq evil-visual-update-x-selection-p nil)
-#+END_SRC
-
-Set =<= and =>= to shifting 2 spaces, this allows adding up shifts to do 4 spaces.
-
-Odd-numbered space indents is, well, um, weird (like 3). Sure if you can't decide between 2 and 4, but if you can't decide you can flip a coin, enforce it in =.editorconfig=, or use tabs and less the viewer decide!
-
-Indenting by 1 space possibly only exist in lisp where the entire program is a rather obtuse array-like structure, and we tend to align arguments that span multiple lines by the function name, which means any arbitrary indent width is possible. Well, for that I will be relying on my editor to automatically indent for me. So in conclusion, setting shift-width to 2 is the best option as of now.
-
-TODO: Like my neovim config, keep visual selection after shifting width.
-
-#+BEGIN_SRC elisp :noweb-ref evil-config :tangle no
-(setq evil-shift-width 2)
-#+END_SRC
-
-Allow evil motion keys to go across lines. If point is at beginning of line, and I use left arrow or =h=, point will then be at the end of the previous line.
-
-#+BEGIN_SRC elisp :noweb-ref evil-config :tangle no
-(setq evil-cross-lines t)
-#+END_SRC
-
-Set undo system to allow redos.
-
-TODO:
-- Save undos in undodir like vim, so when opening new files there's undo data
-- Should I use undo-tree?
-
-#+BEGIN_SRC elisp :noweb-ref evil-init :tangle no
-;; REVIEW: Is this needed if evil-redo-function is set?
-(setq evil-undo-system 'undo-redo)  ;; 'undo-redo from Emacs 28
-(setq evil-undo-function 'undo)
-(setq evil-redo-function 'undo-redo)
-#+END_SRC
-
-** Maps
-
-*** Misc maps
-
-This allows me to use emacs motion key bindings in evil insert mode. Super useful -- best of both worlds!
-
-#+BEGIN_SRC elisp :noweb-ref evil-maps :tangle no
-;; Emacs keybindings in evil insert state - must be set in :config
-(setq evil-insert-state-map (make-sparse-keymap))
-(define-key evil-insert-state-map (kbd "<escape>") 'evil-normal-state)
-(define-key evil-emacs-state-map (kbd "<escape>") 'evil-normal-state)
-#+END_SRC
-
-=C-e= and =C-y= are already bound in emacs state, so I use shift of them instead.
-
-#+BEGIN_SRC elisp :noweb-ref evil-maps :tangle no
-(define-key evil-insert-state-map (kbd "S-C-e") 'evil-scroll-line-down)
-(define-key evil-emacs-state-map (kbd "S-C-e") 'evil-scroll-line-down)
-(define-key evil-insert-state-map (kbd "S-C-y") 'evil-scroll-line-up)
-(define-key evil-emacs-state-map (kbd "S-C-y") 'evil-scroll-line-up)
-#+END_SRC
-
-=S-C-v/c= for clipboard:
-This is a solution I found on Doom Emacs forum. The problem was that if I use the system clipboard shortcut to copy things elsewhere, and I go to emacs, edit some text with =d=, =y= etc, then if I use the system clipboard shortcut to paste what I copied earlier, results from =d=/=y= are pasted instead. This setting bindings different keys for pasting from system clipboard within emacs - Ctrl shift C and V. It may be a little unergonomic going between these
-
-#+BEGIN_SRC elisp :noweb-ref evil-maps :tangle no
-;; Don't put vim yanks into system clipboard
-;; But use shift C-v / C-c to paste/copy from system clipboard instead
-(setq select-enable-clipboard nil)
-(global-set-key (kbd "S-C-c") #'clipboard-kill-ring-save)
-(global-set-key (kbd "S-C-v") #'clipboard-yank)
-
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-#+END_SRC
-
-Add some useful keys for command line (=:=) and global buffer switching using evil functions.
-
-#+BEGIN_SRC elisp :noweb-ref evil-maps :tangle no
-;; FIXME
-(evil-set-leader nil (kbd "S-C-SPC")) ;; C-SPC is mark set
-(evil-set-leader 'normal (kbd "SPC"))
-
-(define-key evil-command-line-map "\C-a" 'move-beginning-of-line)
-(define-key evil-command-line-map "\C-e" 'move-end-of-line)
-;; (define-key evil-command-line-map "\C-d" nil t)
-;; (define-key evil-command-line-map "\C-l" nil t)
-
-(global-set-key (kbd "s-<left>") #'previous-buffer)
-(global-set-key (kbd "s-<right>") #'next-buffer)
-(global-set-key (kbd "S-s-<down>") #'evil-window-down)
-(global-set-key (kbd "S-s-<up>") #'evil-window-up)
-(global-set-key (kbd "S-s-<left>") #'evil-window-left)
-(global-set-key (kbd "S-s-<right>") #'evil-window-right)
-#+END_SRC
-
-*** Leader maps
-
-This solution for binding leader prefixes is found on evil-guide: https://github.com/noctuid/evil-guide?tab=readme-ov-file#leader-key
-
-#+BEGIN_SRC elisp :noweb-ref evil-maps :tangle no
-(defvar ./leader-map (make-sparse-keymap)
-  "Keymap for leader shortcuts")
-(define-key evil-normal-state-map (kbd "SPC") ./leader-map)
-(define-key ./leader-map "q" #'evil-quit)
-(define-key ./leader-map "w" #'save-buffer)
-(define-key ./leader-map "x" #'evil-save-modified-and-close)
-(define-key ./leader-map "1" #'delete-other-windows)
-
-(defvar ./leader-buffer-map (make-sparse-keymap)
-  "Keymap for leader shortcuts for buffers")
-(define-key ./leader-map "b" ./leader-buffer-map)
-(define-key ./leader-buffer-map "b" #'consult-buffer)
-(define-key ./leader-buffer-map "s" #'save-buffer)
-(define-key ./leader-buffer-map "d" #'evil-delete-buffer)
-
-(defvar ./leader-file-map (make-sparse-keymap)
-  "Keymap for leader shortcuts for files")
-(define-key ./leader-map "f" ./leader-file-map)
-(define-key ./leader-file-map "f" #'find-file)
-(define-key ./leader-file-map "r" #'consult-recent-file)
-(define-key ./leader-file-map "p" #'project-find-file)
-
-(defvar ./leader-frame-map (make-sparse-keymap)
-  "Keymap for leader shortcuts for frames")
-(define-key ./leader-map "F" ./leader-frame-map)
-(define-key ./leader-frame-map "q" #'delete-frame)
-(define-key ./leader-frame-map "d" #'delete-frame)
-(define-key ./leader-frame-map "u" #'undelete-frame)
-(define-key ./leader-frame-map "R" #'rename-frame)
-(define-key ./leader-frame-map "o" #'other-frame)
-(define-key ./leader-frame-map "c" #'clone-frame)
-#+END_SRC
-
 * Misc
 
 Other plugins (or apps) with not that much configuration.
 
 #+BEGIN_SRC elisp
 (use-package elpher)
-;; eww is part of emacs now?!!
-;;(use-package eww)
 
 (use-package visual-fill-column
   :init
@@ -443,7 +215,7 @@ Other plugins (or apps) with not that much configuration.
                                    (imenu-list-minor-mode 1)
                                    (visual-line-mode 1)  ;; REVIEW
                                    (display-line-numbers-mode -1)
-                                   (evil-insert-state 1))))
+                                   )))
 
 (use-package math-symbol-lists
   :after cape
@@ -465,52 +237,19 @@ Other plugins (or apps) with not that much configuration.
   ) 
 #+END_SRC
 
-Maybe I'll figure out a better way to organize list of modes where display-line-numbers-mode should be disabled.
-
-#+BEGIN_SRC elisp :tangle no
-;; (use-package help
-;;   :elpaca nil
-;;   :hook
-;;   ((help-mode Custom-mode) . (lambda () (display-line-numbers-mode -1)))
-;;   )
-#+END_SRC
-
-Dang Custom-mode is actually capitalized
 
 ** Dired
 
 #+BEGIN_SRC elisp
-;; (use-package dired
-  ;; :elpaca nil
-  ;; :config
+(use-package dired
+  :elpaca nil
+  :config
   (setq delete-by-moving-to-trash t
         ;; Emacs 29
         dired-make-directory-clickable t
         dired-mouse-drag-files t
         )
-
-  ;;:hook
-  ;; FIXME: replicate evil state cursor style switching here
-  (defun ./cursor-toggle-readonly ()
-    (if buffer-read-only
-        (progn
-          (setq cursor-type 'box)
-          (set-cursor-color "orange"))
-      (setq cursor-type 'bar)
-      (set-cursor-color ./cursor-color)))
-
-  (add-hook 'read-only-mode-hook #'./cursor-toggle-readonly)
-  (add-hook 'dired-mode-hook (lambda () (hl-line-mode) (./cursor-toggle-readonly)))
-  ;; )
-#+END_SRC
-
-** Minibuffer
-
-Enjoy emacs' editting key chords while there's still a glimmer of space in your emacs that forces you to use it, child.
-
-#+BEGIN_SRC elisp
-(add-hook 'minibuffer-setup-hook (lambda () (setq cursor-type 'bar)))
-(add-hook 'minibuffer-exit-hook (lambda () (setq cursor-type 'box)))
+)
 #+END_SRC
 
 ** Wrap region
@@ -623,12 +362,12 @@ Marginalia shows description of each candidate in minibuffer completion next to 
 (use-package consult
   :config
   (global-set-key (kbd "C-s") 'consult-line)
-  (define-key evil-insert-state-map (kbd "C-s") 'isearch-forward)
-  (define-key evil-emacs-state-map (kbd "C-s") 'isearch-forward)
+  (global-set-key (kbd "C-s") 'isearch-forward)
+  (global-set-key (kbd "C-s") 'isearch-forward)
   (global-set-key (kbd "C-c g") 'consult-org-heading)
   (global-set-key (kbd "C-x C-b") 'consult-buffer)
   ;; Doesn't work?
-  (global-set-key [?\C-\t] 'consult-buffer)
+  (global-set-key (kbd "C-t") 'consult-buffer)
   (define-key minibuffer-local-map (kbd "C-r") 'consult-history)
 
   (setq completion-in-region-function #'consult-completion-in-region)
@@ -760,8 +499,8 @@ With references from System Crafter's crafted-emacs configuration
   :config
   ;; Add useful defaults completion sources from cape
   ;; (add-to-list 'completion-at-point-functions #'cape-file)
-  ;; ;;(add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  ;;(add-to-list 'completion-at-point-functions #'cape-tex)
+  ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  ;; (add-to-list 'completion-at-point-functions #'cape-tex)
   (add-to-list 'completion-at-point-functions #'cape-emoji)
 
   ;; Silence the pcomplete capf, no errors or messages!
@@ -772,14 +511,14 @@ With references from System Crafter's crafted-emacs configuration
   ;; and behaves as a pure `completion-at-point-function'.
   (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)
 
-  (define-key evil-insert-state-map (kbd "C-x C-f") 'cape-file)
-  (define-key evil-insert-state-map (kbd "C-x C-d") 'cape-dict)
-  (define-key evil-insert-state-map (kbd "C-x C-w") 'cape-dabbrev)
-  (define-key evil-insert-state-map (kbd "C-x C-:") 'cape-emoji)
+  ;; (define-key evil-insert-state-map (kbd "C-x C-f") 'cape-file)
+  ;; (define-key evil-insert-state-map (kbd "C-x C-d") 'cape-dict)
+  ;; (define-key evil-insert-state-map (kbd "C-x C-w") 'cape-dabbrev)
+  ;; (define-key evil-insert-state-map (kbd "C-x C-:") 'cape-emoji)
 
   (cape-char--define math "math" ?\\)
   (add-to-list 'completion-at-point-functions #'cape-math)
-  (define-key evil-insert-state-map (kbd "C-x C-$") 'cape-math)
+  ;; (define-key evil-insert-state-map (kbd "C-x C-$") 'cape-math)
 
   :hook (eshell-mode-hook . (lambda () (setq-local corfu-quit-at-boundary t
                                                    corfu-quit-no-match t
@@ -804,7 +543,7 @@ Also like fish's autosuggestion.
   (set-face-attribute 'corfu-candidate-overlay-face nil :foreground "dim grey")
   ;; Use TAB to accept a completion, how cool is that!
   <<insert-state-tab-cmd>>
-  (define-key evil-insert-state-map (kbd "TAB") './insert-state-tab)
+  :bind ("TAB" . './insert-state-tab)
 )
 #+END_SRC
 
@@ -849,7 +588,7 @@ folded org heading, then `org-cycle' is called. Otherwise
               ;; "visible" end of line position and use `org-cycle',
               ;; which should work (when called interactively). But
               ;; for some reason it didn't work when using this
-              ;; function so I decided to use `evil-open-fold'
+              ;; function so I decided to use `evil-aopen-fold'
               ;; instead.
               ;; 
               ;; Surprisingly evil's fold on org works even if point
@@ -923,7 +662,7 @@ didn't use `org-cycle' here."
 (use-package which-key
   :diminish
   :config
-  (which-key-setup-side-window-right)
+  (which-key-setup-side-window-bottom)
   (which-key-mode 1))
 #+END_SRC
 
@@ -935,9 +674,6 @@ didn't use `org-cycle' here."
   :config
   <<org-config>>
 
-  ;; (dolist (item '( ;; Newline used to add prefix to tangled file
-  ;;                <<org-font-attributes>>))
-  ;;   (apply #'set-face-attribute item))
   (custom-theme-set-faces
    'user
    <<org-font-attributes>>
@@ -1041,8 +777,7 @@ Org superstar is like org-bullets but with additional customizations as well as 
   :defer t
   :hook (org-mode . org-auto-tangle-mode)
   :config
-  (setq org-auto-tangle-babel-safelist '(
-                                         "~/.config/emacs/packages.org"
+  (setq org-auto-tangle-babel-safelist '("~/.config/emacs/packages.org"
                                          "~/.config/emacs/init.org")))
 #+END_SRC
 

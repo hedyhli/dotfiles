@@ -47,117 +47,7 @@
 ;; FIXME: Doesn't work
 (set-face-attribute 'tab-bar-tab-inactive nil :background "textBackgroundColor")
 
-(use-package evil
-  :demand t
-  :init
-  (setq evil-search-module 'evil-search
-        evil-ex-search-vim-style-regexp t)
-  (setq evil-ex-visual-char-range t  ; column range for ex commands
-        evil-mode-line-format 'nil
-        ;; more vim-like behavior
-        evil-symbol-word-search t)
-  (setq evil-default-cursor 'box
-        evil-normal-state-cursor 'box
-        evil-emacs-state-cursor  'bar
-        evil-insert-state-cursor 'bar
-        evil-visual-state-cursor 'hollow)
-        ;; Only do highlighting in selected window so that Emacs has less work
-        ;; to do highlighting them all.
-  (setq evil-ex-interactive-search-highlight 'selected-window
-        ;; It's infuriating that innocuous "beginning of line" or "end of line"
-        ;; errors will abort macros, so suppress them:
-        evil-kbd-macro-suppress-motion-error t)
-  (setq evil-want-C-u-scroll t) ; must be set in :init
-  ;; REVIEW: Is this needed if evil-redo-function is set?
-  (setq evil-undo-system 'undo-redo)  ;; 'undo-redo from Emacs 28
-  (setq evil-undo-function 'undo)
-  (setq evil-redo-function 'undo-redo)
-
-  :config
-  (setq evil-visual-update-x-selection-p nil)
-  (setq evil-shift-width 2)
-  (setq evil-cross-lines t)
-
-  ;; Emacs keybindings in evil insert state - must be set in :config
-  (setq evil-insert-state-map (make-sparse-keymap))
-  (define-key evil-insert-state-map (kbd "<escape>") 'evil-normal-state)
-  (define-key evil-emacs-state-map (kbd "<escape>") 'evil-normal-state)
-  (define-key evil-insert-state-map (kbd "S-C-e") 'evil-scroll-line-down)
-  (define-key evil-emacs-state-map (kbd "S-C-e") 'evil-scroll-line-down)
-  (define-key evil-insert-state-map (kbd "S-C-y") 'evil-scroll-line-up)
-  (define-key evil-emacs-state-map (kbd "S-C-y") 'evil-scroll-line-up)
-  ;; Don't put vim yanks into system clipboard
-  ;; But use shift C-v / C-c to paste/copy from system clipboard instead
-  (setq select-enable-clipboard nil)
-  (global-set-key (kbd "S-C-c") #'clipboard-kill-ring-save)
-  (global-set-key (kbd "S-C-v") #'clipboard-yank)
-  
-  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-  ;; FIXME
-  (evil-set-leader nil (kbd "S-C-SPC")) ;; C-SPC is mark set
-  (evil-set-leader 'normal (kbd "SPC"))
-  
-  (define-key evil-command-line-map "\C-a" 'move-beginning-of-line)
-  (define-key evil-command-line-map "\C-e" 'move-end-of-line)
-  ;; (define-key evil-command-line-map "\C-d" nil t)
-  ;; (define-key evil-command-line-map "\C-l" nil t)
-  
-  (global-set-key (kbd "s-<left>") #'previous-buffer)
-  (global-set-key (kbd "s-<right>") #'next-buffer)
-  (global-set-key (kbd "S-s-<down>") #'evil-window-down)
-  (global-set-key (kbd "S-s-<up>") #'evil-window-up)
-  (global-set-key (kbd "S-s-<left>") #'evil-window-left)
-  (global-set-key (kbd "S-s-<right>") #'evil-window-right)
-  (defvar ./leader-map (make-sparse-keymap)
-    "Keymap for leader shortcuts")
-  (define-key evil-normal-state-map (kbd "SPC") ./leader-map)
-  (define-key ./leader-map "q" #'evil-quit)
-  (define-key ./leader-map "w" #'save-buffer)
-  (define-key ./leader-map "x" #'evil-save-modified-and-close)
-  (define-key ./leader-map "1" #'delete-other-windows)
-  
-  (defvar ./leader-buffer-map (make-sparse-keymap)
-    "Keymap for leader shortcuts for buffers")
-  (define-key ./leader-map "b" ./leader-buffer-map)
-  (define-key ./leader-buffer-map "b" #'consult-buffer)
-  (define-key ./leader-buffer-map "s" #'save-buffer)
-  (define-key ./leader-buffer-map "d" #'evil-delete-buffer)
-  
-  (defvar ./leader-file-map (make-sparse-keymap)
-    "Keymap for leader shortcuts for files")
-  (define-key ./leader-map "f" ./leader-file-map)
-  (define-key ./leader-file-map "f" #'find-file)
-  (define-key ./leader-file-map "r" #'consult-recent-file)
-  (define-key ./leader-file-map "p" #'project-find-file)
-  
-  (defvar ./leader-frame-map (make-sparse-keymap)
-    "Keymap for leader shortcuts for frames")
-  (define-key ./leader-map "F" ./leader-frame-map)
-  (define-key ./leader-frame-map "q" #'delete-frame)
-  (define-key ./leader-frame-map "d" #'delete-frame)
-  (define-key ./leader-frame-map "u" #'undelete-frame)
-  (define-key ./leader-frame-map "R" #'rename-frame)
-  (define-key ./leader-frame-map "o" #'other-frame)
-  (define-key ./leader-frame-map "c" #'clone-frame)
-
-  (defun ./evil-off ()
-    "Call `turn-off-evil-mode' and show a message"
-    (interactive)
-    (turn-off-evil-mode)
-    (message "Evil mode is turned off"))
-
-  ;; Disable evil in some modes
-  (dolist (mode '(elpaca-ui-mode
-                  dired-mode
-                  magit-mode))
-    (evil-set-initial-state mode 'emacs))
-
-  (evil-mode 1)
-  )
-
 (use-package elpher)
-;; eww is part of emacs now?!!
-;;(use-package eww)
 
 (use-package visual-fill-column
   :init
@@ -171,7 +61,7 @@
                                    (imenu-list-minor-mode 1)
                                    (visual-line-mode 1)  ;; REVIEW
                                    (display-line-numbers-mode -1)
-                                   (evil-insert-state 1))))
+                                   )))
 
 (use-package math-symbol-lists
   :after cape
@@ -192,31 +82,15 @@
         (append math-symbol-list-basic math-symbol-list-extended))
   )
 
-;; (use-package dired
-  ;; :elpaca nil
-  ;; :config
+(use-package dired
+  :elpaca nil
+  :config
   (setq delete-by-moving-to-trash t
         ;; Emacs 29
         dired-make-directory-clickable t
         dired-mouse-drag-files t
         )
-
-  ;;:hook
-  ;; FIXME: replicate evil state cursor style switching here
-  (defun ./cursor-toggle-readonly ()
-    (if buffer-read-only
-        (progn
-          (setq cursor-type 'box)
-          (set-cursor-color "orange"))
-      (setq cursor-type 'bar)
-      (set-cursor-color ./cursor-color)))
-
-  (add-hook 'read-only-mode-hook #'./cursor-toggle-readonly)
-  (add-hook 'dired-mode-hook (lambda () (hl-line-mode) (./cursor-toggle-readonly)))
-  ;; )
-
-(add-hook 'minibuffer-setup-hook (lambda () (setq cursor-type 'bar)))
-(add-hook 'minibuffer-exit-hook (lambda () (setq cursor-type 'box)))
+)
 
 (use-package wrap-region
   :config
@@ -298,12 +172,12 @@
 (use-package consult
   :config
   (global-set-key (kbd "C-s") 'consult-line)
-  (define-key evil-insert-state-map (kbd "C-s") 'isearch-forward)
-  (define-key evil-emacs-state-map (kbd "C-s") 'isearch-forward)
+  (global-set-key (kbd "C-s") 'isearch-forward)
+  (global-set-key (kbd "C-s") 'isearch-forward)
   (global-set-key (kbd "C-c g") 'consult-org-heading)
   (global-set-key (kbd "C-x C-b") 'consult-buffer)
   ;; Doesn't work?
-  (global-set-key [?\C-\t] 'consult-buffer)
+  (global-set-key (kbd "C-t") 'consult-buffer)
   (define-key minibuffer-local-map (kbd "C-r") 'consult-history)
 
   (setq completion-in-region-function #'consult-completion-in-region)
@@ -417,8 +291,8 @@
   :config
   ;; Add useful defaults completion sources from cape
   ;; (add-to-list 'completion-at-point-functions #'cape-file)
-  ;; ;;(add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  ;;(add-to-list 'completion-at-point-functions #'cape-tex)
+  ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  ;; (add-to-list 'completion-at-point-functions #'cape-tex)
   (add-to-list 'completion-at-point-functions #'cape-emoji)
 
   ;; Silence the pcomplete capf, no errors or messages!
@@ -429,14 +303,14 @@
   ;; and behaves as a pure `completion-at-point-function'.
   (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)
 
-  (define-key evil-insert-state-map (kbd "C-x C-f") 'cape-file)
-  (define-key evil-insert-state-map (kbd "C-x C-d") 'cape-dict)
-  (define-key evil-insert-state-map (kbd "C-x C-w") 'cape-dabbrev)
-  (define-key evil-insert-state-map (kbd "C-x C-:") 'cape-emoji)
+  ;; (define-key evil-insert-state-map (kbd "C-x C-f") 'cape-file)
+  ;; (define-key evil-insert-state-map (kbd "C-x C-d") 'cape-dict)
+  ;; (define-key evil-insert-state-map (kbd "C-x C-w") 'cape-dabbrev)
+  ;; (define-key evil-insert-state-map (kbd "C-x C-:") 'cape-emoji)
 
   (cape-char--define math "math" ?\\)
   (add-to-list 'completion-at-point-functions #'cape-math)
-  (define-key evil-insert-state-map (kbd "C-x C-$") 'cape-math)
+  ;; (define-key evil-insert-state-map (kbd "C-x C-$") 'cape-math)
 
   :hook (eshell-mode-hook . (lambda () (setq-local corfu-quit-at-boundary t
                                                    corfu-quit-no-match t
@@ -484,13 +358,13 @@
             (evil-toggle-fold)
             (indent-for-tab-command)
       )))
-  (define-key evil-insert-state-map (kbd "TAB") './insert-state-tab)
+  :bind ("TAB" . './insert-state-tab)
 )
 
 (use-package which-key
   :diminish
   :config
-  (which-key-setup-side-window-right)
+  (which-key-setup-side-window-bottom)
   (which-key-mode 1))
 
 (use-package org
@@ -500,23 +374,6 @@
   (setq org-edit-src-content-indentation 0)
   (setq org-list-indent-offset 2)
 
-  ;; (dolist (item '( ;; Newline used to add prefix to tangled file
-  ;;                '(org-block ((t (:inherit fixed-pitch))))
-  ;;                '(org-code ((t (:inherit (shadow fixed-pitch)))))
-  ;;                '(org-document-info ((t (:foreground "dark orange"))))
-  ;;                '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
-  ;;                '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
-  ;;                '(org-link ((t (:foreground "deep sky blue" :underline t))))
-  ;;                '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-  ;;                '(org-property-value ((t (:inherit fixed-pitch))) t)
-  ;;                '(org-block-begin-line ((t (:inherit (font-lock-comment-face fixed-pitch)))) t)
-  ;;                '(org-block-end-line ((t (:inherit (font-lock-comment-face fixed-pitch)))) t)
-  ;;                '(org-drawer ((t (:inherit fixed-pitch))) t)
-  ;;                '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-  ;;                '(org-table ((t (:inherit fixed-pitch))))
-  ;;                '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
-  ;;                '(org-verbatim ((t (:inherit (shadow fixed-pitch)))))))
-  ;;   (apply #'set-face-attribute item))
   (custom-theme-set-faces
    'user
    '(org-block ((t (:inherit fixed-pitch))))
@@ -578,8 +435,7 @@
   :defer t
   :hook (org-mode . org-auto-tangle-mode)
   :config
-  (setq org-auto-tangle-babel-safelist '(
-                                         "~/.config/emacs/packages.org"
+  (setq org-auto-tangle-babel-safelist '("~/.config/emacs/packages.org"
                                          "~/.config/emacs/init.org")))
 
 (use-package lua-mode)
