@@ -113,6 +113,19 @@ This was my second ever emacs preferred theme (it was zenburn first then this).
 
 XXX: Somehow putting the org scale settings in =:init= works? And putting it in =:config= doesn't work?!
 
+** Modus themes
+
+I eventually decided that I'll just use Modus Vivendi/Operandi.
+
+#+BEGIN_SRC elisp
+;;(set-face-attribute 'org-code nil :inherit font-lock-constant-face)
+;; FIXME: Still no background
+(setq modus-themes-org-blocks 'grey-background ; {nil,'gray-background,'tinted-background}
+      modus-themes-mixed-fonts t
+      )
+(load-theme 'modus-vivendi t)
+#+END_SRC
+
 ** Common settings for themes
 
 #+BEGIN_SRC elisp
@@ -122,15 +135,6 @@ XXX: Somehow putting the org scale settings in =:init= works? And putting it in 
 ;; TODO: Do this for window divider and corfu UI items, and magit diff backgrounds.
 ;; and org-link
 #+END_SRC
-
-** Modus themes
-
-I eventually decided that I'll just use Modus Vivendi/Operandi.
-
-#+BEGIN_SRC elisp
-(load-theme 'modus-vivendi t)
-#+END_SRC
-
 
 * Tab bar
 
@@ -252,7 +256,7 @@ And yes you can even click on the breadcrumb components to jump to things like i
 
 #+BEGIN_SRC elisp
 (use-package breadcrumb
-  :diminish breadcrumb-mode
+  :diminish
   :init
   (breadcrumb-mode 1))
 #+END_SRC
@@ -639,11 +643,12 @@ didn't use `org-cycle' here."
   :elpaca nil
   :config
   <<org-config>>
-
-  (custom-theme-set-faces
-   'user
-   <<org-font-attributes>>
-   )
+  ;; Including no-web `org-font-attributes' is no longer necessary as
+  ;; it's now handled by setting `modus-themes-mixed-fonts'.
+  ;; (custom-theme-set-faces
+  ;;  'user
+  ;; org-font-attributes
+  ;;  )
 
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -673,8 +678,8 @@ didn't use `org-cycle' here."
 
   :hook
   (org-mode . (lambda () (visual-line-mode 1)
-                (variable-pitch-mode)
-                (display-line-numbers-mode -1)))
+              (variable-pitch-mode)
+              (display-line-numbers-mode -1)))
   )
 #+END_SRC
 
@@ -687,16 +692,16 @@ Using =set-face-attribute= rather than =custom-theme-set-faces= doesn't work! Sa
 #+BEGIN_SRC elisp :noweb-ref org-font-attributes :tangle no
 '(org-block ((t (:inherit fixed-pitch))))
 '(org-code ((t (:inherit (shadow fixed-pitch)))))
-'(org-document-info ((t (:foreground "dark orange"))))
+;;  '(org-document-info ((t (:foreground "dark orange"))))
 '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
 '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
 '(org-link ((t (:foreground "deep sky blue" :underline t))))
-'(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+'(org-meta-line ((t (:inherit (fixed-pitch)))))
 '(org-property-value ((t (:inherit fixed-pitch))) t)
-'(org-block-begin-line ((t (:inherit (font-lock-comment-face fixed-pitch)))) t)
-'(org-block-end-line ((t (:inherit (font-lock-comment-face fixed-pitch)))) t)
+'(org-block-begin-line ((t (:inherit (fixed-pitch)))) t)
+'(org-block-end-line ((t (:inherit (fixed-pitch)))) t)
 '(org-drawer ((t (:inherit fixed-pitch))) t)
-'(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+'(org-special-keyword ((t (:inherit (fixed-pitch)))))
 '(org-table ((t (:inherit fixed-pitch))))
 '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
 '(org-verbatim ((t (:inherit (shadow fixed-pitch)))))
@@ -740,6 +745,7 @@ Org superstar is like org-bullets but with additional customizations as well as 
 
 #+BEGIN_SRC elisp
 (use-package org-auto-tangle
+  :diminish
   :defer t
   :hook (org-mode . org-auto-tangle-mode)
   :config
@@ -807,37 +813,18 @@ After applying this patch (you can save the file as =add-destdir.patch=, then ru
 Configuration below enables tree-sitter mode for each major language mode I want to have tree-sitter for.
 
 #+BEGIN_SRC elisp
-;; Open python files in tree-sitter mode.
 (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
 (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
-(add-to-list 'auto-mode-alist
-             '("\\.go\\'" . (lambda ()
-                               (go-ts-mode)
-                               )))
-(add-to-list 'auto-mode-alist
-             '("go.mod\\'" . (lambda ()
-                               (go-mod-ts-mode)
-                               )))
+(add-to-list 'auto-mode-alist '("\\.go\\'" . (lambda () (go-ts-mode))))
+(add-to-list 'auto-mode-alist '("go.mod\\'" . (lambda () (go-mod-ts-mode))))
 #+END_SRC
 
 * Diminish
 
 Diminish allows us to use minor modes without showing it.
 
-Calling =diminish= to specify the mode to hide, (or specify 2nd argument for the alternative display text).
-
-#+BEGIN_SRC elisp
-;; FIXME
-(use-package diminish
-  :config
-  (diminish 'buffer-face-mode)
-  (diminish 'org-auto-tangle-mode)
-  (diminish 'eldoc-mode)
-  (diminish 'auto-revert-mode)
-  (diminish 'visual-line-mode)
-  (diminish 'org-indent-mode)
-  (diminish 'subword-mode)
-  )
+#+BEGIN_SRC elisp :tangle yes
+(use-package diminish :defer t)
 #+END_SRC
 
 * Eshell
@@ -869,10 +856,6 @@ Call FUN2 on all the rest of the elements in ARGS."
   "Edit one or more files in another window."
   (./eshell-fn-on-files 'find-file-other-window 'find-file-other-window files))
 #+end_src
-
-In case I somehow end up in (n)vi(m), I can possibly use my vim's <leader>q to quit, but still.
-
-Oh yeah oopsie doopsie if I end up in nvim, since my leader there is SPC, same as doom emacs... Oh Noes!
 
 #+begin_src elisp
 (defalias 'eshell/emacs 'eshell/ff)

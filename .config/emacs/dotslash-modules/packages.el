@@ -19,13 +19,18 @@
 (defvar ./theme-type "dark"
   "Dark or light")
 
+;;(set-face-attribute 'org-code nil :inherit font-lock-constant-face)
+;; FIXME: Still no background
+(setq modus-themes-org-blocks 'grey-background ; {nil,'gray-background,'tinted-background}
+      modus-themes-mixed-fonts t
+      )
+(load-theme 'modus-vivendi t)
+
 (setq ./theme-type (symbol-name (frame-parameter nil 'background-mode)))
 (setq ./cursor-color (if (string= ./theme-type "dark") "white" "black"))
 (set-face-attribute 'cursor nil :background ./cursor-color)
 ;; TODO: Do this for window divider and corfu UI items, and magit diff backgrounds.
 ;; and org-link
-
-(load-theme 'modus-vivendi t)
 
 (setq tab-bar-auto-width-max nil)
 
@@ -94,7 +99,7 @@
 (use-package magit)
 
 (use-package breadcrumb
-  :diminish breadcrumb-mode
+  :diminish
   :init
   (breadcrumb-mode 1))
 
@@ -360,25 +365,12 @@
   (setq org-startup-indented t)
   (setq org-edit-src-content-indentation 0)
   (setq org-list-indent-offset 2)
-
-  (custom-theme-set-faces
-   'user
-   '(org-block ((t (:inherit fixed-pitch))))
-   '(org-code ((t (:inherit (shadow fixed-pitch)))))
-   '(org-document-info ((t (:foreground "dark orange"))))
-   '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
-   '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
-   '(org-link ((t (:foreground "deep sky blue" :underline t))))
-   '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-   '(org-property-value ((t (:inherit fixed-pitch))) t)
-   '(org-block-begin-line ((t (:inherit (font-lock-comment-face fixed-pitch)))) t)
-   '(org-block-end-line ((t (:inherit (font-lock-comment-face fixed-pitch)))) t)
-   '(org-drawer ((t (:inherit fixed-pitch))) t)
-   '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-   '(org-table ((t (:inherit fixed-pitch))))
-   '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
-   '(org-verbatim ((t (:inherit (shadow fixed-pitch)))))
-   )
+  ;; Including no-web `org-font-attributes' is no longer necessary as
+  ;; it's now handled by setting `modus-themes-mixed-fonts'.
+  ;; (custom-theme-set-faces
+  ;;  'user
+  ;; org-font-attributes
+  ;;  )
 
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -408,8 +400,8 @@
 
   :hook
   (org-mode . (lambda () (visual-line-mode 1)
-                (variable-pitch-mode)
-                (display-line-numbers-mode -1)))
+              (variable-pitch-mode)
+              (display-line-numbers-mode -1)))
   )
 
 (use-package org-superstar
@@ -419,6 +411,7 @@
   (org-mode . (lambda () (org-superstar-mode 1))))
 
 (use-package org-auto-tangle
+  :diminish
   :defer t
   :hook (org-mode . org-auto-tangle-mode)
   :config
@@ -436,29 +429,10 @@
   ((python-ts-mode go-ts-mode lua-mode) . eglot-ensure)
 )
 
-;; Open python files in tree-sitter mode.
 (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
 (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
-(add-to-list 'auto-mode-alist
-             '("\\.go\\'" . (lambda ()
-                               (go-ts-mode)
-                               )))
-(add-to-list 'auto-mode-alist
-             '("go.mod\\'" . (lambda ()
-                               (go-mod-ts-mode)
-                               )))
-
-;; FIXME
-(use-package diminish
-  :config
-  (diminish 'buffer-face-mode)
-  (diminish 'org-auto-tangle-mode)
-  (diminish 'eldoc-mode)
-  (diminish 'auto-revert-mode)
-  (diminish 'visual-line-mode)
-  (diminish 'org-indent-mode)
-  (diminish 'subword-mode)
-  )
+(add-to-list 'auto-mode-alist '("\\.go\\'" . (lambda () (go-ts-mode))))
+(add-to-list 'auto-mode-alist '("go.mod\\'" . (lambda () (go-mod-ts-mode))))
 
 (defun ./eshell-fn-on-files (fun1 fun2 args)
   "Call FUN1 on the first element in list, ARGS.
