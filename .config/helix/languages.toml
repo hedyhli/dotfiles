@@ -11,3 +11,39 @@ command = "/opt/homebrew/opt/llvm@16/bin/clangd"
 name = "cpp"
 #language-servers = [ "ccls" ]
 formatter = { command = "clang-format", args = ["--fallback-style=Google"] }
+
+[[language]]
+roots = []
+name = "cognate"
+scope = "source.cog"
+injection-regex = "cognate"
+file-types = ["cog"]
+comment-token = "~~"
+#block-comment-tokens = { start = "~", end = "~" }
+indent = { tab-width = 4, unit = "\t" }
+
+[[grammar]]
+name = "cognate"
+source = { path = "/Users/hedy/projects/tree-sitter-cognate/", rev = "main" }
+
+[[language]]
+name = "typescript"
+shebangs = ["deno"]
+roots = ["deno.json", "deno.jsonc", "package.json"]
+auto-format = true
+language-servers = ["deno-lsp"]
+
+[language-server.deno-lsp]
+command = "deno"
+args = ["lsp"]
+
+[language-server.deno-lsp.config.deno]
+enable = true
+unstable = true
+suggest.imports.hosts = { "https://deno.land" = true }
+inlayHints.parameterNames.enabled = "all"
+inlayHints.parameterTypes.enabled = true
+inlayHints.variableTypes.enabled = true
+inlayHints.propertyDeclarationTypes.enabled  = true
+inlayHints.functionLikeReturnTypes.enabled = true
+inlayHints.enumMemberValues.enabled = true
