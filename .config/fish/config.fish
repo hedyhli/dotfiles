@@ -13,6 +13,8 @@ if test -f ~/.config/fish/config_local.fish
 end
 
 abbr -a --set-cursor pj cd $PROJECTS_ROOT/%
+abbr -a --set-cursor ccd ranger --choosedir=/tmp/rangerdir % \&\& cd \(cat /tmp/rangerdir\)
+abbr -a --set-cursor cdd ranger --choosedir=/tmp/rangerdir % \&\& cd \(cat /tmp/rangerdir\)
 
 # TODO: migrate .addpath and .exportenvs to direnv :D
 if command -sq direnv > /dev/null
