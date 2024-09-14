@@ -6,7 +6,7 @@ export EMACSDIR=~/.doomemacs/
 export PROJECTS_ROOT=~/projects
 export BROWSER=elinks
 export FILEMAN=ranger
-export TERM=xterm-256color
+#export TERM=xterm-256color
 export GPG_TTY=$(tty)
 
 # telemetry shit
@@ -30,7 +30,7 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_USER_CONFIG_DIR="$XDG_CONFIG_HOME"
 
 # Paths
-export LD_LIBRARY_PATH="$HOME/local/lib/x86_64-linux-gnu/:$HOME/local/lib:/opt/pkgsrc/opt/pkg/lib"
+export LD_LIBRARY_PATH="$HOME/local/lib/x86_64-linux-gnu/:$HOME/local/lib:/opt/pkgsrc/opt/pkg/lib:/opt/pkg/lib"
 export DYLD_LIBRARY_PATH="/opt/pkgsrc/opt/pkg/lib"
 export PKG_CONFIG_PATH="$HOME/local/lib/x86_64-linux-gnu/pkgconfig:$HOME/local/pkgconfig:/opt/pkg/lib/pkgconfig/"
 
@@ -41,8 +41,8 @@ export PNPM_HOME="$HOME/.local/share/pnpm"
 # GPG
 export PASH_KEYID="F92200AF40D013F0"
 
-# Ugh
 export HOMEBREW_PREFIX="/opt/homebrew"
 export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
 export HOMEBREW_REPOSITORY="/opt/homebrew"
-export DENO_INSTALL="/Users/hedy/.deno"
+export DENO_INSTALL="$HOME/.deno"
+export BUN_INSTALL="$HOME/.bun"
