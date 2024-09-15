@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-export EDITOR=nv
+export EDITOR=hx
 export DOOMDIR=~/.config/doom/
 export EMACSDIR=~/.doomemacs/
 export PROJECTS_ROOT=~/projects

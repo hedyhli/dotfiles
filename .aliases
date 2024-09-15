@@ -15,7 +15,7 @@ alias edoom='emacs --with-profile=doom'
 alias g=git
 alias acme='acme -f /mnt/font/FiraCode-Regular/15/font'
 alias la='ls -a'
-alias bat='bat --theme zenburn'
+alias bat='bat --theme base16-256'
 
 # Shortcuts
 alias apt-up='sudo apt update && sudo apt upgrade -y && sudo apt-get dist-upgrade -y && sudo apt autoremove'
