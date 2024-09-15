@@ -25,3 +25,7 @@ if command -sq pyenv > /dev/null
     status is-login; and pyenv init --path | source
     status is-interactive; and pyenv init - | source
 end
+
+function ls_on_cd --on-variable PWD;
+    ls --color=auto
+end
