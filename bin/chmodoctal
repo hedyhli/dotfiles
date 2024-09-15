@@ -8,7 +8,7 @@ if len(sys.argv) > 1:
 else:
     s = open(0).read().strip()
 
-if len(match := re.findall(f"{r'[rwx\-]'*9}", s)) == 1 and match[0] == s:
+if len(match := re.findall(f"{r'[rwx-]'*9}", s)) == 1 and match[0] == s:
     print(sum(sum({'r':4,'w':2,'x':1,'-':0}[c]*(10**(2-n)) for c in s[3*n:3*n+3]) for n in range(3)))
 else:
     print("pipe 9-letter symbolic file mode or as first argument")
