@@ -761,6 +761,8 @@ Org superstar is like org-bullets but with additional customizations as well as 
 (use-package lua-mode)
 (use-package moonscript)
 (use-package nim-mode)
+(use-package cognate-ts-mode
+  :load-path "~/projects/tree-sitter-cognate/")
 #+END_SRC
 
 
@@ -770,7 +772,7 @@ Eglot is now included in Emacs from version 29.
 
 #+BEGIN_SRC elisp
 (use-package eglot
-  :elpaca nil
+  :ensure nil
   :defer t
   :hook
   ((python-ts-mode go-ts-mode lua-mode) . eglot-ensure)

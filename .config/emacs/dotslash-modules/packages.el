@@ -421,9 +421,11 @@
 (use-package lua-mode)
 (use-package moonscript)
 (use-package nim-mode)
+(use-package cognate-ts-mode
+  :load-path "~/projects/tree-sitter-cognate/")
 
 (use-package eglot
-  :elpaca nil
+  :ensure nil
   :defer t
   :hook
   ((python-ts-mode go-ts-mode lua-mode) . eglot-ensure)
