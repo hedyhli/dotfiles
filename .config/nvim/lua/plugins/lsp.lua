@@ -72,6 +72,8 @@ local servers = {
   "v_analyzer", -- https://github.com/vlang/v-analyzer
   "ocamllsp", -- opam install ocaml-lsp-server
   "nushell", -- built-in to nu
+  "ols", -- https://github.com/DanielGavin/ols?tab=readme-ov-file#installation
+  "elmls", -- node @elm-tooling/elm-language-server
 }
 for _, lsp in pairs(servers) do
   lspconfig[lsp].setup {
@@ -180,7 +182,7 @@ end
 return {
   { "neovim/nvim-lspconfig",
     config = config,
-    ft = {"python", "go", "markdown", "lua", "vim", "bash", "javascript", 'javascriptreact', 'sh', "typescript", "typescriptreact", "nim", "rust", "zig", "haskell", "v", "ocaml", "nu"},
+    ft = {"python", "go", "markdown", "lua", "vim", "bash", "javascript", 'javascriptreact', 'sh', "typescript", "typescriptreact", "nim", "rust", "zig", "haskell", "v", "ocaml", "nu", "odin", "elm"},
   },
   { "ray-x/lsp_signature.nvim",
     event = "VeryLazy",

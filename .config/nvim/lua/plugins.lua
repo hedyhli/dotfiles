@@ -78,7 +78,7 @@ return {
     opts = {
       -- Doesn't seem to work
       filter_kind = false,
-      backends = {"lsp"},
+      backends = {"lsp", "treesitter"},
     },
     -- Optional dependencies
     dependencies = {
@@ -169,4 +169,5 @@ return {
     -- Optional dependencies
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
+  -- { dir = "~/projects/tree-sitter-cognate", dependencies = { "nvim-treesitter/nvim-treesitter" } },
 }

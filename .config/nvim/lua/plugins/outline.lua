@@ -30,9 +30,11 @@ return {
   end,
   opts = {
     preview_window = {
-      live = false,
+      live = true,
       border = 'rounded',
       open_hover_on_preview = false,
+        height = 8,
+        relative_height = false,
     },
     symbol_folding = {
       auto_unfold = {
@@ -54,6 +56,7 @@ return {
     },
     outline_window = {
       position = 'left',
+        auto_jump = true,
       show_cursorline = 'focus_in_outline',
       -- Beautiful, but not very good in indicating window focus (I don't use a
       -- statusline), plus at the time of writing preview window breaks this
@@ -74,8 +77,8 @@ return {
         lua = { 'String', 'Package', 'Constant', exclude = true },
         python = { 'Function', 'Method', 'Class' },
       },
-      icon_fetcher = function(k)
-        local ft = vim.api.nvim_buf_get_option(require('outline').current.code.buf, "ft")
+      icon_fetcher = function(k, buf)
+        local ft = vim.api.nvim_buf_get_option(buf, "ft")
         -- There can only be kind String in markdown so... let's not have the
         -- eye candy here
         if ft == 'markdown' and k == 'String' then

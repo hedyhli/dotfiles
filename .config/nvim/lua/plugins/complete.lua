@@ -109,6 +109,12 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'snippy' },
+    {
+      name = 'omni',
+      option = {
+        disable_omnifuncs = { 'v:lua.vim.lsp.omnifunc' }
+      }
+    },
   }, {
     -- { name = 'buffer' },
     { name = 'emoji' },
@@ -225,6 +231,7 @@ return {
       "kdheepak/cmp-latex-symbols", -- τ long live \tau
       -- "dcampos/nvim-snippy", -- Adding it here does not apply opts
       "dcampos/cmp-snippy",
+      "hrsh7th/cmp-omni",
     },
   },
   { "dcampos/nvim-snippy",
