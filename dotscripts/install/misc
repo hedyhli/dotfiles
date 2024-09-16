@@ -33,32 +33,6 @@ else
     fi
 fi
 
-if ! command -v tmux &> /dev/null; then
-    echo "warning: tmux not found"
-    echo "https://github.com/tmux/tmux/wiki"
-else
-    if ! test -e ~/.tmux/plugins/tpm; then
-        echo "installing tmux package manager"
-        git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-        tmux source ~/.tmux.conf
-        echo "remember to hit <prefix> + I to install tmux plugins"
-    else
-        echo "upgrading tpm"
-        cd ~/.tmux/plugins/tpm
-        # git fetch origin
-        # FIXME: don't hard code master and origin
-        # reslog=$(git log HEAD..origin/master --oneline)
-        # if [[ "${reslog}" != "" ]] ; then
-        #     git merge origin/master # completing the pull
-        #     tmux source ~/.tmux.conf
-        #     cd - > /dev/null
-        # fi
-        git pull
-        tmux source ~/.tmux.conf
-        cd - > /dev/null
-    fi
-fi
-
 if ! command -v tig &> /dev/null; then
     echo "installing tig"
     mkdir -p ~/local/src ~/local/bin
