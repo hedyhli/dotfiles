@@ -32,3 +32,5 @@ if [ ! -d ~/.local/share/omf ]; then
 	omf install
 	echo done
 fi
+
+echo "Consider check \$fish_completion_path (add add vendor completions such as that of homebrew)"
