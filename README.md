@@ -29,13 +29,6 @@ Note that WSL support of clipboard pastes is deprecated on NVIM as of
 2023-06-30. Before which, you need to have a `pbcopy`/`pbpaste` binary in path
 that handles clipboard operations with windows.
 
-## CHANGELOG
-
-- 2023-10: Heavily refactored my neovim config (I've also changed my neovim
-  theme from dracula to tundra)
-- 2023-09: I've switched from neovim to Doom, and to my own Emacs!
-- 2023-06: (nvim) Switched from vim to full-lua set up
-
 ---
 
 Repository: [SourceHut](https://sr.ht/~hedy/dotfiles)
@@ -57,7 +50,7 @@ Mirrors: [tildegit (gitea)](https://tildegit.org/hedy/dotfiles) |
   * [Nushell](#nushell)
 * [Editor](#editor)
   * [Vim and nvim](#vim-and-nvim)
-    * [New neovim setup (lua)](#new-neovim-setup-lua)
+    * [Neovim Lua Setup](#neovim-lua-setup)
     * [TODO for neovim](#todo-for-neovim)
   * [Vanilla Emacs](#vanilla-emacs)
   * [Doom emacs](#doom-emacs)
@@ -88,7 +81,7 @@ Configs that involve open source tools/packages I maintain:
   - [fish](https://fishshell.com) ([`.config/fish`](.config/fish))
   - Git ([`.gitconfig`](.gitconfig), [`.gitignore_global`](.gitignore_global))
   - Tmux ([`.tmux.conf`](.tmux.conf))
-- Theme: Dracula (terminal), Tundra (neovim), spacegrey/ef-themes (emacs)
+- Theme: Catppuccin Mocha (terminal, shell and helix), Tundra (neovim), Modus Vivendi (emacs)
 - Email: [aerc](https://aerc-mail.org) ([`.config/aerc`](.config/aerc))
 - Terminal: [Kitty](https://sw.kovidgoyal.net/kitty/) ([`.config/kitty`](.config/kitty))
 - Editor:
@@ -302,9 +295,7 @@ available for quick editing. No auto-complete, no fancy themes, just some
 must-have utilities.
 </details>
 
-#### New neovim setup (lua)
-
-Since 2023-06-30, I've switched to `init.lua` 🎉
+#### Neovim Lua Setup
 
 - Plugin manager: Lazy.nvim
 - Completion: nvim-cmp
@@ -337,10 +328,6 @@ parsers.
 **Telescope**
 
 Telescope plugin is enabled conditionally if neovim version >= 0.9.
-
-While I love what telescope is doing for the neovim community, I personally
-think it is no where near as good as consult.el from emacs, however there are
-no better alternatives to telescope at the moment.
 
 **Setup**:
 - `dotscripts/setup/nvim` (no longer needed as I no longer use vim-plug)
@@ -397,10 +384,10 @@ chemacs). Relevant environment variables are set in `.exportenvs`, also see
 ## Terminal
 
 The shell theme depends on the terminal theme. I use Kitty Terminal, where its
-config at `.config/kitty` uses the Dracula theme. Font configuration varies
-depending on the system hence it should be in a separate file `font.conf`. A
-`local.conf` file is recognized. Both of which are not tracked in this repo as
-they are platform-dependent.
+config at `.config/kitty`. It uses customized Catppuccin Mocha theme. Font
+configuration varies depending on the system hence it should be in a separate
+file `font.conf`. A `local.conf` file is recognized. Both of which are not
+tracked in this repo as they are platform-dependent.
 
 ## Gemini and Spartan client
 
