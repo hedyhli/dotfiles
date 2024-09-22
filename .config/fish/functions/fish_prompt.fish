@@ -61,9 +61,8 @@ function fish_prompt --description 'Write out the prompt'
     if not set -q __fish_git_prompt_color_untrackedfiles
         set -g __fish_git_prompt_color_untrackedfiles $fish_color_normal
     end
-    if not set -q __fish_git_prompt_color_cleanstate
-        set -g __fish_git_prompt_color_cleanstate green --bold
-    end
+
+    set -g __fish_git_prompt_color_cleanstate yellow
 
     set -l color_cwd
     set -l prefix
