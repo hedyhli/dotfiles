@@ -14,7 +14,7 @@
     defaultBranch = main
 
 [alias]
-    s = status
+    s = status -s
     c = commit
     b = branch
     a = add
@@ -22,7 +22,7 @@
     ls-alias = config --get-regexp alias
     l = log --oneline
     ll = log
-    ss = status -s
+    ss = status
     ch = checkout
     chb = checkout -b
     mylog = log --pretty=format:'%C(white)%h %C(blue)%an  %C(green)%as  %C(white)"%s"'
