@@ -1,8 +1,5 @@
 # dotfiles
 
-Welcome to my personal collection of weirdish—sometimes
-unmaintained—configuration and lose organization of cool scripts!
-
 - [Source (SourceHut)](https://git.sr.ht/~hedy/dotfiles)
 - [Patches](https://lists.sr.ht/~hedy/inbox)
 - [Questions/Feedback](https://lists.sr.ht/~hedy/inbox)
@@ -11,10 +8,6 @@ unmaintained—configuration and lose organization of cool scripts!
 These are the setup I have on almost all machines I work in, and because I work
 on many [tildes](https://tildeverse.org), I make this set of configuration as
 cross-platform as possible.
-
-I also try to use `$HOME` or `~` in place of `/home/name` because on Mac it's
-`/Users/name` and my username is not always the same. This also aids portability
-for others looking to reference my config.
 
 Used on (aka loosely tested on):
 - MacOS
@@ -41,7 +34,6 @@ Mirrors: [tildegit (gitea)](https://tildegit.org/hedy/dotfiles) |
 <!-- mtoc-start -->
 
 * [Overview](#overview)
-* [Features](#features)
 * [Installation](#installation)
 * [Shell](#shell)
   * [Oh My Fish](#oh-my-fish)
@@ -60,50 +52,39 @@ Mirrors: [tildegit (gitea)](https://tildegit.org/hedy/dotfiles) |
 
 <!-- mtoc-end -->
 
-Configs in order of frequency of update / stability:
-1. Neovim
-1. Emacs
-1. Kitty
-1. Shell (fish)
-
-Configs that are not well maintained:
-1. irbrc
-1. vimrc
-
-Configs that involve open source tools/packages I maintain:
-1. gelim (itself)
-1. Neovim (a few plugins)
-
 ## Overview
 
 - Manager: [yadm](https://yadm.io) ([`.config/yadm`](.config/yadm))
 - Shell & tools:
-  - [fish](https://fishshell.com) ([`.config/fish`](.config/fish))
+  - Fish ([`.config/fish`](.config/fish))
   - Git ([`.gitconfig`](.gitconfig), [`.gitignore_global`](.gitignore_global))
+  - Jujutsu ([`.config/jutjutsu`](.config/jujutsu))
   - Tmux ([`.tmux.conf`](.tmux.conf))
-- Theme: Catppuccin Mocha (terminal, shell and helix), Tundra (neovim), Modus Vivendi (emacs)
+- Theme: Catppuccin Mocha (Kitty, Fish and Helix), Tundra (Neovim), Modus Vivendi (emacs)
+  - Note I use a modified Catppuccin Mocha variant that swaps around some colors
+    (without modifying the palette itself) for Kitty ([`.config/kitty/mocha.conf`]
+    (.config/kitty/mocha.conf)) and Fish ([`.config/fish/themes/mocha.theme`]
+    (.config/fish/themes/mocha.theme))
+- Font:
+  - Monospace: IBM Plex Mono and Fira Code, without ligatures (Kitty and Emacs)
+  - Variable width: Inter (Emacs, with ligatures in Logseq), IBM Plex Sans and
+    iA Writer Quattro S (in some contexts)
 - Email: [aerc](https://aerc-mail.org) ([`.config/aerc`](.config/aerc))
 - Terminal: [Kitty](https://sw.kovidgoyal.net/kitty/) ([`.config/kitty`](.config/kitty))
 - Editor:
   - Vim ([`.vimrc`](.vimrc)) (not used)
   - Neovim ([`.config/nvim`](.config/nvim))
   - Emacs ([`.config/emacs`](.config/emacs)) (with chemacs: [.emacs-profiles.el](.emacs-profiles.el))
-  - Doom ([`.config/doom`](.config/doom)) (not used)
+  - Helix ([`.config/helix`](.config/helix))
+  - Doom ([`.config/doom`](.config/doom))
   - [Acme](http://acme.cat-v.org/): Does not have config files, but I do have some scripts (`bin/gotagacme`, `bin/gotagclean.py`)
 - Web client (browser):
-  - [Elinks fork](https://github.com/rkd77/elinks) ([`.elinks/elinks.conf`](.elinks/elinks.conf))
+  - [Elinks fork](https://github.com/rkd77/elinks) with local modifications ([`.elinks/elinks.conf`](.elinks/elinks.conf))
   - [Qutebrowser](https://qutebrowser.org) ([`.qutebrowser/config.py`](.qutebrowser/config.py))
   - And others irrelevant to dotfiles
 - Gemini client:
   - [gelim (also spartan)](https://sr.ht/~hedy/gelim) ([`.config/gelim`](.config/gelim))
   - [amfora](https://github.com/makeworld-the-better-one/amfora) ([`.config/amfora`](.config/amfora))
-
-## Features
-
-- Mostly bash shebangs
-- Shared aliases and environment variables between shells (fish, bash, sh)
-- Setup and install scripts
-- Modular and documented
 
 ## Installation
 
