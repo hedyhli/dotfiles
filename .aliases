@@ -17,6 +17,7 @@ alias acme='acme -f /mnt/font/FiraCode-Regular/15/font'
 alias la='ls -a'
 alias bat='bat --theme base16-256'
 alias emacs-clean='emacs -nw -Q --eval "(load-theme '\''modus-vivendi t)"'
+alias emacs-wombat='emacs -nw -Q --eval "(load-theme '\''wombat t)"'
 
 # Shortcuts
 alias apt-up='sudo apt update && sudo apt upgrade -y && sudo apt-get dist-upgrade -y && sudo apt autoremove'
