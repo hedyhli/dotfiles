@@ -19,15 +19,25 @@
 (defvar ./theme-type "dark"
   "Dark or light")
 
-;;(set-face-attribute 'org-code nil :inherit font-lock-constant-face)
 ;; FIXME: Still no background
 (setq modus-themes-org-blocks 'grey-background ; {nil,'gray-background,'tinted-background}
       modus-themes-mixed-fonts t
       )
-(load-theme 'modus-vivendi t)
+;;(load-theme 'modus-vivendi t)
 
-(setq ./theme-type (symbol-name (frame-parameter nil 'background-mode)))
-(setq ./cursor-color (if (string= ./theme-type "dark") "white" "black"))
+(use-package catppuccin-theme
+  :ensure t
+  :after (org corfu vertico)
+  :init
+  (setq catppuccin-flavor 'mocha)
+  :config
+  (setq ./theme-type "dark")
+  (load-theme 'catppuccin :no-confirm)
+  (set-face-attribute 'org-block nil :foreground "#cdd6f4")
+  (set-face-attribute 'font-lock-builtin-face nil :foreground "#89b4fa"))
+
+;;(setq ./theme-type (symbol-name (frame-parameter nil 'background-mode)))
+(setq ./cursor-color (if (string= ./theme-type "light") "black" "white"))
 (set-face-attribute 'cursor nil :background ./cursor-color)
 ;; TODO: Do this for window divider and corfu UI items, and magit diff backgrounds.
 ;; and org-link
@@ -362,15 +372,30 @@
 (use-package org
   :ensure nil
   :config
+(set-face-attribute 'org-code nil :inherit font-lock-constant-face)
   (setq org-startup-indented t)
   (setq org-edit-src-content-indentation 0)
   (setq org-list-indent-offset 2)
-  ;; Including no-web `org-font-attributes' is no longer necessary as
-  ;; it's now handled by setting `modus-themes-mixed-fonts'.
-  ;; (custom-theme-set-faces
-  ;;  'user
-  ;; org-font-attributes
-  ;;  )
+  ;; Including no-web `org-font-attributes' is not necessary with modus as
+  ;; it's handled by setting `modus-themes-mixed-fonts'.
+  (custom-theme-set-faces
+    'user
+   '(org-block ((t (:inherit fixed-pitch))))
+   '(org-code ((t (:inherit (shadow fixed-pitch)))))
+   ;;  '(org-document-info ((t (:foreground "dark orange"))))
+   '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
+   '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
+   '(org-link ((t (:foreground "deep sky blue" :underline t))))
+   '(org-meta-line ((t (:inherit (fixed-pitch)))))
+   '(org-property-value ((t (:inherit fixed-pitch))) t)
+   '(org-block-begin-line ((t (:inherit (fixed-pitch)))) t)
+   '(org-block-end-line ((t (:inherit (fixed-pitch)))) t)
+   '(org-drawer ((t (:inherit fixed-pitch))) t)
+   '(org-special-keyword ((t (:inherit (fixed-pitch)))))
+   '(org-table ((t (:inherit fixed-pitch))))
+   '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
+   '(org-verbatim ((t (:inherit (shadow fixed-pitch)))))
+   )
 
   (org-babel-do-load-languages
    'org-babel-load-languages

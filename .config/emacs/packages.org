@@ -108,19 +108,35 @@ XXX: Somehow putting the org scale settings in =:init= works? And putting it in 
 I eventually decided that I'll just use Modus Vivendi/Operandi.
 
 #+BEGIN_SRC elisp
-;;(set-face-attribute 'org-code nil :inherit font-lock-constant-face)
+
 ;; FIXME: Still no background
 (setq modus-themes-org-blocks 'grey-background ; {nil,'gray-background,'tinted-background}
       modus-themes-mixed-fonts t
       )
-(load-theme 'modus-vivendi t)
+;;(load-theme 'modus-vivendi t)
 #+END_SRC
+
+** Catppuccin
+
+#+BEGIN_SRC elisp
+(use-package catppuccin-theme
+  :ensure t
+  :after (org corfu vertico)
+  :init
+  (setq catppuccin-flavor 'mocha)
+  :config
+  (setq ./theme-type "dark")
+  (load-theme 'catppuccin :no-confirm)
+  (set-face-attribute 'org-block nil :foreground "#cdd6f4")
+  (set-face-attribute 'font-lock-builtin-face nil :foreground "#89b4fa"))
+#+END_SRC
+
 
 ** Common settings for themes
 
 #+BEGIN_SRC elisp
-(setq ./theme-type (symbol-name (frame-parameter nil 'background-mode)))
-(setq ./cursor-color (if (string= ./theme-type "dark") "white" "black"))
+;;(setq ./theme-type (symbol-name (frame-parameter nil 'background-mode)))
+(setq ./cursor-color (if (string= ./theme-type "light") "black" "white"))
 (set-face-attribute 'cursor nil :background ./cursor-color)
 ;; TODO: Do this for window divider and corfu UI items, and magit diff backgrounds.
 ;; and org-link
@@ -632,13 +648,14 @@ didn't use `org-cycle' here."
 (use-package org
   :ensure nil
   :config
+(set-face-attribute 'org-code nil :inherit font-lock-constant-face)
   <<org-config>>
-  ;; Including no-web `org-font-attributes' is no longer necessary as
-  ;; it's now handled by setting `modus-themes-mixed-fonts'.
-  ;; (custom-theme-set-faces
-  ;;  'user
-  ;; org-font-attributes
-  ;;  )
+  ;; Including no-web `org-font-attributes' is not necessary with modus as
+  ;; it's handled by setting `modus-themes-mixed-fonts'.
+  (custom-theme-set-faces
+    'user
+   <<org-font-attributes>>
+   )
 
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -679,7 +696,7 @@ Using =set-face-attribute= rather than =custom-theme-set-faces= doesn't work! Sa
 
 ** Org font faces
 
-#+BEGIN_SRC elisp :noweb-ref org-font-attributes :tangle no
+#+BEGIN_SRC elisp :noweb-ref org-font-attributes :tangle yes
 '(org-block ((t (:inherit fixed-pitch))))
 '(org-code ((t (:inherit (shadow fixed-pitch)))))
 ;;  '(org-document-info ((t (:foreground "dark orange"))))
