@@ -128,7 +128,8 @@ I eventually decided that I'll just use Modus Vivendi/Operandi.
   (setq ./theme-type "dark")
   (load-theme 'catppuccin :no-confirm)
   (set-face-attribute 'org-block nil :foreground "#cdd6f4")
-  (set-face-attribute 'font-lock-builtin-face nil :foreground "#89b4fa"))
+  (set-face-attribute 'font-lock-builtin-face nil :foreground "#89b4fa")
+  (set-face-attribute 'shadow nil :foreground "#969ab3")) ;; More contrast
 #+END_SRC
 
 

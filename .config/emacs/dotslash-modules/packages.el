@@ -34,7 +34,8 @@
   (setq ./theme-type "dark")
   (load-theme 'catppuccin :no-confirm)
   (set-face-attribute 'org-block nil :foreground "#cdd6f4")
-  (set-face-attribute 'font-lock-builtin-face nil :foreground "#89b4fa"))
+  (set-face-attribute 'font-lock-builtin-face nil :foreground "#89b4fa")
+  (set-face-attribute 'shadow nil :foreground "#969ab3")) ;; More contrast
 
 ;;(setq ./theme-type (symbol-name (frame-parameter nil 'background-mode)))
 (setq ./cursor-color (if (string= ./theme-type "light") "black" "white"))

@@ -17,7 +17,7 @@
    (lambda () (set-face-attribute 'highlight-indent-guides-character-face nil
                                    :foreground "gray30")
               (set-face-attribute 'highlight-indent-guides-top-character-face nil
-                                   :foreground "gray70" :weight 'bold)))
+                                   :foreground "gray50" :weight 'bold)))
 
   :init
   (setq highlight-indent-guides-method 'character

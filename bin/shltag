@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
-old=$(git tag | tail -n1)
+# old=$(git tag | tail -n1)
+old="$2"
 force=""
-if [[ "$2" == "-f" ]]; then
-    force="-f"
-fi
+# if [[ "$2" == "-f" ]]; then
+#     force="-f"
+# fi
 case $1 in
 	v*)
 		git shortlog $old..HEAD | git tag $force -as -F - $1
