@@ -6,7 +6,7 @@
   "Font used for titles")
 
 (defvar ./face-fixed-pitch
-  '(:foundry "apple" :family "Fira Code" :height 160)
+  '(:foundry "apple" :family "IBM PLex Mono" :height 160)
   "Contents to be passed to (`set-face-attribute' 'fixed-pitch nil [...]) ")
 (defvar ./face-variable-pitch
   '(:foundry "apple" :family "Inter" :height 170)
