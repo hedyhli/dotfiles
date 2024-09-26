@@ -44,10 +44,6 @@ I sometimes switch between these (sub-headings). To switch, set =:tangle yes/no=
 
 ** EF-themes (ef-elea-dark)
 
-Current preferred dark theme.
-
-The pink accent and the brownish background reminds me of gruvbox, but the purple and the green makes it look different. Overall it's quite ugly; and that is the beauty of it!
-
 #+BEGIN_SRC elisp :tangle no
 (use-package ef-themes
   :config
@@ -66,12 +62,6 @@ The pink accent and the brownish background reminds me of gruvbox, but the purpl
 #+END_SRC
 
 ** Timu Spacegrey (dark)
-
-This theme has partial zenburn vibes (orange) but less brown.
-
-NGL it's so cute. Primary accent is like light brownish orange yet user-interaction accents use pink. :p
-
-This was my second ever emacs preferred theme (it was zenburn first then this).
 
 #+BEGIN_SRC elisp :tangle no
 (use-package timu-spacegrey-theme
@@ -212,7 +202,7 @@ Other plugins (or apps) with not that much configuration.
 
 #+BEGIN_SRC elisp
 (use-package dired
-  :elpaca nil
+  :ensure nil
   :config
   (setq delete-by-moving-to-trash t
         ;; Emacs 29
@@ -283,12 +273,12 @@ And yes you can even click on the breadcrumb components to jump to things like i
         completion-category-overrides '((file (styles partial-completion)))))
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
-  :elpaca nil
+  :ensure nil
   :init
   (savehist-mode))
 ;; Pasted from vertico
 (use-package emacs
-  :elpaca nil
+  :ensure nil
   :init
   ;; Add prompt indicator to `completing-read-multiple'.
   ;; Alternatively try `consult-completing-read-multiple'.
@@ -640,7 +630,7 @@ didn't use `org-cycle' here."
 
 #+BEGIN_SRC elisp :noweb yes
 (use-package org
-  :elpaca nil
+  :ensure nil
   :config
   <<org-config>>
   ;; Including no-web `org-font-attributes' is no longer necessary as
@@ -826,7 +816,7 @@ Configuration below enables tree-sitter mode for each major language mode I want
 Diminish allows us to use minor modes without showing it.
 
 #+BEGIN_SRC elisp :tangle yes
-(use-package diminish :defer t)
+(use-package diminish :ensure t)
 #+END_SRC
 
 * Eshell
@@ -1008,7 +998,7 @@ See `eshell-display-modifier-help' for details on that."
 
 #+begin_src elisp
 (use-package eshell
-  :elpaca nil
+  :ensure nil
   :init
   (setq eshell-error-if-no-glob t
         ;; This jumps back to the prompt:

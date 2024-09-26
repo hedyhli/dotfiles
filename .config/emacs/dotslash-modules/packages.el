@@ -75,7 +75,7 @@
   )
 
 (use-package dired
-  :elpaca nil
+  :ensure nil
   :config
   (setq delete-by-moving-to-trash t
         ;; Emacs 29
@@ -122,12 +122,12 @@
         completion-category-overrides '((file (styles partial-completion)))))
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
-  :elpaca nil
+  :ensure nil
   :init
   (savehist-mode))
 ;; Pasted from vertico
 (use-package emacs
-  :elpaca nil
+  :ensure nil
   :init
   ;; Add prompt indicator to `completing-read-multiple'.
   ;; Alternatively try `consult-completing-read-multiple'.
@@ -360,7 +360,7 @@
   (which-key-mode 1))
 
 (use-package org
-  :elpaca nil
+  :ensure nil
   :config
   (setq org-startup-indented t)
   (setq org-edit-src-content-indentation 0)
@@ -572,7 +572,7 @@ See `eshell-display-modifier-help' for details on that."
     (eshell-command full-cmd)))
 
 (use-package eshell
-  :elpaca nil
+  :ensure nil
   :init
   (setq eshell-error-if-no-glob t
         ;; This jumps back to the prompt:
