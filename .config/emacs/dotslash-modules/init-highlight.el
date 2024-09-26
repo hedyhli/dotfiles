@@ -9,12 +9,21 @@
 ;; Highlight indentions
 (use-package highlight-indent-guides
   :diminish
-  :hook ((prog-mode yaml-mode) . highlight-indent-guides-mode)
-  :init (setq highlight-indent-guides-method 'character
-              highlight-indent-guides-responsive 'top
-              highlight-indent-guides-suppress-auto-error t)
-  :custom-face
-  (highlight-indent-guides-character-face ((t (:foreground "dim gray"))))
+  :hook
+  ((prog-mode yaml-mode) . highlight-indent-guides-mode)
+  (highlight-indent-guides-mode
+   .
+   ;; FIXME: No clue why setting this in config doesn't work.
+   (lambda () (set-face-attribute 'highlight-indent-guides-character-face nil
+                                   :foreground "gray30")
+              (set-face-attribute 'highlight-indent-guides-top-character-face nil
+                                   :foreground "gray70" :weight 'bold)))
+
+  :init
+  (setq highlight-indent-guides-method 'character
+        highlight-indent-guides-responsive 'top
+        highlight-indent-guides-suppress-auto-error t)
+
   :config
   (with-no-warnings
     ;; Don't display first level of indentation
