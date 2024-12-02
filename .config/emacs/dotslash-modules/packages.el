@@ -107,7 +107,11 @@
   ((org-mode markdown-mode) . wrap-region-mode)
 )
 
-(use-package magit)
+(use-package magit
+  :ensure (:host github :repo "magit/magit" :tag "v4.1.1" :branch "main"
+                 :pre-build ("make" "info")
+                 :files (:defaults "lisp/*")))
+(use-package transient)
 
 (use-package breadcrumb
   :diminish
@@ -450,11 +454,17 @@
 (use-package cognate-ts-mode
   :load-path "~/projects/tree-sitter-cognate/")
 
+(use-package fennel-mode
+  :ensure (:repo "https://git.sr.ht/~technomancy/fennel-mode")
+  :mode ("\\.fnl\\'" . fennel-mode))
+
 (use-package eglot
   :ensure nil
   :defer t
   :hook
   ((python-ts-mode go-ts-mode lua-mode) . eglot-ensure)
+  :config
+  (add-to-list 'eglot-server-programs '(fennel-mode . ("fennel-ls")))
 )
 
 (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))

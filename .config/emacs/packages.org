@@ -8,6 +8,7 @@
 ;; This file is generated from packages.org
 #+END_SRC
 
+Elpaca docs: https://github.com/progfolio/elpaca/blob/master/doc/manual.md
 
 * Helpers
 
@@ -251,8 +252,18 @@ It enables this for quotes and brackets by default, below I've added some more u
 
 ** Magit
 
+I've had trouble updating Magit first due to the =git-commit= dependency (fixed by switching to GitHub repo rather than Elpa), then the transient dependency (fixed by installing through GitHub), and finally a "No elisp files in magit" error, fixed by adding the =:files= entry to =:ensure=.
+
+For future reference:
+- https://github.com/magit/magit/discussions/5180
+- https://github.com/progfolio/elpaca/issues/343
+
 #+BEGIN_SRC elisp
-(use-package magit)
+(use-package magit
+  :ensure (:host github :repo "magit/magit" :tag "v4.1.1" :branch "main"
+                 :pre-build ("make" "info")
+                 :files (:defaults "lisp/*")))
+(use-package transient)
 #+END_SRC
 
 ** Breadcrumb
@@ -632,7 +643,6 @@ didn't use `org-cycle' here."
     )))
 #+END_SRC
 
-
 * Which-Key
 
 #+BEGIN_SRC elisp
@@ -773,6 +783,16 @@ Org superstar is like org-bullets but with additional customizations as well as 
   :load-path "~/projects/tree-sitter-cognate/")
 #+END_SRC
 
+** Fennel
+
+Note that =fennel-ls= integration for Emacs <= 29 requires extra Eglot configuration (see below).
+
+#+BEGIN_SRC elisp
+(use-package fennel-mode
+  :ensure (:repo "https://git.sr.ht/~technomancy/fennel-mode")
+  :mode ("\\.fnl\\'" . fennel-mode))
+#+END_SRC
+
 
 ** Eglot
 
@@ -784,6 +804,8 @@ Eglot is now included in Emacs from version 29.
   :defer t
   :hook
   ((python-ts-mode go-ts-mode lua-mode) . eglot-ensure)
+  :config
+  (add-to-list 'eglot-server-programs '(fennel-mode . ("fennel-ls")))
 )
 #+END_SRC
 
@@ -832,6 +854,8 @@ Configuration below enables tree-sitter mode for each major language mode I want
 * Diminish
 
 Diminish allows us to use minor modes without showing it.
+
+I've never quite gotten it to work though, unfortunately.
 
 #+BEGIN_SRC elisp :tangle yes
 (use-package diminish :ensure t)
