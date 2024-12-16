@@ -18,6 +18,7 @@ alias la='ls -a'
 alias bat='bat --theme base16-256'
 alias emacs-clean='emacs -nw -Q --eval "(load-theme '\''modus-vivendi t)"'
 alias emacs-wombat='emacs -nw -Q --eval "(load-theme '\''wombat t)"'
+alias ranger='TERM=xterm-kitty env ranger'
 
 # Shortcuts
 alias apt-up='sudo apt update && sudo apt upgrade -y && sudo apt-get dist-upgrade -y && sudo apt autoremove'

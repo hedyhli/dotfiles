@@ -6,7 +6,7 @@ export EMACSDIR=~/.doomemacs/
 export PROJECTS_ROOT=~/projects
 export BROWSER=elinks
 export FILEMAN=ranger
-#export TERM=xterm-256color
+export TERM=xterm-256color
 export GPG_TTY=$(tty)
 
 # telemetry shit
