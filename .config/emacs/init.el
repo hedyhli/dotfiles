@@ -83,6 +83,14 @@
 (setq window-divider-default-places 'right-only)
 (window-divider-mode 1)
 
+(defun ./countdown ()
+  "Show a message after timer expires. Based on run-at-time and can understand time like it can."
+  (interactive)
+  (let* ((msg-to-show (read-string "Enter msg to show: "))
+         (time-duration (read-string "Time? ")))
+    (message time-duration)
+    (run-at-time time-duration nil #'message-box msg-to-show)))
+
 (defun ./org-insert-src (beg end)
   "Insert (or wrap region with, or cancel) src block.
 

@@ -131,6 +131,23 @@ Hopefully I'll be consistent with the convention of using =./= for all self-defi
 
 To search for these in completion systems, use =\./= (\o/ :D). =./= stands for DOTSLASH
 
+** Timer
+
+https://www.reddit.com/r/emacs/comments/7wsnoi/using_countdown_timers_for_alerts/
+
+Simple pomodoro timer.
+
+#+BEGIN_SRC elisp
+(defun ./countdown ()
+  "Show a message after timer expires. Based on run-at-time and can understand time like it can."
+  (interactive)
+  (let* ((msg-to-show (read-string "Enter msg to show: "))
+         (time-duration (read-string "Time? ")))
+    (message time-duration)
+    (run-at-time time-duration nil #'message-box msg-to-show)))
+#+END_SRC
+
+
 ** Org insert src
 
 The function below is adapted from a blog post (link lost, sorry) which describes how you can define a function to quickly insert a src code block.
