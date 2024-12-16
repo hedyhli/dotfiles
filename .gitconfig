@@ -38,6 +38,7 @@
     pushall = !git remote | xargs -L1 git push --all
     # Same as pushall but not for all branches
     pall = !git remote | xargs -L1 git push
+    pallt = !git remote | xargs -L1 git push --follow-tags
     d = diff
     ds = diff --staged
 

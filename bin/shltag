@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-# old=$(git tag | tail -n1)
-old="$2"
+old=$(git describe --abbrev=0 --tags)
 force=""
 # if [[ "$2" == "-f" ]]; then
 #     force="-f"
@@ -10,10 +9,8 @@ case $1 in
 	v*)
 		git shortlog $old..HEAD | git tag $force -as -F - $1
 		exit;;
-	--help)
-		echo Usage: shltag '[v<version> | --help | -o ]'
+	*)
+		echo Usage: shltag '[ --help ] [ vNEW ]'
+		echo old tag is $old;
 		exit;;
-	-o)
-		# show old tag
-		echo old is $old;;
 esac
