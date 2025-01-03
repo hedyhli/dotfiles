@@ -94,8 +94,7 @@ map("n", "<leader>tp", "<cmd>tabprev<cr>", d "tabprev")
 
 map("", "<leader>`", "<cmd>botright split term://fish<cr><cmd>resize -7<cr>i")
 if vim.fn.has("macunix") == 1 then
-  -- WTF?? (I checked using C-v in insert mode)
-  -- TODO: Fix in tmux
+  -- (I checked using C-v in insert mode)
   map("", "<C-@>", "<cmd>botright split term://fish<cr><cmd>resize -7<cr>i")
 else
   map("", "<C-`>", "<cmd>botright split term://fish<cr><cmd>resize -7<cr>i",

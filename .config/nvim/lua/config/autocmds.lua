@@ -46,3 +46,6 @@ vim.filetype.add({
     ['justfile'] = "just",
   }
 })
+vim.filetype.add({
+  extension = { njk = "html" }
+})

@@ -8,7 +8,10 @@ return {
   {
   dir = "~/projects/outline.nvim",
   enabled = vim.fn.has("nvim-0.7") == 1,
-  dependencies = { 'msr1k/outline-asciidoc-provider.nvim' },
+  dependencies = {
+    'msr1k/outline-asciidoc-provider.nvim',
+    'epheien/outline-treesitter-provider.nvim'
+  },
   lazy = false,
   cmd = { "Outline", "OutlineOpen" },
   keys = {
@@ -70,7 +73,7 @@ return {
     providers = {
       lsp = { blacklist_clients = {'marksman'} },
       markdown = {filetypes = {'markdown', 'text'}},
-      priority = {'lsp', 'markdown', 'asciidoc', 'norg'},
+      priority = {'treesitter', 'lsp', 'markdown', 'asciidoc', 'norg'},
     },
     symbols = {
       filter = {
