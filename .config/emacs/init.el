@@ -83,6 +83,14 @@
 (setq window-divider-default-places 'right-only)
 (window-divider-mode 1)
 
+(when (< (length exec-path) 10)
+  (let* ((add-path (string-trim-right
+                    (shell-command-to-string
+                     "~/dotscripts/convert/addpath")))
+         (additions (split-string add-path ":")))
+    (setenv "PATH" (concat add-path ":" (getenv "PATH")))
+    (setq exec-path (append exec-path additions))))
+
 (defun ./countdown ()
   "Show a message after timer expires. Based on run-at-time and can understand time like it can."
   (interactive)

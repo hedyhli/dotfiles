@@ -77,3 +77,5 @@
     whitespace = red reverse
 [push]
     followTags = false
+[gpg]
+	program = /opt/local/bin/gpg

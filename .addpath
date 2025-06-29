@@ -9,4 +9,5 @@ go/bin
 node_modules/.bin
 .local/share/pnpm
 /usr/local/go/bin
-/usr/local/sbin/
+/usr/local/bin
+/usr/local/sbin

@@ -125,6 +125,23 @@ This makes resizing by mouse dragging easier, as it increases the divider width 
 (window-divider-mode 1)
 #+END_SRC
 
+** Shell
+
+Launching Emacs through =Emacs.app= from the dock on MacOS does not set up the =$PATH= properly. We need to detect this and form the correct binary paths ourselves.
+
+
+#+BEGIN_SRC elisp
+(when (< (length exec-path) 10)
+  (let* ((add-path (string-trim-right
+                    (shell-command-to-string
+                     "~/dotscripts/convert/addpath")))
+         (additions (split-string add-path ":")))
+    (setenv "PATH" (concat add-path ":" (getenv "PATH")))
+    (setq exec-path (append exec-path additions))))
+                
+#+END_SRC
+
+
 * Helper functions
 
 Hopefully I'll be consistent with the convention of using =./= for all self-defined functions.
