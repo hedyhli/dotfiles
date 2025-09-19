@@ -177,12 +177,27 @@ lspconfig.lua_ls.setup {
     },
   },
 }
+  -- https://myriad-dreamin.github.io/tinymist/frontend/neovim.html
+  lspconfig.tinymist.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    -- root_markers = {".git", "tmpl.typst", "README.md"},
+    root_dir = function(fname)
+      return vim.fs.dirname(vim.fs.find('tmpl.typst', { path = fname, upward = true })[1])
+    end,
+    handlers = handlers,
+    settings = {
+      formatterMode = "typstyle",
+      exportPdf = "onType",
+      semanticTokens = "disable"
+    }
+  }
 end
 
 return {
   { "neovim/nvim-lspconfig",
     config = config,
-    ft = {"python", "go", "markdown", "lua", "vim", "bash", "javascript", 'javascriptreact', 'sh', "typescript", "typescriptreact", "nim", "rust", "zig", "haskell", "v", "ocaml", "nu", "odin", "elm"},
+    ft = {"python", "go", "markdown", "lua", "vim", "bash", "javascript", 'javascriptreact', 'sh', "typescript", "typescriptreact", "nim", "rust", "zig", "haskell", "v", "ocaml", "nu", "odin", "elm", "typst"},
   },
   { "ray-x/lsp_signature.nvim",
     event = "VeryLazy",

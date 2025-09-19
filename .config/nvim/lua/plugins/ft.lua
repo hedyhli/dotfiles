@@ -18,12 +18,13 @@ return {
   { "mzlogin/vim-markdown-toc", ft = "markdown",
   },
   { dir = "~/projects/markdown-toc.nvim", ft = "markdown",
-    opts = {
-      -- fences = false,
-      toc_list = {
-        -- indent_size = function() return vim.bo.shiftwidth end,
-      }
-    },
+    opts = {}
+    -- opts = {
+    --   -- fences = false,
+    --   toc_list = {
+    --     -- indent_size = function() return vim.bo.shiftwidth end,
+    --   }
+    -- },
   },
   { "leafo/moonscript-vim", ft = "moon",
     config = function ()

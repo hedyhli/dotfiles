@@ -162,7 +162,7 @@ require('competitest').setup {
     c = { exec = "./$(FNOEXT).out" },
     cpp = { exec = "./$(FNOEXT).out" },
     rust = { exec = "./$(FNOEXT)" },
-    python = { exec = "python", args = { "$(FNAME)" } },
+    python = { exec = "python3", args = { "$(FNAME)" } },
     java = { exec = "java", args = { "$(FNOEXT)" } },
   },
   multiple_testing = -1,
@@ -218,5 +218,5 @@ return {
   "xeluxee/competitest.nvim",
   dependencies = "MunifTanjim/nui.nvim",
   config = config,
-  ft = "cpp",
+  ft = {"cpp", "python"},
 }

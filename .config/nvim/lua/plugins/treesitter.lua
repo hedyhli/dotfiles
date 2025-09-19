@@ -23,7 +23,7 @@ parser_config.hy = {
 local configs = require("nvim-treesitter.configs")
 configs.setup({
   ensure_installed = {
-    "cpp", "lua", "vim", "vimdoc", "html", "css", "go", "bash", "regex", "markdown", "markdown_inline", "query", "toml", "vimdoc", "python", "diff", "javascript", "hy", "vento", "nim", "racket", "v", "haskell", "zig", "rust", "nu", "just"
+    "cpp", "lua", "vim", "vimdoc", "html", "css", "go", "bash", "regex", "markdown", "markdown_inline", "query", "toml", "vimdoc", "python", "diff", "javascript", "hy", "vento", "nim", "racket", "v", "haskell", "zig", "rust", "nu", "just", "typst"
   },
   sync_install = false,
   highlight = { enable = true },

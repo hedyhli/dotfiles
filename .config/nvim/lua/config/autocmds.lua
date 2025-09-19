@@ -49,3 +49,6 @@ vim.filetype.add({
 vim.filetype.add({
   extension = { njk = "html" }
 })
+vim.filetype.add({
+  extension = { typst = "typst", typ = "typst" }
+})
