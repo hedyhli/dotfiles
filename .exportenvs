@@ -4,7 +4,7 @@ export EDITOR=nv
 export DOOMDIR=~/.config/doom/
 export EMACSDIR=~/.doomemacs/
 export PROJECTS_ROOT=~/projects
-export BROWSER=elinks
+export BROWSER='open -u'
 export FILEMAN=ranger
 export TERM=xterm-256color
 export GPG_TTY=$(/usr/bin/tty)
@@ -32,7 +32,7 @@ export XDG_USER_CONFIG_DIR="$XDG_CONFIG_HOME"
 # Paths
 export LD_LIBRARY_PATH="$HOME/local/lib/x86_64-linux-gnu/:$HOME/local/lib:/opt/pkgsrc/opt/pkg/lib:/opt/pkg/lib"
 export DYLD_LIBRARY_PATH="/opt/pkgsrc/opt/pkg/lib"
-export PKG_CONFIG_PATH="$HOME/local/lib/x86_64-linux-gnu/pkgconfig:$HOME/local/pkgconfig:/opt/pkg/lib/pkgconfig/"
+export PKG_CONFIG_PATH="$HOME/local/lib/x86_64-linux-gnu/pkgconfig:$HOME/local/pkgconfig:/opt/pkg/lib/pkgconfig/:/opt/homebrew/opt/tcl-tk/lib/pkgconfig"
 
 # Add $NVM_DIR/versions/node/<VERSION>/bin to addpath to enable node on startup
 export NVM_DIR="$HOME/.config/nvm"
