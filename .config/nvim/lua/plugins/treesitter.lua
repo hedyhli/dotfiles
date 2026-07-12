@@ -1,12 +1,12 @@
 local function config()
-vim.filetype.add({ extension = { cog = "cognate" } })
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "cognate",
-  callback = function(event) vim.bo[event.buf].commentstring = "~~ %s" end,
-})
-vim.treesitter.language.add('cognate', { path = "/Users/hedy/projects/tree-sitter-cognate/cognate.dylib" })
-vim.bo.commentstring = "~~ %s"
-require("Comment.ft").set("cognate", {"~~ %s", "~%s~"})
+-- vim.filetype.add({ extension = { cog = "cognate" } })
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = "cognate",
+--   callback = function(event) vim.bo[event.buf].commentstring = "~~ %s" end,
+-- })
+-- vim.treesitter.language.add('cognate', { path = "/Users/hedy/projects/tree-sitter-cognate/cognate.dylib" })
+-- vim.bo.commentstring = "~~ %s"
+-- require("Comment.ft").set("cognate", {"~~ %s", "~%s~"})
 
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
 parser_config.hy = {

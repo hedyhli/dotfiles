@@ -59,13 +59,13 @@ return {
     },
     outline_window = {
       position = 'left',
-        auto_jump = true,
       show_cursorline = 'focus_in_outline',
       -- Beautiful, but not very good in indicating window focus (I don't use a
       -- statusline), plus at the time of writing preview window breaks this
       -- feature... But still beautiful nonetheless!
       hide_cursor = true,
       winhl = "OutlineDetails:LineNr,OutlineLineno:LineNr,OutlineGuides:Comment",
+        width = 10,
     },
     outline_items = {
       auto_set_cursor = false,
@@ -73,7 +73,7 @@ return {
     providers = {
       lsp = { blacklist_clients = {'marksman'} },
       markdown = {filetypes = {'markdown', 'text'}},
-      priority = {'treesitter', 'lsp', 'markdown', 'asciidoc', 'norg'},
+      priority = {'lsp', 'treesitter', 'markdown', 'asciidoc', 'norg'},
     },
     symbols = {
       filter = {

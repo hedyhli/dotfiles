@@ -48,7 +48,6 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap("n", "g@", "<cmd>lua vim.lsp.buf.format{async=true}<CR>", opts)
-  --buf_set_keymap('n', '<localleader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 end
 
 local handlers =  {
@@ -192,12 +191,16 @@ lspconfig.lua_ls.setup {
       semanticTokens = "disable"
     }
   }
+  lspconfig.clangd.setup{
+    on_attach = on_attach,
+    capabilities = capabilities,
+  }
 end
 
 return {
   { "neovim/nvim-lspconfig",
     config = config,
-    ft = {"python", "go", "markdown", "lua", "vim", "bash", "javascript", 'javascriptreact', 'sh', "typescript", "typescriptreact", "nim", "rust", "zig", "haskell", "v", "ocaml", "nu", "odin", "elm", "typst"},
+    ft = {"python", "go", "markdown", "lua", "vim", "bash", "javascript", 'javascriptreact', 'sh', "typescript", "typescriptreact", "nim", "rust", "zig", "haskell", "v", "ocaml", "nu", "odin", "elm", "typst", "cpp", "html"},
   },
   { "ray-x/lsp_signature.nvim",
     event = "VeryLazy",

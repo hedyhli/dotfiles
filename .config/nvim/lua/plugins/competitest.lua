@@ -118,7 +118,9 @@ require('competitest').setup {
       height = 0.5,
       show_nu = true,
       show_rnu = false,
-      close_mappings = { "q", "Q" },
+      mappings = {
+        close = { "q", "Q" },
+      },
     },
   },
   popup_ui = {
@@ -153,7 +155,7 @@ require('competitest').setup {
   compile_command = {
     c = { exec = "gcc", args = { "-Wall", "$(FNAME)", "-o", "$(FNOEXT).out" } },
     -- cpp = { exec = "clang++", args = { "-Wall", "$(FNAME)", "-o", "$(FNOEXT).out", "--include-directory=/opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/aarch64-apple-darwin22" } },
-    cpp = { exec = "g++", args = { "-Wall", "$(FNAME)", "-o", "$(FNOEXT).out" } },
+    cpp = { exec = "g++-14", args = { "-Wall", "$(FNAME)", "-o", "$(FNOEXT).out" } },
     rust = { exec = "rustc", args = { "$(FNAME)" } },
     java = { exec = "javac", args = { "$(FNAME)" } },
   },
