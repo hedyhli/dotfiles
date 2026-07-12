@@ -1,0 +1,10 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "command": {
+    "btw": {
+      "template": "This is a quick side question, separate from the main conversation context. Answer concisely.\n\n$ARGUMENTS",
+      "description": "Quick side question, separate context",
+      "subtask": true
+    }
+  }
+}
